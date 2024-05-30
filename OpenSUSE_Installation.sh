@@ -52,6 +52,10 @@ unzip ./MacSonoma-kde-main.zip
 # Install the KDE and Kvantum theme
 sh ./MacSonoma-kde-main/install.sh
 
+# Create '.scripts' directory in the user home directory and move the login tasks script there
+mkdir ~/.scripts
+cp login_tasks.sh ~/.scripts/
+
 # ---- CLEANUP ---- #
 
 # Add "autoremove" command to remove any unneeded packages.
