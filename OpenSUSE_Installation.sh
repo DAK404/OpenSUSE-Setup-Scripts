@@ -1,58 +1,60 @@
 #!/bin/bash
 
-#first check for updates
+# Check for OpenSUSE Tumbleweed updates
 sudo zypper dup -y
 
-#install codecs
+# Install the codecs for multimedia playback from OBS Package Installer (opi)
 sudo zypper install -y opi
 opi codecs
 
-#install vscode and edge
-sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
-sudo zypper addrepo --refresh https://packages.microsoft.com/yumrepos/edge microsoft-edge
-sudo zypper addrepo --refresh https://packages.microsoft.com/yumrepos/vscode vscode
-sudo zypper install -y microsoft-edge-stable
-sudo zypper install -y code
+# ---- ADD REPOSITORIES ---- #
 
-#install github desktop
+# Add Microsoft Repositories
+sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+sudo zypper addrepo --refresh https://packages.microsoft.com/yumrepos/vscode vscode
+
+# Add GitHub Desktop for Linux Repository
 sudo rpm --import https://rpm.packages.shiftkey.dev/gpg.key
 sudo sh -c 'echo -e "[shiftkey-packages]\nname=GitHub Desktop\nbaseurl=https://rpm.packages.shiftkey.dev/rpm/\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://rpm.packages.shiftkey.dev/gpg.key" > /etc/zypp/repos.d/shiftkey-packages.repo'
-sudo zypper ref && sudo zypper in -y github-desktop
 
-#install the essentials for consumer systems, comment out the ones that you might not need
-sudo zypper in -y plymouth-plugin-script
-sudo zypper in -y fde-tools
-sudo zypper in -y kdeconnect-kde
-sudo zypper in -y libdbusmenu-glib4
-sudo zypper in -y kvantum-manager
-sudo zypper in -y partitionmanager
-sudo zypper in -y git
-sudo zypper in -y discord
-sudo zypper in -y libdiscord-rpc*
-sudo zypper in -y bleachbit
-sudo zypper in -y easyeffects
+# ---- INSTALL SOFTWARE ---- #
 
-#install plymouth theme
-sudo cp -r colorful /usr/share/plymouth/themes/
-sudo plymouth-set-default-theme colorful -R
+sudo zypper refresh
+sudo zypper install -y plymouth-plugin-script fde-tools kdeconnect-kde discord libdiscord-rpc* bleachbit easyeffects libdbusmenu-glib4 git kvantum-manager partitionmanager code github-desktop
 
-#make the theme folders and install GRUB theme
+# ---- INSTALL EXTRAS ---- #
+
+# Install Floorp browser
+flatpak install flathub one.ablaze.floorp
+
+# Install GRUB Theme
 sudo mkdir -p /boot/misc/themes
 sudo cp -r sayonara/* /boot/misc/themes
 
-#install the easy effects presets
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/JackHack96/PulseEffects-Presets/master/install.sh)"
+# Install Plymouth Theme
+sudo cp -r colorful /usr/share/plymouth/themes/
+sudo plymouth-set-default-theme colorful -R
 
-#install KDE theme
-sh ./MacSonoma-kde-main/install.sh --round
+# Copy the wallpapers over to the system wallpapers directory
+sudo cp ./custom-wallpapers/* /usr/share/wallpapers
 
-#install fonts, place any TTF or OTF fonts in the folder
+# Install fonts
 sudo cp *.ttf /usr/share/fonts/
 sudo cp *.otf /usr/share/fonts/
 
-#make .scripts directory in the /home directory and move the login tasks script there
-mkdir ../.scripts
-cp login_tasks.sh ../.scripts/
+# Install EasyEffects presets
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/JackHack96/PulseEffects-Presets/master/install.sh)"
 
-#cleanup
-sudo zypper packages --unneeded | awk -F'|' 'NR==0 || NR==1 || NR==2 || NR==3 || NR==4 {next} {print $3}' | grep -v Name | sudo xargs zypper remove --clean-deps > CleanupLog.txt
+# Download the MacSonoma Theme (Thanks Vinceliuice!)
+curl -LJO https://github.com/vinceliuice/MacSonoma-kde/archive/refs/heads/main.zip
+# Unzip the dowloaded file
+unzip ./MacSonoma-kde-main.zip
+# Install the KDE and Kvantum theme
+sh ./MacSonoma-kde-main/install.sh
+
+# ---- CLEANUP ---- #
+
+# Add "autoremove" command to remove any unneeded packages.
+echo alias autoremove="sudo zypper packages --unneeded | awk -F'|' 'NR==0 || NR==1 || NR==2 || NR==3 || NR==4 {next} {print $3}' | grep -v Name | sudo xargs zypper remove -y --clean-deps > CleanupLog.txt" >> /etc/bash.bashrc
+# Run autoremove
+autoremove
