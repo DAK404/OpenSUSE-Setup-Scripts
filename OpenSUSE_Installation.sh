@@ -19,8 +19,10 @@ sudo sh -c 'echo -e "[shiftkey-packages]\nname=GitHub Desktop\nbaseurl=https://r
 
 # ---- INSTALL SOFTWARE ---- #
 
+# Refresh the repositories
 sudo zypper refresh
-sudo zypper install -y plymouth-plugin-script fde-tools kdeconnect-kde discord libdiscord-rpc* bleachbit easyeffects libdbusmenu-glib4 git kvantum-manager partitionmanager code github-desktop
+# Begin package installation
+sudo zypper install -y plymouth-plugin-script fde-tools kdeconnect-kde discord libdiscord-rpc* bleachbit easyeffects libdbusmenu-glib4 git kvantum-manager partitionmanager code github-desktop MozillaThunderbird
 
 # ---- INSTALL EXTRAS ---- #
 
@@ -33,6 +35,7 @@ sudo cp -r sayonara/* /boot/misc/themes
 
 # Install Plymouth Theme
 sudo cp -r colorful /usr/share/plymouth/themes/
+# Set the custom theme as 'colorful'
 sudo plymouth-set-default-theme colorful -R
 
 # Copy the wallpapers over to the system wallpapers directory
@@ -51,6 +54,10 @@ curl -LJO https://github.com/vinceliuice/MacSonoma-kde/archive/refs/heads/main.z
 unzip ./MacSonoma-kde-main.zip
 # Install the KDE and Kvantum theme
 sh ./MacSonoma-kde-main/install.sh
+# Delete the directory to save space
+rm -r ./MacSonoma-kde-main
+# Delete the zip file too
+rm MacSonoma-kde-main.zip
 
 # Create '.scripts' directory in the user home directory and move the login tasks script there
 mkdir ~/.scripts
