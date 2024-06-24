@@ -1,4 +1,4 @@
 #!/bin/bash
 
-#remove the VSCode GPUCache directory
+# Remove the VSCode GPUCache directory
 rm -r ../.config/Code/GPUCache

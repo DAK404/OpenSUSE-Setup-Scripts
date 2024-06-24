@@ -22,21 +22,16 @@ sudo sh -c 'echo -e "[shiftkey-packages]\nname=GitHub Desktop\nbaseurl=https://r
 # Refresh the repositories
 sudo zypper refresh
 # Begin package installation
-sudo zypper install -y plymouth-plugin-script fde-tools kdeconnect-kde discord libdiscord-rpc* bleachbit easyeffects libdbusmenu-glib4 git kvantum-manager partitionmanager code github-desktop MozillaThunderbird
+sudo zypper install -y fde-tools kdeconnect-kde discord libdiscord-rpc* bleachbit easyeffects libdbusmenu-glib4 git kvantum-manager partitionmanager code github-desktop MozillaThunderbird
 
 # ---- INSTALL EXTRAS ---- #
 
 # Install Floorp browser
-flatpak install flathub one.ablaze.floorp
+flatpak install -y flathub one.ablaze.floorp
 
 # Install GRUB Theme
 sudo mkdir -p /boot/misc/themes
 sudo cp -r sayonara/* /boot/misc/themes
-
-# Install Plymouth Theme
-sudo cp -r colorful /usr/share/plymouth/themes/
-# Set the custom theme as 'colorful'
-sudo plymouth-set-default-theme colorful -R
 
 # Copy the wallpapers over to the system wallpapers directory
 sudo cp ./custom-wallpapers/* /usr/share/wallpapers
@@ -61,11 +56,11 @@ rm MacSonoma-kde-main.zip
 
 # Create '.scripts' directory in the user home directory and move the login tasks script there
 mkdir ~/.scripts
+mkdir -p ~/.logs
 cp login_tasks.sh ~/.scripts/
 
 # ---- CLEANUP ---- #
 
 # Add "autoremove" command to remove any unneeded packages.
-echo alias autoremove="sudo zypper packages --unneeded | awk -F'|' 'NR==0 || NR==1 || NR==2 || NR==3 || NR==4 {next} {print $3}' | grep -v Name | sudo xargs zypper remove -y --clean-deps > CleanupLog.txt" >> /etc/bash.bashrc
-# Run autoremove
-autoremove
+echo alias autoremove="sudo zypper packages --unneeded | awk -F'|' 'NR==0 || NR==1 || NR==2 || NR==3 || NR==4 {next} {print $3}' | grep -v Name | sudo xargs zypper remove -y --clean-deps >> ~/CleanupLog.txt" >> /etc/bash.bashrc.local
+

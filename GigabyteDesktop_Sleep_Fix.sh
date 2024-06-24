@@ -2,7 +2,7 @@
 
 sudo cat > /etc/systemd/system/biosWakeupWorkaround.service << EOL
 [Unit]
-Description=Workaround for Gigabyte B550 F13 bios sleep/wakeup bug
+Description=Workaround for Gigabyte BIOS sleep/wakeup bug
 
 [Service]
 Type=oneshot
@@ -13,4 +13,3 @@ WantedBy = multi-user.target
 EOL
 
 sudo systemctl daemon-reload && sudo systemctl enable biosWakeupWorkaround.service
-
