@@ -5,7 +5,7 @@ sudo zypper dup -y
 
 # Install the codecs for multimedia playback from OBS Package Installer (opi)
 sudo zypper install -y opi
-opi codecs
+opi codecs -n
 
 # ---- ADD REPOSITORIES ---- #
 
