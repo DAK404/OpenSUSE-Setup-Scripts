@@ -11,6 +11,7 @@ opi codecs -n
 
 # Add Microsoft Repositories
 sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+sudo zypper addrepo --refresh https://packages.microsoft.com/yumrepos/edge microsoft-edge
 sudo zypper addrepo --refresh https://packages.microsoft.com/yumrepos/vscode vscode
 
 # Add GitHub Desktop for Linux Repository
@@ -22,7 +23,7 @@ sudo sh -c 'echo -e "[shiftkey-packages]\nname=GitHub Desktop\nbaseurl=https://r
 # Refresh the repositories
 sudo zypper refresh
 # Begin package installation
-sudo zypper install -y fde-tools kdeconnect-kde discord libdiscord-rpc* bleachbit easyeffects libdbusmenu-glib4 git kvantum-manager partitionmanager code github-desktop MozillaThunderbird
+sudo zypper install -y fde-tools kdeconnect-kde discord libdiscord-rpc* bleachbit easyeffects libdbusmenu-glib4 git kvantum-manager partitionmanager microsoft-edge-stable code github-desktop MozillaThunderbird
 
 # ---- INSTALL EXTRAS ---- #
 
