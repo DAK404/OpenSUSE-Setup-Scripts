@@ -57,11 +57,10 @@ rm MacSonoma-kde-main.zip
 
 # Create '.scripts' directory in the user home directory and move the login tasks script there
 mkdir ~/.scripts
-mkdir -p ~/.logs
 cp login_tasks.sh ~/.scripts/
 
 # ---- CLEANUP ---- #
 
 # Add "autoremove" command to remove any unneeded packages.
-echo alias autoremove="sudo zypper packages --unneeded | awk -F'|' 'NR==0 || NR==1 || NR==2 || NR==3 || NR==4 {next} {print $3}' | grep -v Name | sudo xargs zypper remove -y --clean-deps >> ~/CleanupLog.txt" >> /etc/bash.bashrc.local
+echo alias autoremove="sudo zypper packages --unneeded | awk -F'|' 'NR==0 || NR==1 || NR==2 || NR==3 || NR==4 {next} {print $3}' | grep -v Name | sudo xargs zypper remove -y --clean-deps >> ~/Cleanup.log" >> /etc/bash.bashrc.local
 
