@@ -27,9 +27,6 @@ sudo zypper install -y fde-tools kdeconnect-kde discord libdiscord-rpc* bleachbi
 
 # ---- INSTALL EXTRAS ---- #
 
-# Install Floorp browser
-flatpak install -y flathub one.ablaze.floorp
-
 # Install GRUB Theme
 sudo mkdir -p /boot/misc/themes
 sudo cp -r sayonara/* /boot/misc/themes
@@ -38,8 +35,8 @@ sudo cp -r sayonara/* /boot/misc/themes
 sudo cp ./custom-wallpapers/* /usr/share/wallpapers
 
 # Install fonts
-sudo cp *.ttf /usr/share/fonts/
-sudo cp *.otf /usr/share/fonts/
+sudo cp ./Fonts/*.ttf /usr/share/fonts/
+sudo cp ./Fonts/*.otf /usr/share/fonts/
 
 # Install EasyEffects presets
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/JackHack96/PulseEffects-Presets/master/install.sh)"
@@ -62,5 +59,8 @@ cp login_tasks.sh ~/.scripts/
 # ---- CLEANUP ---- #
 
 # Add "autoremove" command to remove any unneeded packages.
-echo alias autoremove="sudo zypper packages --unneeded | awk -F'|' 'NR==0 || NR==1 || NR==2 || NR==3 || NR==4 {next} {print $3}' | grep -v Name | sudo xargs zypper remove -y --clean-deps >> ~/Cleanup.log" >> /etc/bash.bashrc.local
-
+echo "alias autoremove=\"sudo zypper packages --unneeded | awk -F'|' 'NR==0 || NR==1 || NR==2 || NR==3 || NR==4 {next} {print $3}' | grep -v Name | sudo xargs zypper remove -y --clean-deps >> ~/Cleanup.log\"" | sudo tee -a /usr/bash.bashrc.local
+# Apply the changes immediately
+source ~/.bashrc
+# Run the autoremove command
+autoremove
