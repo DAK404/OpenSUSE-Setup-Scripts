@@ -23,7 +23,7 @@ sudo sh -c 'echo -e "[shiftkey-packages]\nname=GitHub Desktop\nbaseurl=https://r
 # Refresh the repositories
 sudo zypper refresh
 # Begin package installation
-sudo zypper install -y fde-tools kdeconnect-kde discord libdiscord-rpc* bleachbit easyeffects libdbusmenu-glib4 git kvantum-manager partitionmanager microsoft-edge-stable code github-desktop MozillaThunderbird
+sudo zypper install -y i2c-tools fde-tools kdeconnect-kde discord libdiscord-rpc* bleachbit easyeffects libdbusmenu-glib4 git kvantum-manager partitionmanager microsoft-edge-stable code github-desktop MozillaThunderbird
 
 # ---- INSTALL EXTRAS ---- #
 
