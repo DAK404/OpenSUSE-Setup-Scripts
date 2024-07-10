@@ -45,6 +45,10 @@ The OpenSUSE Installation script contains the following actions:
     8. `bleachbit`: Helps in removing unwanted files in system. A useful tool
 
     9. `easyeffects`: Provides audio effects for speakers. Can improve sound quality
+    
+    10. `openrgb`: Provides control over RGB lighting of keyboards and peripherals
+
+    11. `i2c-tools`: Helps in setting up configurations for the RGB lighting of peripherals
 
 6. Install GRUB theme
 7. Install EasyEffects presets; presets are required for the effects
@@ -67,6 +71,13 @@ For more details on this, please check this reddit thread: https://www.reddit.co
 Instead of manually doing the same tasks every setup, I have automated the process via this script file. You just need to run it once ONLY IF YOU FACE SLEEP ISSUES WITH YOUR GIGABYTE SYSTEMS!
 
 To check if there are issues with your systems, attempt to put your system in sleep mode. If the computer immediately wakes up, this might help you.
+
+## OpenRGB
+
+This script shall help users to setup RGB peripheral lighting to work on Linux. A bit of configuration is required, therefore this script shall do it for you.
+
+NOTE: This is only for AMD chipsets for now. For Intel users, please see the script file comments.
+Also do check out the OpenRGB repository for more information: https://gitlab.com/CalcProgrammer1/OpenRGB#smbus-access-1
 
 ## Usage
 
