@@ -18,6 +18,14 @@ The script called `OpenSUSE_Installation.sh` requires a few extra items which ca
 
 NOTE: For the Sayonara theme, you might need to add your own image as a background, I haven't included mine. Theme may not work if the image is missing.
 
+Once you download the files, you may need to set the permissions so that double clicking/single clicking it will execute it automatically. I have not done this because i want do do it via the command line manually.
+
+## Script Priorities
+
+It is recommended that the `OpenSUSE_Installation.sh` file is run first. If necessary the `GigabyteDesktop_Sleep_Fix.sh` should be run next. Next, run `OpenRGB.sh`.
+
+It is possible for me to create a script to execute these serially, but I prefer to do them manually, since I would want to know and control what I install. Additionally, by writing a master script to execute everything may be disastrous since there are hardware specific configurations (like GigabyteDesktop_Sleep_Fix.sh) which may not work or worse, break your system. Therefore the scripts need to be manually installed by the user.
+
 ## OpenSUSE Installation
 
 The OpenSUSE Installation script contains the following actions:
