@@ -27,7 +27,7 @@ sudo zypper refresh
 #
 # NOTE: Not using opi here since it will switch ALL packages that exist in the Packman repository to use Packman.
 # We manually specify Packman repository and the codecs that need to be installed by the system
-sudo zypper install --allow-vendor-change --from packman ffmpeg gstreamer-plugins-{good,bad,ugly,libav} libavcodec vlc-codecs
+sudo zypper install -y --allow-vendor-change --from packman ffmpeg gstreamer-plugins-{good,bad,ugly,libav} libavcodec vlc-codecs
 
 # Refresh the repositories
 sudo zypper refresh
