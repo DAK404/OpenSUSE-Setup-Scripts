@@ -11,10 +11,9 @@ These are for my configurations, therefore feel free to customize the list of it
 [ ATTENTION ]
 
 The use of `opi` has now been removed.
-The script to be automatable, and while using `opi` it downloads and installs latest updates from the Packman repository.
+The script needs to be automatic with least user intervention, and while using `opi` it downloads and installs latest updates from the Packman repository.
+Updates from Packman may contain issues (personally, I have faced many), therefore, the use of Packman is restricted to the installation of codecs.
 Therefore, `opi` has been removed. It will add the Packman repository, but will not install anything else other than the codecs.
-
-Additionally, updates from Packman may contain issues (personally, I have faced many), therefore, the use of Packman is restricted to the installation of codecs.
 
 ## Prerequisites
 
