@@ -8,6 +8,14 @@ This repository has a set of scripts that can be helpful for setting up OpenSUSE
 
 These are for my configurations, therefore feel free to customize the list of items to be installed or changed.
 
+[ ATTENTION ]
+
+The use of `opi` has now been removed.
+The script to be automatable, and while using `opi` it downloads and installs latest updates from the Packman repository.
+Therefore, `opi` has been removed. It will add the Packman repository, but will not install anything else other than the codecs.
+
+Additionally, updates from Packman may contain issues (personally, I have faced many), therefore, the use of Packman is restricted to the installation of codecs.
+
 ## Prerequisites
 
 The script called `OpenSUSE_Installation.sh` requires a few extra items which can be downloaded from the web.
@@ -31,7 +39,7 @@ It is possible for me to create a script to execute these serially, but I prefer
 The OpenSUSE Installation script contains the following actions:
 
 1. Check for updates and install them
-2. Install `opi` and install codecs for media playback
+2. Add Packman repository and install codecs
 3. Add Microsoft repo and install Edge and VS Code
 4. Add GitHub Desktop (Linux) and install it
 5. Install components such as
@@ -57,6 +65,10 @@ The OpenSUSE Installation script contains the following actions:
     10. `openrgb`: Provides control over RGB lighting of keyboards and peripherals
 
     11. `i2c-tools`: Helps in setting up configurations for the RGB lighting of peripherals
+    
+    12. `krita`: A powerful image editing tool
+    
+    13. `kdenlive`: A decent video editor
 
 6. Install GRUB theme
 7. Install EasyEffects presets; presets are required for the effects
