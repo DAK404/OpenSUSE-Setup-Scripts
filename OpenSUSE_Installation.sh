@@ -3,22 +3,31 @@
 # Check for OpenSUSE Tumbleweed updates
 sudo zypper dup -y
 
-# Install the codecs for multimedia playback from OBS Package Installer (opi)
-sudo zypper install -y opi
-opi codecs -n
-
 # ---- ADD REPOSITORIES ---- #
+
+# Add OpenSUSE Packman repository
+sudo zypper addrepo --refresh 'https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/' packman
 
 # Add Microsoft Repositories
 sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
-sudo zypper addrepo --refresh https://packages.microsoft.com/yumrepos/edge microsoft-edge
-sudo zypper addrepo --refresh https://packages.microsoft.com/yumrepos/vscode vscode
+sudo zypper addrepo --refresh 'https://packages.microsoft.com/yumrepos/edge' microsoft-edge
+sudo zypper addrepo --refresh 'https://packages.microsoft.com/yumrepos/vscode' vscode
 
 # Add GitHub Desktop for Linux Repository
 sudo rpm --import https://rpm.packages.shiftkey.dev/gpg.key
 sudo sh -c 'echo -e "[shiftkey-packages]\nname=GitHub Desktop\nbaseurl=https://rpm.packages.shiftkey.dev/rpm/\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://rpm.packages.shiftkey.dev/gpg.key" > /etc/zypp/repos.d/shiftkey-packages.repo'
 
 # ---- INSTALL SOFTWARE ---- #
+
+# Refresh all repositories
+sudo zypper refresh
+
+# Installing the codecs separately to avoid updating other packages
+# Install the codecs required for multimedia playback
+#
+# NOTE: Not using opi here since it will switch ALL packages that exist in the Packman repository to use Packman.
+# We manually specify Packman repository and the codecs that need to be installed by the system
+sudo zypper install --allow-vendor-change --from packman ffmpeg gstreamer-plugins-{good,bad,ugly,libav} libavcodec vlc-codecs
 
 # Refresh the repositories
 sudo zypper refresh
@@ -56,9 +65,12 @@ rm MacSonoma-kde-main.zip
 mkdir ~/.scripts
 cp login_tasks.sh ~/.scripts/
 
+# Install the custom MacOcean theme (Ocean theme with the Mac startup sound)
+sudo cp -r ./MacOcean /usr/share/sounds
+
 # ---- CLEANUP ---- #
 
 # Add "autoremove" command to remove any unneeded packages.
 echo "alias autoremove=\"sudo zypper packages --unneeded | awk -F'|' 'NR==0 || NR==1 || NR==2 || NR==3 || NR==4 {next} {print $3}' | grep -v Name | sudo xargs zypper remove -y --clean-deps >> ~/Cleanup.log\"" | sudo tee -a /etc/bash.bashrc.local
-# Run the autoremove command
-autoremove
+# Run the command to autoremove packages
+sudo zypper packages --unneeded | awk -F'|' 'NR==0 || NR==1 || NR==2 || NR==3 || NR==4 {next} {print $3}' | grep -v Name | sudo xargs zypper remove -y --clean-deps
