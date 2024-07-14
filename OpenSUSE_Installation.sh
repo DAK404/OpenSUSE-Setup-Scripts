@@ -32,7 +32,7 @@ sudo zypper install --allow-vendor-change --from packman ffmpeg gstreamer-plugin
 # Refresh the repositories
 sudo zypper refresh
 # Begin package installation
-sudo zypper install -y openrgb i2c-tools fde-tools kdeconnect-kde discord libdiscord-rpc* bleachbit easyeffects libdbusmenu-glib4 git kvantum-manager partitionmanager microsoft-edge-stable code github-desktop MozillaThunderbird
+sudo zypper install -y openrgb i2c-tools fde-tools kdeconnect-kde discord libdiscord-rpc* bleachbit easyeffects libdbusmenu-glib4 git kvantum-manager partitionmanager microsoft-edge-stable code github-desktop MozillaThunderbird krita kdenlive
 
 # ---- INSTALL EXTRAS ---- #
 
