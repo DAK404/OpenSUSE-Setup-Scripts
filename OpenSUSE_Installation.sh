@@ -29,8 +29,6 @@ sudo zypper refresh
 # We manually specify Packman repository and the codecs that need to be installed by the system
 sudo zypper install -y --allow-vendor-change --from packman ffmpeg gstreamer-plugins-{good,bad,ugly,libav} libavcodec vlc-codecs
 
-# Refresh the repositories
-sudo zypper refresh
 # Begin package installation
 sudo zypper install -y openrgb i2c-tools fde-tools kdeconnect-kde discord libdiscord-rpc* bleachbit easyeffects libdbusmenu-glib4 git kvantum-manager partitionmanager microsoft-edge-stable code github-desktop MozillaThunderbird krita kdenlive
 
