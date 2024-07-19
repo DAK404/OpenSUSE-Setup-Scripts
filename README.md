@@ -1,12 +1,15 @@
 # OpenSUSE-Setup-Scripts
-A set of useful scripts that can help in setting up and maintaining OpenSUSE Tumbleweed systems
+
+Description: A set of scripts to install essential software, utilities and tools after installing OpenSUSE Tumbleweed.
+
+Version: 1.0 (19-July-2024)
 
 ---
 ## Introduction
 
 This repository has a set of scripts that can be helpful for setting up OpenSUSE Tumbleweed fresh installs.
 
-These are for my configurations, therefore feel free to customize the list of items to be installed or changed.
+These are written for my configuration, therefore feel free to customize the list of items to be installed or changed.
 
 [ ATTENTION ]
 
@@ -68,6 +71,8 @@ The OpenSUSE Installation script contains the following actions:
     12. `krita`: A powerful image editing tool
     
     13. `kdenlive`: A decent video editor
+    
+    14. `p11-kit-server`: Flatpak version of OBS have issues with certificates when using browser elements, therefore this can help fix it.
 
 6. Install GRUB theme
 7. Install EasyEffects presets; presets are required for the effects
