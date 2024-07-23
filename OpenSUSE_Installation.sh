@@ -12,6 +12,7 @@
 #    * Make the script install VLC from the VideoLAN repos
 #    * Add tags to echo statements to show the status of
 #      an action.
+#    # Disable font installation logic.
 #
 # 1.0 (19-July-2024):
 #    * Improve comments
@@ -106,10 +107,16 @@ echo "[ INFORMATION ] Installing: Custom Wallpapers"
 # Copy the wallpapers over to the system wallpapers directory
 sudo cp ./custom-wallpapers/* /usr/share/wallpapers
 
-echo "[ INFORMATION ] Installing: Fonts"
+# NOTE
+#
+# Currently, there are no fonts as a prerequisite.
+# Therefore, this section is disabled and will not be run by default.
+# Manually enable this if you want to install any additional fonts.
+
+#echo "[ INFORMATION ] Installing: Fonts"
 # Install fonts
-sudo cp ./Fonts/*.ttf /usr/share/fonts/
-sudo cp ./Fonts/*.otf /usr/share/fonts/
+#sudo cp ./Fonts/*.ttf /usr/share/fonts/
+#sudo cp ./Fonts/*.otf /usr/share/fonts/
 
 echo "Installing: EasyEffects Presets"
 # Install EasyEffects presets
