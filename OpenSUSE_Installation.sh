@@ -12,7 +12,11 @@
 #    * Make the script install VLC from the VideoLAN repos
 #    * Add tags to echo statements to show the status of
 #      an action.
-#    # Disable font installation logic.
+#    * Disable font installation logic.
+#    * Disable repository Packman after installation of
+#      codecs. This will prevent vendor change to Packman.
+#    * Reorder logic to check updates after importing keys
+#      and adding relevant repositories.
 #
 # 1.0 (19-July-2024):
 #    * Improve comments
@@ -25,17 +29,7 @@
 
 echo "--- OpenSUSE Installation Script ---"
 
-# --- CHECK FOR UPDATES --- #
-
-# Check for OpenSUSE Tumbleweed updates
-echo "[ INFORMATION ] Checking for Updates..."
-sudo zypper dup -y
-
 # ---- ADD REPOSITORIES ---- #
-
-echo "[ INFORMATION ] Adding Repository: Packman"
-# Add OpenSUSE Packman repository
-sudo zypper addrepo --refresh 'https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/' packman
 
 echo "[ INFORMATION ] Adding Repository: Microsoft"
 # Add Microsoft Repositories
@@ -51,15 +45,11 @@ sudo sh -c 'echo -e "[shiftkey-packages]\nname=GitHub Desktop\nbaseurl=https://r
 echo "[ INFORMATION ] Adding Repository: VLC"
 sudo zypper addrepo 'https://download.videolan.org/pub/vlc/SuSE/Tumbleweed/' VLC
 
-# ---- INSTALL SOFTWARE ---- #
-
-echo "[ INFORMATION ] Refreshing ALL Repositories..."
-# Refresh all repositories
-sudo zypper refresh
-
-# Begin package installation
-
 # --- Install Codecs from Packman --- #
+
+echo "[ INFORMATION ] Adding Repository: Packman"
+# Add OpenSUSE Packman repository
+sudo zypper addrepo --refresh 'https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/' packman
 
 echo "[  ATTENTION  ] Installing: Codecs"
 # Install the codecs required for multimedia playback
@@ -67,6 +57,22 @@ echo "[  ATTENTION  ] Installing: Codecs"
 # NOTE: Not using opi here since it will switch ALL packages that exist in the Packman repository to use Packman.
 # We manually specify to install codecs from Packman repository so all other programs are not switched to Packman.
 sudo zypper install -y --allow-vendor-change --from packman ffmpeg gstreamer-plugins-{good,bad,ugly,libav} libavcodec vlc-codecs
+# Disable Packman repository
+sudo zypper mr -d packman
+
+# ---- INSTALL SOFTWARE ---- #
+
+echo "[ INFORMATION ] Refreshing ALL Repositories..."
+# Refresh all repositories
+sudo zypper refresh
+
+# --- CHECK FOR UPDATES --- #
+
+# Check for OpenSUSE Tumbleweed updates
+echo "[ INFORMATION ] Checking for Updates..."
+sudo zypper dup -y
+
+# Begin package installation
 
 echo "[  ATTENTION  ] Installing: OpenRGB & Utilities"
 # --- Install OpenRGB Tools --- #
