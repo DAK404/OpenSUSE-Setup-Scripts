@@ -13,18 +13,24 @@ These are written for my configuration, therefore feel free to customize the lis
 
 [ ATTENTION ]
 
-The use of `opi` has now been removed.
+* The use of `opi` has now been removed.
 The script needs to be automatic with least user intervention, and while using `opi` it downloads and installs latest updates from the Packman repository.
 Updates from Packman may contain issues (personally, I have faced many), therefore, the use of Packman is restricted to the installation of codecs.
 Therefore, `opi` has been removed. It will add the Packman repository, but will not install anything else other than the codecs.
+
+* MacSonoma Theme by VinceLiuice is now autodownloaded and installed by the script. There is no requirement for the user to download it manually.
+
+* I may also remove the installation logic for Sayonara theme for GRUB2 when systemd-boot becomes the default for Tumbleweed. But that may take quite some time so it will be up for the foreseeable future.
+
+* It may not be the best to use Apple fonts (due to their licensing) therefore, I have switched to Liberation Sans (which is very similar to SF Pro fonts)
+I will therefore be removing that as a prerequisite from now onwards
 
 ## Prerequisites
 
 The script called `OpenSUSE_Installation.sh` requires a few extra items which can be downloaded from the web.
 
 1. Sayonara + Improved Font GRUB theme: https://www.dropbox.com/s/il0dxjq5u65t0pt/Font.zip?dl=0&e=1
-2. MacSonoma-KDE theme: https://github.com/vinceliuice/MacSonoma-kde
-3. SF Pro TTF + OTF files: https://developer.apple.com/fonts/
+2. SF Pro TTF + OTF files: https://developer.apple.com/fonts/
 
 NOTE: For the Sayonara theme, you might need to add your own image as a background, I haven't included mine. Theme may not work if the image is missing.
 
