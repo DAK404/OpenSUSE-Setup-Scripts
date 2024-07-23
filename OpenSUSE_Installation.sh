@@ -6,6 +6,12 @@
 # Date Modified: 19-July-2024
 #
 # --- CHANGELOG ---
+# 
+# 1.1 (23-July-2024):
+#    * Add the VLC repository
+#    * Make the script install VLC from the VideoLAN repos
+#    * Add tags to echo statements to show the status of
+#      an action.
 #
 # 1.0 (19-July-2024):
 #    * Improve comments
@@ -16,34 +22,37 @@
 #    * echo each stage of script
 ############################################################
 
-echo "OpenSUSE Installation Script"
+echo "--- OpenSUSE Installation Script ---"
 
 # --- CHECK FOR UPDATES --- #
 
 # Check for OpenSUSE Tumbleweed updates
-echo "Checking for Updates..."
+echo "[ INFORMATION ] Checking for Updates..."
 sudo zypper dup -y
 
 # ---- ADD REPOSITORIES ---- #
 
-echo "Adding Repository: Packman"
+echo "[ INFORMATION ] Adding Repository: Packman"
 # Add OpenSUSE Packman repository
 sudo zypper addrepo --refresh 'https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/' packman
 
-echo "Adding Repository: Microsoft"
+echo "[ INFORMATION ] Adding Repository: Microsoft"
 # Add Microsoft Repositories
 sudo rpm --import 'https://packages.microsoft.com/keys/microsoft.asc'
 sudo zypper addrepo --refresh 'https://packages.microsoft.com/yumrepos/edge' microsoft-edge
 sudo zypper addrepo --refresh 'https://packages.microsoft.com/yumrepos/vscode' vscode
 
-echo "Adding Repository: GitHub"
+echo "[ INFORMATION ] Adding Repository: GitHub"
 # Add GitHub Desktop for Linux Repository
 sudo rpm --import https://rpm.packages.shiftkey.dev/gpg.key
 sudo sh -c 'echo -e "[shiftkey-packages]\nname=GitHub Desktop\nbaseurl=https://rpm.packages.shiftkey.dev/rpm/\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://rpm.packages.shiftkey.dev/gpg.key" > /etc/zypp/repos.d/shiftkey-packages.repo'
 
+echo "[ INFORMATION ] Adding Repository: VLC"
+sudo zypper addrepo 'https://download.videolan.org/pub/vlc/SuSE/Tumbleweed/' VLC
+
 # ---- INSTALL SOFTWARE ---- #
 
-echo "Refreshing ALL Repositories..."
+echo "[ INFORMATION ] Refreshing ALL Repositories..."
 # Refresh all repositories
 sudo zypper refresh
 
@@ -51,50 +60,53 @@ sudo zypper refresh
 
 # --- Install Codecs from Packman --- #
 
-echo "Installing: Codecs"
+echo "[  ATTENTION  ] Installing: Codecs"
 # Install the codecs required for multimedia playback
 #
 # NOTE: Not using opi here since it will switch ALL packages that exist in the Packman repository to use Packman.
 # We manually specify to install codecs from Packman repository so all other programs are not switched to Packman.
 sudo zypper install -y --allow-vendor-change --from packman ffmpeg gstreamer-plugins-{good,bad,ugly,libav} libavcodec vlc-codecs
 
-echo "Installing: OpenRGB & Utilities"
+echo "[  ATTENTION  ] Installing: OpenRGB & Utilities"
 # --- Install OpenRGB Tools --- #
 sudo zypper install -y OpenRGB i2c-tools
 
-echo "Installing: KDE Utilities"
+echo "[  ATTENTION  ] Installing: KDE Utilities"
 # --- Install KDE Utilities --- #
 sudo zypper install -y kdeconnect-kde krita kdenlive partitionmanager kvantum-manager
 
-echo "Installing: Discord"
+echo "[  ATTENTION  ] Installing: Discord"
 # --- Install Discord IM --- #
 sudo zypper install -y discord libdiscord-rpc*
 
-echo "Installing: Microsoft Edge and VS Code"
+echo "[  ATTENTION  ] Installing: Microsoft Edge and VS Code"
 # --- Install Microsoft Edge and VS Code --- #
 sudo zypper install -y microsoft-edge-stable code
 
-echo "Installing: GitHub Desktop & Git"
+echo "[  ATTENTION  ] Installing: GitHub Desktop & Git"
 # --- Install GitHub Desktop and Git --- #
 sudo zypper install github-desktop git
 
-echo "Installing: System Utilities"
+echo "[  ATTENTION  ] Installing: System Utilities"
 # --- Install System Level Utilities --- #
 sudo zypper install -y fde-tools bleachbit easyeffects libdbusmenu-glib4 MozillaThunderbird p11-kit-server
 
+echo "[  ATTENTION  ] Installing: VLC"
+# --- Install VLC from VideoLAN Repositories --- #
+sudo zypper dup -y --from VLC --allow-vendor-change
 
 # ---- INSTALL FONTS AND THEMES ---- #
 
-echo "Installing: GRUB2 Theme"
+echo "[ INFORMATION ] Installing: GRUB2 Theme"
 # Install GRUB Theme
 sudo mkdir -p /boot/misc/themes
 sudo cp -r sayonara/* /boot/misc/themes
 
-echo "Installing: Custom Wallpapers"
+echo "[ INFORMATION ] Installing: Custom Wallpapers"
 # Copy the wallpapers over to the system wallpapers directory
 sudo cp ./custom-wallpapers/* /usr/share/wallpapers
 
-echo "Installing: Fonts"
+echo "[ INFORMATION ] Installing: Fonts"
 # Install fonts
 sudo cp ./Fonts/*.ttf /usr/share/fonts/
 sudo cp ./Fonts/*.otf /usr/share/fonts/
@@ -103,7 +115,7 @@ echo "Installing: EasyEffects Presets"
 # Install EasyEffects presets
 echo 1 | bash -c "$(curl -fsSL https://raw.githubusercontent.com/JackHack96/PulseEffects-Presets/master/install.sh)"
 
-echo "Installing: KDE & Kvantum Theme"
+echo "[ INFORMATION ] Installing: KDE & Kvantum Theme"
 # Download the MacSonoma Theme (Thanks Vinceliuice!)
 curl -LJO https://github.com/vinceliuice/MacSonoma-kde/archive/refs/heads/main.zip
 # Unzip the dowloaded file
@@ -115,22 +127,22 @@ rm -r ./MacSonoma-kde-main
 # Delete the zip file too
 rm MacSonoma-kde-main.zip
 
-echo "Installing: Login Scripts"
+echo "[ INFORMATION ] Installing: Login Scripts"
 # Create '.scripts' directory in the user home directory and move the login tasks script there
 mkdir ~/.scripts
 cp login_tasks.sh ~/.scripts/
 
-echo "Installing: Sound Theme"
+echo "[ INFORMATION ] Installing: Sound Theme"
 # Install the custom MacOcean theme (Ocean theme with the Mac startup sound)
 sudo cp -r ./MacOcean /usr/share/sounds
 
 # ---- CLEANUP ---- #
 
-echo "Installing: \'autoremove\' command"
+echo "[ INFORMATION ] Installing: \'autoremove\' command"
 # Add "autoremove" command to remove any unneeded packages.
 echo "alias autoremove=\"sudo zypper packages --unneeded | awk -F'|' 'NR==0 || NR==1 || NR==2 || NR==3 || NR==4 {next} {print $3}' | grep -v Name | sudo xargs zypper remove -y --clean-deps >> ~/Cleanup.log\"" | sudo tee -a /etc/bash.bashrc.local
 
-echo "Cleaning Up..."
+echo "[ INFORMATION ] Cleaning Up..."
 # Run the command to autoremove packages
 sudo zypper packages --unneeded | awk -F'|' 'NR==0 || NR==1 || NR==2 || NR==3 || NR==4 {next} {print $3}' | grep -v Name | sudo xargs zypper remove -y --clean-deps >> ~/Cleanup.log
 
