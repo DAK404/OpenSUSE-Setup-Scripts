@@ -2,7 +2,7 @@
 
 Description: A set of scripts to install essential software, utilities and tools after installing OpenSUSE Tumbleweed.
 
-Version: 1.1 (13-July-2024)
+Version: 1.1 (23-July-2024)
 
 ---
 ## Introduction
