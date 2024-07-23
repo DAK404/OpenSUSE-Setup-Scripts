@@ -30,7 +30,7 @@ I will therefore be removing that as a prerequisite from now onwards
 The script called `OpenSUSE_Installation.sh` requires a few extra items which can be downloaded from the web.
 
 1. Sayonara + Improved Font GRUB theme: https://www.dropbox.com/s/il0dxjq5u65t0pt/Font.zip?dl=0&e=1
-2. SF Pro TTF + OTF files: https://developer.apple.com/fonts/
+2. ~~SF Pro TTF + OTF files: https://developer.apple.com/fonts/~~
 
 NOTE: For the Sayonara theme, you might need to add your own image as a background, I haven't included mine. Theme may not work if the image is missing.
 
