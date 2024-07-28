@@ -7,6 +7,19 @@
 #
 # --- CHANGELOG ---
 # 
+# 1.2 (28-July-2024):
+#    * Add a new section to import repository keys first
+#      and then install the necessary packages. Avoids
+#      the script from erroring out and skip the packages
+#      that requires installation.
+#    * Move OpenRGB tools installation to OpenRGB.sh
+#      (Makes more sense if the user does not want OpenRGB
+#      to be installed on their system)
+#    * Add '-y' flag to automate installation of 
+#      GitHubDesktop and git
+#    * Cleared up the logic to import the GitHub Desktop
+#      repository and the GPG Key.
+#
 # 1.1 (23-July-2024):
 #    * Add the VLC repository
 #    * Make the script install VLC from the VideoLAN repos
@@ -31,18 +44,28 @@ echo "--- OpenSUSE Installation Script ---"
 
 # ---- ADD REPOSITORIES ---- #
 
+echo "[ INFORMATION ] Importing GPG Keys from External Repositories"
+# Import GPG keys from Microsoft, GitHub Desktop for Linux, Packman and VLC repositories
+# VLC GPG Key
+sudo rpm --import 'http://download.videolan.org/SuSE/Tumbleweed/repodata/repomd.xml.key'
+# Microsoft GPG Key
+sudo rpm --import 'https://packages.microsoft.com/keys/microsoft.asc'
+# GitHub Desktop GPG Key
+sudo rpm --import 'https://rpm.packages.shiftkey.dev/gpg.key'
+# Packman GPG Key
+sudo rpm --import 'http://packman.inode.at/suse/openSUSE_Tumbleweed/repodata/repomd.xml.key'
+
 echo "[ INFORMATION ] Adding Repository: Microsoft"
 # Add Microsoft Repositories
-sudo rpm --import 'https://packages.microsoft.com/keys/microsoft.asc'
-sudo zypper addrepo --refresh 'https://packages.microsoft.com/yumrepos/edge' microsoft-edge
-sudo zypper addrepo --refresh 'https://packages.microsoft.com/yumrepos/vscode' vscode
+sudo zypper addrepo --refresh 'https://packages.microsoft.com/yumrepos/edge' Microsoft Edge
+sudo zypper addrepo --refresh 'https://packages.microsoft.com/yumrepos/vscode' Visual Studio Code
 
 echo "[ INFORMATION ] Adding Repository: GitHub"
 # Add GitHub Desktop for Linux Repository
-sudo rpm --import https://rpm.packages.shiftkey.dev/gpg.key
-sudo sh -c 'echo -e "[shiftkey-packages]\nname=GitHub Desktop\nbaseurl=https://rpm.packages.shiftkey.dev/rpm/\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://rpm.packages.shiftkey.dev/gpg.key" > /etc/zypp/repos.d/shiftkey-packages.repo'
+sudo zypper addrepo --refresh 'https://rpm.packages.shiftkey.dev/rpm/' GitHub Desktop
 
 echo "[ INFORMATION ] Adding Repository: VLC"
+# Add VLC Repository
 sudo zypper addrepo 'https://download.videolan.org/pub/vlc/SuSE/Tumbleweed/' VLC
 
 # --- Install Codecs from Packman --- #
@@ -58,6 +81,9 @@ echo "[  ATTENTION  ] Installing: Codecs"
 # We manually specify to install codecs from Packman repository so all other programs are not switched to Packman.
 sudo zypper install -y --allow-vendor-change --from packman ffmpeg gstreamer-plugins-{good,bad,ugly,libav} libavcodec vlc-codecs
 # Disable Packman repository
+#
+# NOTE
+# You may want to comment this line out if you want updates from Packman.
 sudo zypper mr -d packman
 
 # ---- INSTALL SOFTWARE ---- #
@@ -74,10 +100,6 @@ sudo zypper dup -y
 
 # Begin package installation
 
-echo "[  ATTENTION  ] Installing: OpenRGB & Utilities"
-# --- Install OpenRGB Tools --- #
-sudo zypper install -y OpenRGB i2c-tools
-
 echo "[  ATTENTION  ] Installing: KDE Utilities"
 # --- Install KDE Utilities --- #
 sudo zypper install -y kdeconnect-kde krita kdenlive partitionmanager kvantum-manager
@@ -92,7 +114,7 @@ sudo zypper install -y microsoft-edge-stable code
 
 echo "[  ATTENTION  ] Installing: GitHub Desktop & Git"
 # --- Install GitHub Desktop and Git --- #
-sudo zypper install github-desktop git
+sudo zypper install -y github-desktop git
 
 echo "[  ATTENTION  ] Installing: System Utilities"
 # --- Install System Level Utilities --- #
@@ -151,7 +173,7 @@ sudo cp -r ./MacOcean /usr/share/sounds
 
 # ---- CLEANUP ---- #
 
-echo "[ INFORMATION ] Installing: \'autoremove\' command"
+printf "[ INFORMATION ] Installing: \'autoremove\' command"
 # Add "autoremove" command to remove any unneeded packages.
 echo "alias autoremove=\"sudo zypper packages --unneeded | awk -F'|' 'NR==0 || NR==1 || NR==2 || NR==3 || NR==4 {next} {print $3}' | grep -v Name | sudo xargs zypper remove -y --clean-deps >> ~/Cleanup.log\"" | sudo tee -a /etc/bash.bashrc.local
 
