@@ -32,9 +32,11 @@ The script called `OpenSUSE_Installation.sh` requires a few extra items which ca
 1. Sayonara + Improved Font GRUB theme: https://www.dropbox.com/s/il0dxjq5u65t0pt/Font.zip?dl=0&e=1
 2. ~~SF Pro TTF + OTF files: https://developer.apple.com/fonts/~~
 
-NOTE: For the Sayonara theme, you might need to add your own image as a background, I haven't included mine. Theme may not work if the image is missing.
+NOTE:
 
-Once you download the files, you may need to set the permissions so that double clicking/single clicking it will execute it automatically. I have not done this because i want do do it via the command line manually.
+* For the Sayonara theme, you might need to add your own image as a background, I haven't included mine. Theme may not work if the image is missing.
+* You may need to add your own wallpapers in a directory called `custom-wallpapers`. The script shall copy over those files to `/usr/share/wallpapers`. Helpful if you want the same wallpaper to be available for multiple users.
+* Once you download the files, you may need to set the permissions so that double clicking/single clicking it will execute it automatically. I have not done this because i want do do it via the command line manually.
 
 ## Script Priorities
 
@@ -46,45 +48,31 @@ It is possible for me to create a script to execute these serially, but I prefer
 
 The OpenSUSE Installation script contains the following actions:
 
-1. Check for updates and install them
-2. Add Packman repository and install codecs
-3. Add Microsoft repo and install Edge and VS Code
-4. Add GitHub Desktop (Linux) and install it
-5. Install components such as
+1. Import GPG Keys from External Repositories (Microsoft Edge, VS Code, GitHub Desktop, VLC)
+2. Add External Repositories (Microsoft Edge, VS Code, GitHub Desktop, VLC)
+3. Add Packman repository, install codecs and disable Packman repository
+4. Refresh ALL repositories
+5. Check for and perform distribution updates
+6. Install components such as
 
     1. `fde-tools`: I use FDE for my installation
-
     2. `kdeconnect-kde`: I use KDE Connect in my installation
-
     3. `libdbusmenu-glib4`: Helps a few application menubar be visible in global menu (namely VS Code)
-
     4. `kvantum-manager`: Helps in theming the system components
-
     5. `partitionmanager`: KDE Partition Manager, useful to format USB drives
-
     6. `git`: I need git for all GitHub related stuff
-
     7. `discord` and `libdiscord-rpc`: Installs discord and Discord RPC library
-
     8. `bleachbit`: Helps in removing unwanted files in system. A useful tool
-
     9. `easyeffects`: Provides audio effects for speakers. Can improve sound quality
-    
-    10. `openrgb`: Provides control over RGB lighting of keyboards and peripherals
+    10. `krita`: A powerful image editing tool
+    11. `kdenlive`: A decent video editor
+    12. `p11-kit-server`: Flatpak version of OBS have issues with certificates when using browser elements, therefore this can help fix it.
 
-    11. `i2c-tools`: Helps in setting up configurations for the RGB lighting of peripherals
-    
-    12. `krita`: A powerful image editing tool
-    
-    13. `kdenlive`: A decent video editor
-    
-    14. `p11-kit-server`: Flatpak version of OBS have issues with certificates when using browser elements, therefore this can help fix it.
-
-6. Install GRUB theme
-7. Install EasyEffects presets; presets are required for the effects
-8. Install fonts, if any
-9. Add the `login_tasks.sh` script to the `.scripts` directory
-10. Clean up any unneeded packages
+7. Install GRUB theme
+8. Install EasyEffects presets; presets are required for the effects
+9. Install fonts, if any
+10. Add the `login_tasks.sh` script to the `.scripts` directory
+11. Clean up any unneeded packages
 
 ## Login Tasks
 
@@ -105,6 +93,8 @@ To check if there are issues with your systems, attempt to put your system in sl
 ## OpenRGB
 
 This script shall help users to setup RGB peripheral lighting to work on Linux. A bit of configuration is required, therefore this script shall do it for you.
+
+This script will install `OpenRGB` and `i2c-tools` packages.
 
 NOTE: This is only for AMD chipsets for now. For Intel users, please see the script file comments.
 Also do check out the OpenRGB repository for more information: https://gitlab.com/CalcProgrammer1/OpenRGB#smbus-access-1
