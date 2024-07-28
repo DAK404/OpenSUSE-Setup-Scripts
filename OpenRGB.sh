@@ -7,11 +7,18 @@
 #
 # --- CHANGELOG ---
 #
+# 1.1 (28-July-2024):
+#    * Move OpenRGB tools into OpenRGB.sh
+#
 # 1.0 (19-July-2024):
 #    * Improve comments
 #    * Segregated each step of installation
 #    * echo each stage of script
 ############################################################
+
+echo "[  ATTENTION  ] Installing: OpenRGB & Utilities"
+# --- Install OpenRGB Tools --- #
+sudo zypper install -y OpenRGB i2c-tools
 
 # Just following the steps outlined in OpenRGB GitLab repository
 # https://gitlab.com/CalcProgrammer1/OpenRGB
