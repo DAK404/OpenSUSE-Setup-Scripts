@@ -13,8 +13,7 @@
 #    * Fix packman -> Packman
 #    * Import keys for GitHub Desktop and Microsoft
 #      since they caused errors for me.
-#    * Remove custom-wallpapers installation [SEE NOTE]
-#    * Remove GRUB2 theme installation [SEE NOTE]
+#    * Move personalization commands to personalize.sh
 #
 # 1.2 (28-July-2024):
 #    * Add a new section to import repository keys first
@@ -179,9 +178,9 @@ echo "[ INFORMATION ] Installing: Login Scripts"
 mkdir ~/.scripts
 cp login_tasks.sh ~/.scripts/
 
-echo "[ INFORMATION ] Installing: Sound Theme"
-# Install the custom MacOcean theme (Ocean theme with the Mac startup sound)
-sudo cp -r ./MacOcean /usr/share/sounds
+# echo "[ INFORMATION ] Installing: Sound Theme"
+# # Install the custom MacOcean theme (Ocean theme with the Mac startup sound)
+# sudo cp -r ./MacOcean /usr/share/sounds
 
 # ---- CLEANUP ---- #
 
