@@ -10,6 +10,9 @@
 # 1.3 (01-August-2024):
 #    * GPG keys are now auto imported with repository
 #    * Add quotes to repo aliases
+#    * Fix packman -> Packman
+#    * Import keys for GitHub Desktop and Microsoft
+#      since they caused errors for me.
 #
 # 1.2 (28-July-2024):
 #    * Add a new section to import repository keys first
@@ -50,11 +53,13 @@ echo "--- OpenSUSE Installation Script ---"
 
 echo "[ INFORMATION ] Adding Repository: Microsoft"
 # Add Microsoft Repositories
+sudo rpm --import 'https://packages.microsoft.com/keys/microsoft.asc'
 sudo zypper --gpg-auto-import-keys addrepo --refresh 'https://packages.microsoft.com/yumrepos/edge' 'Microsoft Edge'
 sudo zypper --gpg-auto-import-keys addrepo --refresh 'https://packages.microsoft.com/yumrepos/vscode' 'Visual Studio Code'
 
 echo "[ INFORMATION ] Adding Repository: GitHub"
 # Add GitHub Desktop for Linux Repository
+sudo rpm --import 'https://rpm.packages.shiftkey.dev/gpg.key'
 sudo zypper --gpg-auto-import-keys addrepo --refresh 'https://rpm.packages.shiftkey.dev/rpm/' 'GitHub Desktop'
 
 echo "[ INFORMATION ] Adding Repository: VLC"
@@ -72,12 +77,12 @@ echo "[  ATTENTION  ] Installing: Codecs"
 #
 # NOTE: Not using opi here since it will switch ALL packages that exist in the Packman repository to use Packman.
 # We manually specify to install codecs from Packman repository so all other programs are not switched to Packman.
-sudo zypper install -y --allow-vendor-change --from packman ffmpeg gstreamer-plugins-{good,bad,ugly,libav} libavcodec vlc-codecs
+sudo zypper install -y --allow-vendor-change --from Packman ffmpeg gstreamer-plugins-{good,bad,ugly,libav} libavcodec vlc-codecs
 # Disable Packman repository
 #
 # NOTE
 # You may want to comment this line out if you want updates from Packman.
-sudo zypper mr -d packman
+sudo zypper mr -d Packman
 
 # ---- INSTALL SOFTWARE ---- #
 
