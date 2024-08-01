@@ -9,6 +9,7 @@
 # 
 # 1.3 (01-August-2024):
 #    * GPG keys are now auto imported with repository
+#    * Add quotes to repo aliases
 #
 # 1.2 (28-July-2024):
 #    * Add a new section to import repository keys first
@@ -49,22 +50,22 @@ echo "--- OpenSUSE Installation Script ---"
 
 echo "[ INFORMATION ] Adding Repository: Microsoft"
 # Add Microsoft Repositories
-sudo zypper --gpg-auto-import-keys addrepo --refresh 'https://packages.microsoft.com/yumrepos/edge' Microsoft Edge
-sudo zypper --gpg-auto-import-keys addrepo --refresh 'https://packages.microsoft.com/yumrepos/vscode' Visual Studio Code
+sudo zypper --gpg-auto-import-keys addrepo --refresh 'https://packages.microsoft.com/yumrepos/edge' 'Microsoft Edge'
+sudo zypper --gpg-auto-import-keys addrepo --refresh 'https://packages.microsoft.com/yumrepos/vscode' 'Visual Studio Code'
 
 echo "[ INFORMATION ] Adding Repository: GitHub"
 # Add GitHub Desktop for Linux Repository
-sudo zypper --gpg-auto-import-keys addrepo --refresh 'https://rpm.packages.shiftkey.dev/rpm/' GitHub Desktop
+sudo zypper --gpg-auto-import-keys addrepo --refresh 'https://rpm.packages.shiftkey.dev/rpm/' 'GitHub Desktop'
 
 echo "[ INFORMATION ] Adding Repository: VLC"
 # Add VLC Repository
-sudo zypper --gpg-auto-import-keys addrepo 'https://download.videolan.org/pub/vlc/SuSE/Tumbleweed/' VLC
+sudo zypper --gpg-auto-import-keys addrepo 'https://download.videolan.org/pub/vlc/SuSE/Tumbleweed/' 'VLC'
 
 # --- Install Codecs from Packman --- #
 
 echo "[ INFORMATION ] Adding Repository: Packman"
 # Add OpenSUSE Packman repository
-sudo zypper --gpg-auto-import-keys addrepo --refresh 'https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/' packman
+sudo zypper --gpg-auto-import-keys addrepo --refresh 'https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/' 'Packman'
 
 echo "[  ATTENTION  ] Installing: Codecs"
 # Install the codecs required for multimedia playback
