@@ -2,8 +2,15 @@
 
 ############################################################
 # OpenSUSE Installation Script
-# Version 1.0
-# Date Modified: 19-July-2024
+#
+# ----------------------------------------------------------
+# ATTENTION!
+# This script can be run in a single line from your shell!
+# Simply run the following in the Terminal:
+#
+#   bash -c "$(curl -fsSL https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main/OpenSUSE_Installation.sh)"
+#
+# ----------------------------------------------------------
 #
 # --- CHANGELOG ---
 # 
@@ -14,6 +21,10 @@
 #    * Import keys for GitHub Desktop and Microsoft
 #      since they caused errors for me.
 #    * Move personalization commands to personalize.sh
+#    * NOTE:
+#      This script no longer has external dependencies,
+#      therefore, like the EasyEffects installation,
+#      this too can be done over the internet directly.
 #
 # 1.2 (28-July-2024):
 #    * Add a new section to import repository keys first
@@ -123,64 +134,9 @@ echo "[  ATTENTION  ] Installing: VLC"
 # --- Install VLC from VideoLAN Repositories --- #
 sudo zypper dup -y --from VLC --allow-vendor-change
 
-# ---- INSTALL FONTS AND THEMES ---- #
-
-# NOTE
-#
-# Currently, there are no GRUB2 themes as a prerequisite.
-# Therefore, this section is disabled and will not be run by default.
-# Manually enable this if you want to install any GRUB2 themes.
-
-# echo "[ INFORMATION ] Installing: GRUB2 Theme"
-# # Install GRUB Theme
-# sudo mkdir -p /boot/misc/themes
-# sudo cp -r sayonara/* /boot/misc/themes
-
-# NOTE
-#
-# Currently, there are no custom wallpapers as a prerequisite.
-# I use wallpaper slideshow aka Picture of the Day currently.
-# Therefore, this section is disabled and will not be run by default.
-
-# echo "[ INFORMATION ] Installing: Custom Wallpapers"
-# # Copy the wallpapers over to the system wallpapers directory
-# sudo cp ./custom-wallpapers/* /usr/share/wallpapers
-
-# NOTE
-#
-# Currently, there are no fonts as a prerequisite.
-# Therefore, this section is disabled and will not be run by default.
-# Manually enable this if you want to install any additional fonts.
-
-#echo "[ INFORMATION ] Installing: Fonts"
-# Install fonts
-#sudo cp ./Fonts/*.ttf /usr/share/fonts/
-#sudo cp ./Fonts/*.otf /usr/share/fonts/
-
-echo "Installing: EasyEffects Presets"
+echo "[  ATTENTION  ] Installing: EasyEffects Presets"
 # Install EasyEffects presets
 echo 1 | bash -c "$(curl -fsSL https://raw.githubusercontent.com/JackHack96/PulseEffects-Presets/master/install.sh)"
-
-echo "[ INFORMATION ] Installing: KDE & Kvantum Theme"
-# Download the MacSonoma Theme (Thanks Vinceliuice!)
-curl -LJO https://github.com/vinceliuice/MacSonoma-kde/archive/refs/heads/main.zip
-# Unzip the dowloaded file
-unzip ./MacSonoma-kde-main.zip
-# Install the KDE and Kvantum theme
-sh ./MacSonoma-kde-main/install.sh
-# Delete the directory to save space
-rm -r ./MacSonoma-kde-main
-# Delete the zip file too
-rm MacSonoma-kde-main.zip
-
-echo "[ INFORMATION ] Installing: Login Scripts"
-# Create '.scripts' directory in the user home directory and move the login tasks script there
-mkdir ~/.scripts
-cp login_tasks.sh ~/.scripts/
-
-# echo "[ INFORMATION ] Installing: Sound Theme"
-# # Install the custom MacOcean theme (Ocean theme with the Mac startup sound)
-# sudo cp -r ./MacOcean /usr/share/sounds
 
 # ---- CLEANUP ---- #
 
