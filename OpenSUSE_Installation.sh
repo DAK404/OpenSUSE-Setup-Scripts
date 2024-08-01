@@ -13,6 +13,8 @@
 #    * Fix packman -> Packman
 #    * Import keys for GitHub Desktop and Microsoft
 #      since they caused errors for me.
+#    * Remove custom-wallpapers installation [SEE NOTE]
+#    * Remove GRUB2 theme installation [SEE NOTE]
 #
 # 1.2 (28-July-2024):
 #    * Add a new section to import repository keys first
@@ -124,14 +126,26 @@ sudo zypper dup -y --from VLC --allow-vendor-change
 
 # ---- INSTALL FONTS AND THEMES ---- #
 
-echo "[ INFORMATION ] Installing: GRUB2 Theme"
-# Install GRUB Theme
-sudo mkdir -p /boot/misc/themes
-sudo cp -r sayonara/* /boot/misc/themes
+# NOTE
+#
+# Currently, there are no GRUB2 themes as a prerequisite.
+# Therefore, this section is disabled and will not be run by default.
+# Manually enable this if you want to install any GRUB2 themes.
 
-echo "[ INFORMATION ] Installing: Custom Wallpapers"
-# Copy the wallpapers over to the system wallpapers directory
-sudo cp ./custom-wallpapers/* /usr/share/wallpapers
+# echo "[ INFORMATION ] Installing: GRUB2 Theme"
+# # Install GRUB Theme
+# sudo mkdir -p /boot/misc/themes
+# sudo cp -r sayonara/* /boot/misc/themes
+
+# NOTE
+#
+# Currently, there are no custom wallpapers as a prerequisite.
+# I use wallpaper slideshow aka Picture of the Day currently.
+# Therefore, this section is disabled and will not be run by default.
+
+# echo "[ INFORMATION ] Installing: Custom Wallpapers"
+# # Copy the wallpapers over to the system wallpapers directory
+# sudo cp ./custom-wallpapers/* /usr/share/wallpapers
 
 # NOTE
 #
