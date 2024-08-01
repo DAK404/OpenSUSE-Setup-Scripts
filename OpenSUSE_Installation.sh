@@ -25,6 +25,7 @@
 #      This script no longer has external dependencies,
 #      therefore, like the EasyEffects installation,
 #      this too can be done over the internet directly.
+#    * Add '\n' to printf statement for autoremove alias
 #
 # 1.2 (28-July-2024):
 #    * Add a new section to import repository keys first
@@ -140,7 +141,7 @@ echo 1 | bash -c "$(curl -fsSL https://raw.githubusercontent.com/JackHack96/Puls
 
 # ---- CLEANUP ---- #
 
-printf "[ INFORMATION ] Installing: \'autoremove\' command"
+printf "[ INFORMATION ] Installing: \'autoremove\' command\n"
 # Add "autoremove" command to remove any unneeded packages.
 echo "alias autoremove=\"sudo zypper packages --unneeded | awk -F'|' 'NR==0 || NR==1 || NR==2 || NR==3 || NR==4 {next} {print $3}' | grep -v Name | sudo xargs zypper remove -y --clean-deps >> ~/Cleanup.log\"" | sudo tee -a /etc/bash.bashrc.local
 
