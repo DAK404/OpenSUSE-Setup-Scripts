@@ -31,3 +31,10 @@ sudo cp ./custom-wallpapers/* /usr/share/wallpapers
 echo "[ INFORMATION ] Installing: Sound Theme"
 # Install the custom MacOcean theme (Ocean theme with the Mac startup sound)
 sudo cp -r ./MacOcean /usr/share/sounds
+
+echo "[ INFORMATION ] Installing: Login Task"
+# Create directory '~/.scripts'
+mkdir ~/.scripts
+# Copy the login_tasks.sh file to '~/.scripts/' directory
+cp login_tasks.sh ~/.scripts/
+
