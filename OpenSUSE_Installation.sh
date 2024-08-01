@@ -7,6 +7,9 @@
 #
 # --- CHANGELOG ---
 # 
+# 1.3 (01-August-2024):
+#    * GPG keys are now auto imported with repository
+#
 # 1.2 (28-July-2024):
 #    * Add a new section to import repository keys first
 #      and then install the necessary packages. Avoids
@@ -44,35 +47,24 @@ echo "--- OpenSUSE Installation Script ---"
 
 # ---- ADD REPOSITORIES ---- #
 
-echo "[ INFORMATION ] Importing GPG Keys from External Repositories"
-# Import GPG keys from Microsoft, GitHub Desktop for Linux, Packman and VLC repositories
-# VLC GPG Key
-sudo rpm --import 'http://download.videolan.org/SuSE/Tumbleweed/repodata/repomd.xml.key'
-# Microsoft GPG Key
-sudo rpm --import 'https://packages.microsoft.com/keys/microsoft.asc'
-# GitHub Desktop GPG Key
-sudo rpm --import 'https://rpm.packages.shiftkey.dev/gpg.key'
-# Packman GPG Key
-sudo rpm --import 'http://packman.inode.at/suse/openSUSE_Tumbleweed/repodata/repomd.xml.key'
-
 echo "[ INFORMATION ] Adding Repository: Microsoft"
 # Add Microsoft Repositories
-sudo zypper addrepo --refresh 'https://packages.microsoft.com/yumrepos/edge' Microsoft Edge
-sudo zypper addrepo --refresh 'https://packages.microsoft.com/yumrepos/vscode' Visual Studio Code
+sudo zypper --gpg-auto-import-keys addrepo --refresh 'https://packages.microsoft.com/yumrepos/edge' Microsoft Edge
+sudo zypper --gpg-auto-import-keys addrepo --refresh 'https://packages.microsoft.com/yumrepos/vscode' Visual Studio Code
 
 echo "[ INFORMATION ] Adding Repository: GitHub"
 # Add GitHub Desktop for Linux Repository
-sudo zypper addrepo --refresh 'https://rpm.packages.shiftkey.dev/rpm/' GitHub Desktop
+sudo zypper --gpg-auto-import-keys addrepo --refresh 'https://rpm.packages.shiftkey.dev/rpm/' GitHub Desktop
 
 echo "[ INFORMATION ] Adding Repository: VLC"
 # Add VLC Repository
-sudo zypper addrepo 'https://download.videolan.org/pub/vlc/SuSE/Tumbleweed/' VLC
+sudo zypper --gpg-auto-import-keys addrepo 'https://download.videolan.org/pub/vlc/SuSE/Tumbleweed/' VLC
 
 # --- Install Codecs from Packman --- #
 
 echo "[ INFORMATION ] Adding Repository: Packman"
 # Add OpenSUSE Packman repository
-sudo zypper addrepo --refresh 'https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/' packman
+sudo zypper --gpg-auto-import-keys addrepo --refresh 'https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/' packman
 
 echo "[  ATTENTION  ] Installing: Codecs"
 # Install the codecs required for multimedia playback
