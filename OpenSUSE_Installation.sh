@@ -102,12 +102,6 @@ sudo zypper mr -d Packman
 
 # ---- INSTALL SOFTWARE ---- #
 
-echo "[ INFORMATION ] Refreshing ALL Repositories..."
-# Refresh all repositories
-sudo zypper refresh
-
-# --- CHECK FOR UPDATES --- #
-
 # Check for OpenSUSE Tumbleweed updates
 echo "[ INFORMATION ] Checking for Updates..."
 sudo zypper dup -y
