@@ -77,13 +77,16 @@ sudo zypper --gpg-auto-import-keys addrepo --refresh 'https://rpm.packages.shift
 
 echo "[ INFORMATION ] Adding Repository: VLC"
 # Add VLC Repository
-sudo zypper --gpg-auto-import-keys addrepo 'https://download.videolan.org/pub/vlc/SuSE/Tumbleweed/' 'VLC'
+sudo zypper --gpg-auto-import-keys addrepo --refresh 'https://download.videolan.org/pub/vlc/SuSE/Tumbleweed/' 'VLC'
 
 # --- Install Codecs from Packman --- #
 
 echo "[ INFORMATION ] Adding Repository: Packman"
 # Add OpenSUSE Packman repository
 sudo zypper --gpg-auto-import-keys addrepo --refresh 'https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/' 'Packman'
+
+echo "[ INFORMATION ] Refreshing Repositories; Importing GPG Keys..."
+sudo zypper --gpg-auto-import-keys refresh
 
 echo "[  ATTENTION  ] Installing: Codecs"
 # Install the codecs required for multimedia playback
