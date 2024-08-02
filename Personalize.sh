@@ -11,7 +11,7 @@
 
 echo "[ INFORMATION ] Installing: Kvantum Manager"
 # Install Kvantum Manager
-sudo zypper in kvantum-manager kvantum-themes
+sudo zypper in -y kvantum-manager kvantum-themes
 
 echo "[ INFORMATION ] Installing: KDE & Kvantum Theme"
 # Download the MacSonoma Theme (Thanks Vinceliuice!)
