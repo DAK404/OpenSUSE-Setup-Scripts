@@ -5,25 +5,43 @@
 #
 # --- CHANGELOG ---
 #
+# 1.1 (14-August-2024):
+#    * Remove MacSonoma theme
+#    * Add Colloid Kvantum and GTK themes
+#      (This is done so that the UI looks consistent)
+#
 # 1.0 (02-August-2024):
 #    * Initial Commit
 ############################################################
 
 echo "[ INFORMATION ] Installing: Kvantum Manager"
-# Install Kvantum Manager
-sudo zypper in -y kvantum-manager kvantum-themes
+# Install Kvantum Manager & GTK theme requirements
+sudo zypper in -y kvantum-manager gtk2-engine-murrine sassc
 
 echo "[ INFORMATION ] Installing: KDE & Kvantum Theme"
-# Download the MacSonoma Theme (Thanks Vinceliuice!)
-curl -LJO https://github.com/vinceliuice/MacSonoma-kde/archive/refs/heads/main.zip
+# Download the Colloid Theme (Thanks Vinceliuice!)
+curl -LJO https://github.com/vinceliuice/Colloid-kde/archive/refs/heads/main.zip
 # Unzip the dowloaded file
-unzip ./MacSonoma-kde-main.zip
-# Install the KDE and Kvantum theme
-sh ./MacSonoma-kde-main/install.sh
+unzip ./Colloid-kde-main.zip
+# Install the KDE and Kvantum theme for ALL users (remove sudo if you want to install to current user only)
+sudo sh ./Colloid-kde-main/install.sh
 # Delete the directory to save space
-rm -r ./MacSonoma-kde-main
+rm -r ./Colloid-kde-main
 # Delete the zip file too
-rm MacSonoma-kde-main.zip
+rm Colloid-kde-main.zip
+
+echo "[ INFORMATION ] Installing: Colloid GTK Theme"
+# Download the Colloid Theme (Thanks Vinceliuice!)
+curl -LJO https://github.com/vinceliuice/Colloid-gtk-theme/archive/refs/heads/main.zip
+# Unzip the dowloaded file
+unzip ./Colloid-gtk-theme-main.zip
+# Install the KDE and Kvantum theme
+sudo sh ./Colloid-gtk-theme-main/install.sh
+# Delete the directory to save space
+rm -r ./Colloid-gtk-theme-main
+# Delete the zip file too
+rm Colloid-gtk-theme-main.zip
+
 
 echo "[ INFORMATION ] Installing: Custom Wallpapers"
 sudo cp ./custom-wallpapers/* /usr/share/wallpapers
