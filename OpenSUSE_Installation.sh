@@ -81,24 +81,27 @@ sudo zypper --gpg-auto-import-keys addrepo --refresh 'https://download.videolan.
 
 # --- Install Codecs from Packman --- #
 
-echo "[ INFORMATION ] Adding Repository: Packman"
+#echo "[ INFORMATION ] Adding Repository: Packman"
 # Add OpenSUSE Packman repository
-sudo zypper --gpg-auto-import-keys addrepo --refresh 'https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/' 'Packman'
+#sudo zypper --gpg-auto-import-keys addrepo --refresh 'https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/' 'Packman'
 
 echo "[ INFORMATION ] Refreshing Repositories; Importing GPG Keys..."
 sudo zypper --gpg-auto-import-keys refresh
 
 echo "[  ATTENTION  ] Installing: Codecs"
-# Install the codecs required for multimedia playback
-#
+# Install the codecs required for multimedia playback from the main repository
+sudo zypper install -y ffmpeg gstreamer-plugins-{good,bad,ugly,libav} libavcodec vlc-codecs
+
 # NOTE: Not using opi here since it will switch ALL packages that exist in the Packman repository to use Packman.
 # We manually specify to install codecs from Packman repository so all other programs are not switched to Packman.
-sudo zypper install -y --allow-vendor-change --from Packman ffmpeg gstreamer-plugins-{good,bad,ugly,libav} libavcodec vlc-codecs
+# sudo zypper install -y --allow-vendor-change --from Packman ffmpeg gstreamer-plugins-{good,bad,ugly,libav} libavcodec vlc-codecs
 # Disable Packman repository
 #
 # NOTE
 # You may want to comment this line out if you want updates from Packman.
-sudo zypper mr -d Packman
+# sudo zypper mr -d Packman
+
+
 
 # ---- INSTALL SOFTWARE ---- #
 
