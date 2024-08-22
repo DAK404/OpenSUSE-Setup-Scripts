@@ -13,6 +13,13 @@
 # ----------------------------------------------------------
 #
 # --- CHANGELOG ---
+#
+# 1.4 (22-August-2024):
+#    * Install codecs from the main repository
+#    * Disable the addition of Packman and installation
+#      of codecs from Packman repository
+#    * NOTE: Please enable it if you want to use packages
+#      from Packman!
 # 
 # 1.3 (01-August-2024):
 #    * GPG keys are now auto imported with repository
