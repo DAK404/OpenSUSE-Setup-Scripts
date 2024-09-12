@@ -112,10 +112,6 @@ sudo zypper install -y ffmpeg gstreamer-plugins-{good,bad,ugly,libav} libavcodec
 
 # ---- INSTALL SOFTWARE ---- #
 
-# Check for OpenSUSE Tumbleweed updates
-echo "[ INFORMATION ] Checking for Updates..."
-sudo zypper dup -y
-
 # Begin package installation
 
 echo "[  ATTENTION  ] Installing: KDE Utilities"
@@ -141,6 +137,10 @@ sudo zypper install -y fde-tools bleachbit easyeffects libdbusmenu-glib4 Mozilla
 echo "[  ATTENTION  ] Installing: VLC"
 # --- Install VLC from VideoLAN Repositories --- #
 sudo zypper dup -y --from VLC --allow-vendor-change
+
+# Check for OpenSUSE Tumbleweed updates
+echo "[ INFORMATION ] Checking for Updates..."
+sudo zypper dup -y
 
 echo "[  ATTENTION  ] Installing: EasyEffects Presets"
 # Install EasyEffects presets
