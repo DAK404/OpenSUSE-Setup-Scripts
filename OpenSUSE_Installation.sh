@@ -14,6 +14,10 @@
 #
 # --- CHANGELOG ---
 #
+# 1.5 (05-November-2024):
+#    * Revert Edge repository to microsoft-edge
+#      (Prevents repo duplication under different name)
+#
 # 1.4 (22-August-2024):
 #    * Install codecs from the main repository
 #    * Disable the addition of Packman and installation
@@ -74,7 +78,7 @@ echo "--- OpenSUSE Installation Script ---"
 echo "[ INFORMATION ] Adding Repository: Microsoft"
 # Add Microsoft Repositories
 sudo rpm --import 'https://packages.microsoft.com/keys/microsoft.asc'
-sudo zypper --gpg-auto-import-keys addrepo --refresh 'https://packages.microsoft.com/yumrepos/edge' 'Microsoft Edge'
+sudo zypper --gpg-auto-import-keys addrepo --refresh 'https://packages.microsoft.com/yumrepos/edge' 'microsoft-edge'
 sudo zypper --gpg-auto-import-keys addrepo --refresh 'https://packages.microsoft.com/yumrepos/vscode' 'Visual Studio Code'
 
 echo "[ INFORMATION ] Adding Repository: GitHub"
