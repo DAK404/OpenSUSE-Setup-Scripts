@@ -5,6 +5,9 @@
 #
 # --- CHANGELOG ---
 #
+# 1.3 (05-November-2024):
+#    * Add commands to install Breeze Transparent
+#
 # 1.2 (13-September-2024):
 #    * Add commands to download and install 
 #      Posy's Cursor Set
@@ -60,6 +63,18 @@ unzip ./Colloid-icon-theme-main.zip
 sudo sh ./Colloid-icon-theme-main/install.sh
 # Delete the directory to save space
 rm -rf ./Colloid-icon-theme-main
+
+# ---------------------------------------------------------- #
+
+echo "[ INFORMATION ] Installing: Breeze Transparent Plasma Style"
+# Download the Breeze Transparent Plasma Style (Thanks Gumbachi!)
+curl -LJO https://github.com/Gumbachi/Breeze-Transparent/archive/refs/heads/main.zip
+# Unzip the dowloaded file
+unzip ./Breeze-Transparent-main.zip
+# Install the Plasma Style
+sudo cp -r ./Breeze-Transparent-main /usr/share/plasma/desktoptheme/
+# Delete the directory to save space
+rm -rf ./Breeze-Transparent-main
 
 # ---------------------------------------------------------- #
 
