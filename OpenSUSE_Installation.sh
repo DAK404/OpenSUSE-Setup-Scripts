@@ -14,6 +14,11 @@
 #
 # --- CHANGELOG ---
 #
+# 1.6 (12-November-2024):
+#    * Add logic to install gaming software
+#      (Steam, lutris, Wine, DXVK)
+#    * Remove installation logic for Mozilla Thunderbird
+#
 # 1.5 (05-November-2024):
 #    * Revert Edge repository to microsoft-edge
 #      (Prevents repo duplication under different name)
@@ -136,7 +141,11 @@ sudo zypper install -y github-desktop git
 
 echo "[  ATTENTION  ] Installing: System Utilities"
 # --- Install System Level Utilities --- #
-sudo zypper install -y fde-tools bleachbit easyeffects libdbusmenu-glib4 MozillaThunderbird p11-kit-server
+sudo zypper install -y fde-tools bleachbit easyeffects libdbusmenu-glib4 p11-kit-server
+
+echo "[  ATTENTION  ] Installing: Gaming Components"
+# --- Install Gaming Software and Utilities --- #
+sudo zypper install -y dxvk wine lutris steam
 
 echo "[  ATTENTION  ] Installing: VLC"
 # --- Install VLC from VideoLAN Repositories --- #
