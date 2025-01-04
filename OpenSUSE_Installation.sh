@@ -14,6 +14,13 @@
 #
 # --- CHANGELOG ---
 #
+# 1.7 (06-January-2025):
+#    * Disable the installation of Discord Linux client
+#      NOTE: Please use the Discord-Install.sh script if
+#      Packman is not added and enabled!
+#    * Remove EasyEffects installation
+#    * Modify installation of codecs
+#
 # 1.6 (12-November-2024):
 #    * Add logic to install gaming software
 #      (Steam, lutris, Wine, DXVK)
@@ -104,20 +111,19 @@ sudo zypper --gpg-auto-import-keys addrepo --refresh 'https://download.videolan.
 echo "[ INFORMATION ] Refreshing Repositories; Importing GPG Keys..."
 sudo zypper --gpg-auto-import-keys refresh
 
-echo "[  ATTENTION  ] Installing: Codecs"
+#echo "[  ATTENTION  ] Installing: Codecs"
 # Install the codecs required for multimedia playback from the main repository
-sudo zypper install -y ffmpeg gstreamer-plugins-{good,bad,ugly,libav} libavcodec vlc-codecs
+#sudo zypper install -y ffmpeg gstreamer-plugins-{good,bad,ugly,libav} libavcodec vlc-codecs
 
 # NOTE: Not using opi here since it will switch ALL packages that exist in the Packman repository to use Packman.
 # We manually specify to install codecs from Packman repository so all other programs are not switched to Packman.
+#
 # sudo zypper install -y --allow-vendor-change --from Packman ffmpeg gstreamer-plugins-{good,bad,ugly,libav} libavcodec vlc-codecs
 # Disable Packman repository
 #
 # NOTE
 # You may want to comment this line out if you want updates from Packman.
 # sudo zypper mr -d Packman
-
-
 
 # ---- INSTALL SOFTWARE ---- #
 
@@ -127,9 +133,10 @@ echo "[  ATTENTION  ] Installing: KDE Utilities"
 # --- Install KDE Utilities --- #
 sudo zypper install -y kdeconnect-kde krita kdenlive partitionmanager kvantum-manager
 
-echo "[  ATTENTION  ] Installing: Discord"
+# --------- PLEASE UNCOMMENT WHEN USING PACKMAN ---------#
+# echo "[  ATTENTION  ] Installing: Discord"
 # --- Install Discord IM --- #
-sudo zypper install -y discord libdiscord-rpc*
+# sudo zypper install -y discord libdiscord-rpc*
 
 echo "[  ATTENTION  ] Installing: Microsoft Edge and VS Code"
 # --- Install Microsoft Edge and VS Code --- #
@@ -141,23 +148,22 @@ sudo zypper install -y github-desktop git
 
 echo "[  ATTENTION  ] Installing: System Utilities"
 # --- Install System Level Utilities --- #
-sudo zypper install -y fde-tools bleachbit easyeffects libdbusmenu-glib4 p11-kit-server
+sudo zypper install -y fde-tools bleachbitsudo zypper install -y libdbusmenu-glib4 p11-kit-server
 
-echo "[  ATTENTION  ] Installing: Gaming Components"
+echo "[  ATTENTION  ] Installing: WINE and Gaming Components"
 # --- Install Gaming Software and Utilities --- #
 sudo zypper install -y dxvk wine lutris steam
 
-echo "[  ATTENTION  ] Installing: VLC"
+echo "[  ATTENTION  ] Installing: VLC and Codecs"
 # --- Install VLC from VideoLAN Repositories --- #
-sudo zypper dup -y --from VLC --allow-vendor-change
+sudo zypper remove vlc
+sudo zypper install ffmpeg gstreamer-plugins-{good,bad,ugly,libav}
+latest_version=$(zypper search -s libavcodec | grep -Eo 'libavcodec[0-9]+' | sort -V | tail -1)
+sudo zypper install --from VLC --allow-vendor-change vlc vlc-codecs x264 x265 $latest_version
 
 # Check for OpenSUSE Tumbleweed updates
 echo "[ INFORMATION ] Checking for Updates..."
 sudo zypper dup -y
-
-echo "[  ATTENTION  ] Installing: EasyEffects Presets"
-# Install EasyEffects presets
-echo 1 | bash -c "$(curl -fsSL https://raw.githubusercontent.com/JackHack96/PulseEffects-Presets/master/install.sh)"
 
 # ---- CLEANUP ---- #
 
