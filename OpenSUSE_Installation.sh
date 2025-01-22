@@ -14,6 +14,14 @@
 #
 # --- CHANGELOG ---
 #
+# 1.8 (22-January-2025):
+#    * Give options to end user to install codecs from
+#      Packman, Main repositories, OPI and VLC Repository
+#    * Fix the command to install system utilities
+#    * Install package 'gamemode' while installing WINE
+#      and Gaming Components.
+#    * Added comments for clarity.
+#
 # 1.7 (06-January-2025):
 #    * Disable the installation of Discord Linux client
 #      NOTE: Please use the Discord-Install.sh script if
@@ -111,18 +119,32 @@ sudo zypper --gpg-auto-import-keys addrepo --refresh 'https://download.videolan.
 echo "[ INFORMATION ] Refreshing Repositories; Importing GPG Keys..."
 sudo zypper --gpg-auto-import-keys refresh
 
-#echo "[  ATTENTION  ] Installing: Codecs"
+# echo "[  ATTENTION  ] Installing: Codecs"
 # Install the codecs required for multimedia playback from the main repository
-#sudo zypper install -y ffmpeg gstreamer-plugins-{good,bad,ugly,libav} libavcodec vlc-codecs
-
-# NOTE: Not using opi here since it will switch ALL packages that exist in the Packman repository to use Packman.
-# We manually specify to install codecs from Packman repository so all other programs are not switched to Packman.
 #
+# Please comment/uncomment whichever is necessary
+#
+# Install Codecs from
+# A) Packman
+# B) OpenSUSE Main Repositories
+# C) OPI
+# D) VLC Repositories (RECOMMENDED)
+#
+# A) Packman Repository Codecs - Please ENABLE Packman repository above
 # sudo zypper install -y --allow-vendor-change --from Packman ffmpeg gstreamer-plugins-{good,bad,ugly,libav} libavcodec vlc-codecs
+#
+# B) OpenSUSE Main Repository Codecs - Please DISABLE Packman repository above
+# sudo zypper install -y ffmpeg gstreamer-plugins-{good,bad,ugly,libav} libavcodec vlc-codecs
+#
+# C) Codecs from OPI
+# sudo zypper install -y opi
+# opi codecs -n
+#
+# D) VLC Codecs installation is below.
+
+# echo "[  ATTENTION  ] Disabling Packman Repository"
 # Disable Packman repository
 #
-# NOTE
-# You may want to comment this line out if you want updates from Packman.
 # sudo zypper mr -d Packman
 
 # ---- INSTALL SOFTWARE ---- #
@@ -137,6 +159,7 @@ sudo zypper install -y kdeconnect-kde krita kdenlive partitionmanager kvantum-ma
 # echo "[  ATTENTION  ] Installing: Discord"
 # --- Install Discord IM --- #
 # sudo zypper install -y discord libdiscord-rpc*
+# -------------------------------------------------------#
 
 echo "[  ATTENTION  ] Installing: Microsoft Edge and VS Code"
 # --- Install Microsoft Edge and VS Code --- #
@@ -148,18 +171,20 @@ sudo zypper install -y github-desktop git
 
 echo "[  ATTENTION  ] Installing: System Utilities"
 # --- Install System Level Utilities --- #
-sudo zypper install -y fde-tools bleachbitsudo zypper install -y libdbusmenu-glib4 p11-kit-server
+sudo zypper install -y fde-tools bleachbit libdbusmenu-glib4 p11-kit-server
 
 echo "[  ATTENTION  ] Installing: WINE and Gaming Components"
 # --- Install Gaming Software and Utilities --- #
-sudo zypper install -y dxvk wine lutris steam
+sudo zypper install -y dxvk wine lutris steam gamemode
 
+# --------- PLEASE COMMENT WHEN USING PACKMAN ---------#
 echo "[  ATTENTION  ] Installing: VLC and Codecs"
 # --- Install VLC from VideoLAN Repositories --- #
 sudo zypper remove vlc
 sudo zypper install ffmpeg gstreamer-plugins-{good,bad,ugly,libav}
 latest_version=$(zypper search -s libavcodec | grep -Eo 'libavcodec[0-9]+' | sort -V | tail -1)
 sudo zypper install --from VLC --allow-vendor-change vlc vlc-codecs x264 x265 $latest_version
+# -----------------------------------------------------#
 
 # Check for OpenSUSE Tumbleweed updates
 echo "[ INFORMATION ] Checking for Updates..."
