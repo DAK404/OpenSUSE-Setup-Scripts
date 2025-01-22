@@ -1,203 +1,374 @@
 #!/bin/bash
 
 ############################################################
-# OpenSUSE Installation Script
+# OpenSUSE Setup Script
 #
-# ----------------------------------------------------------
 # ATTENTION!
 # This script can be run in a single line from your shell!
 # Simply run the following in the Terminal:
 #
 #   bash -c "$(curl -fsSL https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main/OpenSUSE_Installation.sh)"
 #
-# ----------------------------------------------------------
-#
-# --- CHANGELOG ---
-#
-# 1.8 (22-January-2025):
-#    * Give options to end user to install codecs from
-#      Packman, Main repositories, OPI and VLC Repository
-#    * Fix the command to install system utilities
-#    * Install package 'gamemode' while installing WINE
-#      and Gaming Components.
-#    * Added comments for clarity.
-#
-# 1.7 (06-January-2025):
-#    * Disable the installation of Discord Linux client
-#      NOTE: Please use the Discord-Install.sh script if
-#      Packman is not added and enabled!
-#    * Remove EasyEffects installation
-#    * Modify installation of codecs
-#
-# 1.6 (12-November-2024):
-#    * Add logic to install gaming software
-#      (Steam, lutris, Wine, DXVK)
-#    * Remove installation logic for Mozilla Thunderbird
-#
-# 1.5 (05-November-2024):
-#    * Revert Edge repository to microsoft-edge
-#      (Prevents repo duplication under different name)
-#
-# 1.4 (22-August-2024):
-#    * Install codecs from the main repository
-#    * Disable the addition of Packman and installation
-#      of codecs from Packman repository
-#    * NOTE: Please enable it if you want to use packages
-#      from Packman!
-# 
-# 1.3 (01-August-2024):
-#    * GPG keys are now auto imported with repository
-#    * Add quotes to repo aliases
-#    * Fix packman -> Packman
-#    * Import keys for GitHub Desktop and Microsoft
-#      since they caused errors for me.
-#    * Move personalization commands to personalize.sh
-#    * NOTE:
-#      This script no longer has external dependencies,
-#      therefore, like the EasyEffects installation,
-#      this too can be done over the internet directly.
-#    * Add '\n' to printf statement for autoremove alias
-#
-# 1.2 (28-July-2024):
-#    * Add a new section to import repository keys first
-#      and then install the necessary packages. Avoids
-#      the script from erroring out and skip the packages
-#      that requires installation.
-#    * Move OpenRGB tools installation to OpenRGB.sh
-#      (Makes more sense if the user does not want OpenRGB
-#      to be installed on their system)
-#    * Add '-y' flag to automate installation of 
-#      GitHubDesktop and git
-#    * Cleared up the logic to import the GitHub Desktop
-#      repository and the GPG Key.
-#
-# 1.1 (23-July-2024):
-#    * Add the VLC repository
-#    * Make the script install VLC from the VideoLAN repos
-#    * Add tags to echo statements to show the status of
-#      an action.
-#    * Disable font installation logic.
-#    * Disable repository Packman after installation of
-#      codecs. This will prevent vendor change to Packman.
-#    * Reorder logic to check updates after importing keys
-#      and adding relevant repositories.
-#
-# 1.0 (19-July-2024):
-#    * Improve comments
-#    * Add p11-kit-server
-#    * Segregated each step of installation
-#    * Fix the OpenRGB package name
-#    * Automated Easyeffects preset installation
-#    * echo each stage of script
 ############################################################
 
-echo "--- OpenSUSE Installation Script ---"
+SCRIPT_VERSION="2.0.0"
+INTERNET_CONNECTION="yes"
 
-# ---- ADD REPOSITORIES ---- #
+LOG_FILE=/tmp/DAK404-OpenSUSE-Setup.log
+SCRIPT_PATH="https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main/"
 
-echo "[ INFORMATION ] Adding Repository: Microsoft"
-# Add Microsoft Repositories
-sudo rpm --import 'https://packages.microsoft.com/keys/microsoft.asc'
-sudo zypper --gpg-auto-import-keys addrepo --refresh 'https://packages.microsoft.com/yumrepos/edge' 'microsoft-edge'
-sudo zypper --gpg-auto-import-keys addrepo --refresh 'https://packages.microsoft.com/yumrepos/vscode' 'Visual Studio Code'
+# ********************************************************* #
+#                    REQUIREMENT CHECK
+# ********************************************************* #
 
-echo "[ INFORMATION ] Adding Repository: GitHub"
-# Add GitHub Desktop for Linux Repository
-sudo rpm --import 'https://rpm.packages.shiftkey.dev/gpg.key'
-sudo zypper --gpg-auto-import-keys addrepo --refresh 'https://rpm.packages.shiftkey.dev/rpm/' 'GitHub Desktop'
+# Function to log messages to specified path
+message_logger()
+{
+    local message="$1"
+    local timestamp=$(date +%s)
+    echo "[$timestamp]: $message" | tee -a "$LOG_FILE"
+}
 
-echo "[ INFORMATION ] Adding Repository: VLC"
-# Add VLC Repository
-sudo zypper --gpg-auto-import-keys addrepo --refresh 'https://download.videolan.org/pub/vlc/SuSE/Tumbleweed/' 'VLC'
+# Function to check if computer is able to ping GitHub servers
+check_internet_connection()
+{
+    message_logger "[I] Started: Internet Connection Check"
+    message_logger "[I] Pinging: https://github.com"
+    if ping -c 1 https://github.com &> /dev/null
+    then
+        message_logger "[I] Ping Successful"
+        echo "[ INFORMATION ] Ping to GitHub Successful."
+    else
+        message_logger "[I] Ping Unsuccessful"
+        echo "[ WARNING ] Ping to GitHub Failed!"
+        INTERNET_CONNECTION="no"
+        SCRIPT_PATH="./"
+    fi
 
-# --- Install Codecs from Packman --- #
+    message_logger "[I] FINISHED: Internet Connection Check"
+    echo "[ INFORMATION ] Internet Connection Check Complete"
+}
 
-#echo "[ INFORMATION ] Adding Repository: Packman"
-# Add OpenSUSE Packman repository
-#sudo zypper --gpg-auto-import-keys addrepo --refresh 'https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/' 'Packman'
+# ********************************************************* #
+#                    REPOSITORY ADDITION
+# ********************************************************* #
 
-echo "[ INFORMATION ] Refreshing Repositories; Importing GPG Keys..."
-sudo zypper --gpg-auto-import-keys refresh
+# Function to add necessary repositories
+add_repositories()
+{
+    message_logger "[I] Started: Add Repositories"
 
-# echo "[  ATTENTION  ] Installing: Codecs"
-# Install the codecs required for multimedia playback from the main repository
-#
-# Please comment/uncomment whichever is necessary
-#
-# Install Codecs from
-# A) Packman
-# B) OpenSUSE Main Repositories
-# C) OPI
-# D) VLC Repositories (RECOMMENDED)
-#
-# A) Packman Repository Codecs - Please ENABLE Packman repository above
-# sudo zypper install -y --allow-vendor-change --from Packman ffmpeg gstreamer-plugins-{good,bad,ugly,libav} libavcodec vlc-codecs
-#
-# B) OpenSUSE Main Repository Codecs - Please DISABLE Packman repository above
-# sudo zypper install -y ffmpeg gstreamer-plugins-{good,bad,ugly,libav} libavcodec vlc-codecs
-#
-# C) Codecs from OPI
-# sudo zypper install -y opi
-# opi codecs -n
-#
-# D) VLC Codecs installation is below.
+    # ---------- REPOSITORY GPG KEY URLS ---------- #
+    MICROSOFT_GPG_KEY_URL='https://packages.microsoft.com/keys/microsoft.asc'
+    GITHUB_GPG_KEY_URL='https://rpm.packages.shiftkey.dev/gpg.key'
+    # --------------------------------------------- #
 
-# echo "[  ATTENTION  ] Disabling Packman Repository"
-# Disable Packman repository
-#
-# sudo zypper mr -d Packman
+    # ----------     REPOSITORY URLS     ---------- #
+    MSEDGE_REPO_URL='https://packages.microsoft.com/yumrepos/edge'
+    VSCODE_REPO_URL='https://packages.microsoft.com/yumrepos/vscode'
+    GITHUB_REPO_URL='https://rpm.packages.shiftkey.dev/rpm/'
+    VLC_REPO_URL='https://download.videolan.org/pub/vlc/SuSE/Tumbleweed/'
+    GAMES_REPO_URL='https://download.opensuse.org/repositories/games/openSUSE_Tumbleweed/'
+    PACKMAN_REPO_URL='https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/'
+    # --------------------------------------------- #
 
-# ---- INSTALL SOFTWARE ---- #
+    message_logger "[I] Started: Add Microsoft Repositories"
+    echo "[ INFORMATION ] Adding Repositories: Microsoft"
+    sudo rpm --import "$MICROSOFT_GPG_KEY_URL"
+    sudo zypper --gpg-auto-import-keys addrepo --refresh "$MSEDGE_REPO_URL" 'microsoft-edge'
+    sudo zypper --gpg-auto-import-keys addrepo --refresh "$VSCODE_REPO_URL" 'Visual Studio Code'
+    message_logger "[I] Finished: Add Microsoft Repositories"
 
-# Begin package installation
+    message_logger "[I] Started: Add GitHub Repository"
+    echo "[ INFORMATION ] Adding Repository: GitHub Desktop"
+    sudo rpm --import "$GITHUB_GPG_KEY_URL"
+    sudo zypper --gpg-auto-import-keys addrepo --refresh "$GITHUB_REPO_URL" 'GitHub Desktop'
+    message_logger "[I] Finished: Add GitHub Repository"
 
-echo "[  ATTENTION  ] Installing: KDE Utilities"
-# --- Install KDE Utilities --- #
-sudo zypper install -y kdeconnect-kde krita kdenlive partitionmanager kvantum-manager
+    message_logger "[I] Started: Add VLC Repository"
+    echo "[ INFORMATION ] Adding Repository: VLC"
+    sudo zypper --gpg-auto-import-keys addrepo --refresh "$VLC_REPO_URL" 'VLC'
+    message_logger "[I] Finished: Add VLC Repository"
 
-# --------- PLEASE UNCOMMENT WHEN USING PACKMAN ---------#
-# echo "[  ATTENTION  ] Installing: Discord"
-# --- Install Discord IM --- #
-# sudo zypper install -y discord libdiscord-rpc*
-# -------------------------------------------------------#
+    message_logger "[I] Started: Add OpenSUSE Games Repository"
+    echo "[ INFORMATION ] Adding Repository: OpenSUSE Games"
+    sudo zypper --gpg-auto-import-keys addrepo --refresh "$GAMES_REPO_URL" 'Games'
+    message_logger "[I] Finished: Add OpenSUSE Games Repository"
 
-echo "[  ATTENTION  ] Installing: Microsoft Edge and VS Code"
-# --- Install Microsoft Edge and VS Code --- #
-sudo zypper install -y microsoft-edge-stable code
+    message_logger "[I] Started: Refreshing Repositories; Importing GPG Keys"
+    echo "[ INFORMATION ] Refreshing Repositories; Importing GPG Keys..."
+    message_logger "$(sudo zypper --gpg-auto-import-keys refresh)"
+    message_logger "[I] Finished: Refreshing Repositories; Importing GPG Keys"
 
-echo "[  ATTENTION  ] Installing: GitHub Desktop & Git"
-# --- Install GitHub Desktop and Git --- #
-sudo zypper install -y github-desktop git
+    message_logger "[I] Finished: Add Repositories"
+}
 
-echo "[  ATTENTION  ] Installing: System Utilities"
-# --- Install System Level Utilities --- #
-sudo zypper install -y fde-tools bleachbit libdbusmenu-glib4 p11-kit-server
+# ********************************************************* #
+#                    CODECS INSTALLATION
+# ********************************************************* #
 
-echo "[  ATTENTION  ] Installing: WINE and Gaming Components"
-# --- Install Gaming Software and Utilities --- #
-sudo zypper install -y dxvk wine lutris steam gamemode
+# Function to install codecs from Packman repositories
+codecs_install_packman()
+{
+    message_logger "[I] Started: Add Packman Repository"
+    echo "[ INFORMATION ] Adding Repository: Packman"
+    sudo zypper --gpg-auto-import-keys addrepo --refresh "$PACKMAN_REPO_URL" "Packman"
+    message_logger "[I] Finished: Add Packman Repository"
 
-# --------- PLEASE COMMENT WHEN USING PACKMAN ---------#
-echo "[  ATTENTION  ] Installing: VLC and Codecs"
-# --- Install VLC from VideoLAN Repositories --- #
-sudo zypper remove vlc
-sudo zypper install ffmpeg gstreamer-plugins-{good,bad,ugly,libav}
-latest_version=$(zypper search -s libavcodec | grep -Eo 'libavcodec[0-9]+' | sort -V | tail -1)
-sudo zypper install --from VLC --allow-vendor-change vlc vlc-codecs x264 x265 $latest_version
-# -----------------------------------------------------#
+    sudo zypper --gpg-auto-import-keys refresh
 
-# Check for OpenSUSE Tumbleweed updates
-echo "[ INFORMATION ] Checking for Updates..."
-sudo zypper dup -y
+    message_logger "[I] Started: Codecs Installation - Packman"
+    echo "[  ATTENTION  ] Installing: Codecs from Packman Repositories"
+    sudo zypper install -y --allow-vendor-change --from Packman ffmpeg gstreamer-plugins-{good,bad,ugly,libav} libavcodec vlc-codecs
+    message_logger "[I] Finished: Codecs Installation - Packman"
+}
 
-# ---- CLEANUP ---- #
+# Function to install codecs from Main repositories
+codecs_install_Main()
+{
+    message_logger "[I] Started: Codecs Installation - Main"
+    echo "[  ATTENTION  ] Installing: Codecs from Main Repositories (OSS)"
+    sudo zypper install -y ffmpeg gstreamer-plugins-{good,bad,ugly,libav} libavcodec vlc-codecs
+    message_logger "[I] Finished: Codecs Installation - Main"
+}
 
-printf "[ INFORMATION ] Installing: \'autoremove\' command\n"
-# Add "autoremove" command to remove any unneeded packages.
-echo "alias autoremove=\"sudo zypper packages --unneeded | awk -F'|' 'NR==0 || NR==1 || NR==2 || NR==3 || NR==4 {next} {print $3}' | grep -v Name | sudo xargs zypper remove -y --clean-deps >> ~/Cleanup.log\"" | sudo tee -a /etc/bash.bashrc.local
+# Function to install codecs from OPI
+codecs_install_opi()
+{
+    message_logger "[I] Started: Codecs Installation - OPI"
+    echo "[  ATTENTION  ] Installing: Codecs from OPI"
+    sudo zypper install -y opi
+    opi codecs -n
+    message_logger "[I] Finished: Codecs Installation - OPI"
+}
 
-echo "[ INFORMATION ] Cleaning Up..."
-# Run the command to autoremove packages
-sudo zypper packages --unneeded | awk -F'|' 'NR==0 || NR==1 || NR==2 || NR==3 || NR==4 {next} {print $3}' | grep -v Name | sudo xargs zypper remove -y --clean-deps >> ~/Cleanup.log
+# Function to install codecs from VLC repositories
+codecs_install_VLC()
+{
+    message_logger "[I] Started: Codecs Installation - VLC"
+    echo "[  ATTENTION  ] Installing: Codecs from VLC Repositories"
+    sudo zypper install ffmpeg gstreamer-plugins-{good,bad,ugly,libav}
+    latest_version=$(zypper search -s libavcodec | grep -Eo 'libavcodec[0-9]+' | sort -V | tail -1)
+    sudo zypper install --from VLC --allow-vendor-change vlc-codecs x264 x265 $latest_version
+    message_logger "[I] Finished: Codecs Installation - VLC"
+}
 
-echo "End Of Script. It is recommended to reboot to apply changes."
+# ********************************************************* #
+#                   SOFTWARE INSTALLATION
+# ********************************************************* #
+
+# Function to install KDE Utilities
+sw_install_kde-pkgs()
+{
+    message_logger "[I] Started: KDE Utilities Installation"
+    echo "[  ATTENTION  ] Installing: KDE Utilities"
+    sudo zypper install -y kdeconnect-kde krita kdenlive partitionmanager kvantum-manager
+    message_logger "[I] Finished: KDE Utilities Installation"
+}
+
+# Function to install Microsoft Edge and VS Code
+sw_install_microsoft-pkgs()
+{
+    message_logger "[I] Started: Installing Microsoft Edge and VS Code"
+    echo "[  ATTENTION  ] Installing: Microsoft Edge and VS Code"
+    sudo zypper install -y microsoft-edge-stable code
+    message_logger "[I] Finished: Installing Microsoft Edge and VS Code"
+}
+
+# Function to install GitHub Desktop and Git
+sw_install_git-github-pkgs()
+{
+    message_logger "[I] Started: Installing GitHub Desktop and Git"
+    echo "[  ATTENTION  ] Installing: GitHub Desktop & Git"
+    sudo zypper install -y github-desktop git
+    message_logger "[I] Finished: Installing GitHub Desktop and Git"
+}
+
+# Function to install System Utilities
+sw_install_sys-util-pkgs()
+{
+    message_logger "[I] Started: Installing System Utilities"
+    echo "[  ATTENTION  ] Installing: System Utilities"
+    sudo zypper install -y fde-tools bleachbit libdbusmenu-glib4 p11-kit-server
+    message_logger "[I] Finished: Installing System Utilities"
+}
+
+# Function to install Gaming Components
+sw_install_gaming-pkgs()
+{
+    message_logger "[I] Started: Installing WINE and Gaming Components"
+    echo "[  ATTENTION  ] Installing: WINE and Gaming Components"
+    sudo zypper install -y dxvk wine lutris steam gamemode
+    message_logger "[I] Finished: Installing WINE and Gaming Components"
+}
+
+# Function to install VLC and Codecs
+sw_remove_VLC-TW-Main-pkgs()
+{
+    message_logger "[I] Started: Removing VLC and Codecs from Main Repository (OSS)"
+    echo "[  ATTENTION  ] Removing: VLC and Codecs from Main Repository (OSS)"
+    sudo zypper remove -y vlc vlc-codecs
+    message_logger "[I] Finished: Removing VLC and Codecs from Main Repository (OSS)"
+}
+
+# Function to install VLC and Codecs
+sw_install_VLC-pkgs()
+{
+    message_logger "[I] Started: Installing VLC"
+    echo "[  ATTENTION  ] Installing: VLC"
+    sudo zypper install --from VLC --allow-vendor-change vlc
+    sudo zypper dup -y --from VLC --allow-vendor-change
+    message_logger "[I] Finished: Installing VLC"
+}
+
+# ********************************************************* #
+#                   SCRIPT INSTALLATION
+# ********************************************************* #
+
+# Function to install Discord using my script
+sw_install_Discord-script()
+{
+    message_logger "[I] Started: Installing Discord [Script]"
+    echo "[  ATTENTION  ] Installing: Discord"
+    bash -c "$(curl -fsSL ${SCRIPT_PATH}Discord-Install.sh)"
+    message_logger "[I] Finished: Installing Discord [Script]"
+}
+
+# Function to install OpenRGB using my script
+sw_install_OpenRGB-script()
+{
+    message_logger "[I] Started: Installing OpenRGB [Script]"
+    echo "[  ATTENTION  ] Installing: OpenRGB"
+    bash -c "$(curl -fsSL ${SCRIPT_PATH}OpenRGB-Install.sh)"
+    message_logger "[I] Finished: Installing OpenRGB [Script]"
+}
+
+# Function to install Gigabyte Sleep Fix using my script
+sw_install_Gigabyte-Sleep-Fix-script()
+{
+    message_logger "[I] Started: Installing Sleep Fix for Gigabyte Motherboards [Script]"
+    echo "[  ATTENTION  ] Installing: Sleep Fix for Gigabyte Motherboards"
+    bash -c "$(curl -fsSL ${SCRIPT_PATH}Gigabyte-Sleep-Fix.sh)"
+    message_logger "[I] Finished: Installing Sleep Fix for Gigabyte Motherboards [Script]"
+}
+
+# Function to install KDE Personalization using my script
+sw_install_KDE-Personalization-script()
+{
+    message_logger "[I] Started: Installing KDE Personalization [Script]"
+    echo "[  ATTENTION  ] Installing: Wallpaper, Kvantum and Sound Themes"
+    bash -c "$(curl -fsSL ${SCRIPT_PATH}Personalize.sh)"
+    message_logger "[I] Finished: Installing KDE Personalization [Script]"
+}
+
+# Function to remove Flatpak and Flatpak Applications using my script
+sw_remove_flatpak-script()
+{
+    message_logger "[I] Started: Removing Flatpak and Flatpak Applications [Script]"
+    echo "[  ATTENTION  ] Removing: Flatpak and Flatpak Applications"
+    bash -c "$(curl -fsSL ${SCRIPT_PATH}Flatpak-Remove.sh)"
+    message_logger "[I] Finished: Removing Flatpak and Flatpak Applications [Script]"
+}
+
+# ********************************************************* #
+#                   ALIAS INSTALLATION
+# ********************************************************* #
+
+# Function to install 'autoremove' command
+alias_install_autoremove()
+{
+    message_logger "[I] Started: Installing 'autoremove' command"
+    printf "[ INFORMATION ] Installing: \'autoremove\' command\n"
+    echo "alias autoremove=\"sudo zypper packages --unneeded | awk -F'|' 'NR==0 || NR==1 || NR==2 || NR==3 || NR==4 {next} {print $3}' | grep -v Name | sudo xargs zypper remove -y --clean-deps >> ~/Cleanup.log\"" | sudo tee -a /etc/bash.bashrc.local
+    message_logger "[I] Finished: Installing 'autoremove' command"
+}
+
+# ********************************************************* #
+#                   CLEANUP FUNCTIONS
+# ********************************************************* #
+
+# Function to finish cleanup
+finish_cleanup()
+{
+    message_logger "[I] Started: Cleaning Up"
+    echo "[ INFORMATION ] Cleaning Up..."
+    sudo zypper packages --unneeded | awk -F'|' 'NR==0 || NR==1 || NR==2 || NR==3 || NR==4 {next} {print $3}' | grep -v Name | sudo xargs zypper remove -y --clean-deps >> ~/Cleanup.log
+    mv /tmp/DAK404-OpenSUSE-Setup.log ~/
+    echo "Setup Complete! Log file saved to ~/DAK404-OpenSSE-Setup.log"
+    echo "It is recommended to restart your system to apply changes."
+}
+
+# ********************************************************* #
+#                     SCRIPT ENTRY POINT
+# ********************************************************* #
+
+message_logger "[I] OpenSUSE Setup Script - Version: $SCRIPT_VERSION"
+message_logger "[I] Log File stored in: $LOG_FILE"
+
+check_internet_connection
+
+if INTERNET_CONNECTION="yes"
+then
+    add_repositories
+    
+    for arg in "$@"
+    do
+        case "$arg" in
+            codecs_packman)
+                codecs_install_packman
+                break
+                ;;
+            codecs_main)
+                codecs_install_Main
+                break
+                ;;
+            codecs_opi)
+                codecs_install_opi
+                break
+                ;;
+            codecs_vlc)
+                codecs_install_VLC
+                break
+                ;;
+        esac
+    done
+
+    sw_install_kde-pkgs
+    sw_install_microsoft-pkgs
+    sw_install_git-github-pkgs
+    sw_install_sys-util-pkgs
+    sw_install_gaming-pkgs
+    sw_remove_VLC-TW-Main-pkgs
+    sw_install_VLC-pkgs
+else
+    echo "[   WARNING   ] Internet Connection Unavailable! Skipping Repository Addition, Codecs and Package Installation."
+fi
+
+# Process arguments and call corresponding functions
+for arg in "$@"
+do
+    case "$arg" in
+        discord)
+            sw_install_Discord-script
+            ;;
+        openrgb)
+            sw_install_openRGB-script
+            ;;
+        gigabyte_sleep_fix)
+            sw_install_Gigabyte-Sleep-Fix-script
+            ;;
+        personalize)
+            sw_install_KDE-Personalization-script
+            ;;
+        remove_flatpak)
+            sw_remove_flatpak-script
+            ;;
+        *)
+            echo "[    ERROR    ] Unknown argument: $arg"
+            message_logger "[E] Unknown argument: $arg"
+            ;;
+    esac
+done
+
+alias_install_autoremove
+finish_cleanup

@@ -2,8 +2,6 @@
 
 ############################################################
 # OpenRGB Configuration Script
-# Version 1.0
-# Date Modified: 19-July-2024
 #
 # --- CHANGELOG ---
 #
