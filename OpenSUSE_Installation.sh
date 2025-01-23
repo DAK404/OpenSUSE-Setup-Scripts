@@ -307,7 +307,7 @@ message_logger "[I] Log File stored in: $LOG_FILE"
 
 check_internet_connection
 
-if INTERNET_CONNECTION
+if $INTERNET_CONNECTION
 then
     add_repositories
     
@@ -369,3 +369,8 @@ fi
 
 alias_install_autoremove
 finish_cleanup
+
+            *)
+                echo "[    ERROR    ] Unknown argument: $arg"
+                message_logger "[E] Unknown argument: $arg"
+                ;;
