@@ -12,7 +12,7 @@
 ############################################################
 
 SCRIPT_VERSION="2.0.0"
-INTERNET_CONNECTION="yes"
+INTERNET_CONNECTION=true
 
 LOG_FILE=/tmp/DAK404-OpenSUSE-Setup.log
 SCRIPT_PATH="https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main/"
@@ -33,15 +33,15 @@ message_logger()
 check_internet_connection()
 {
     message_logger "[I] Started: Internet Connection Check"
-    message_logger "[I] Pinging: https://github.com"
-    if ping -c 1 https://github.com &> /dev/null
+    message_logger "[I] Pinging: github.com"
+    if ping -c 1 github.com &> /dev/null
     then
         message_logger "[I] Ping Successful"
         echo "[ INFORMATION ] Ping to GitHub Successful."
     else
-        message_logger "[I] Ping Unsuccessful"
+        message_logger "[W] Ping Unsuccessful"
         echo "[ WARNING ] Ping to GitHub Failed!"
-        INTERNET_CONNECTION="no"
+        INTERNET_CONNECTION=false
         SCRIPT_PATH="./"
     fi
 
@@ -307,26 +307,26 @@ message_logger "[I] Log File stored in: $LOG_FILE"
 
 check_internet_connection
 
-if INTERNET_CONNECTION="yes"
+if INTERNET_CONNECTION
 then
     add_repositories
     
     for arg in "$@"
     do
         case "$arg" in
-            codecs_packman)
+            codecs-packman)
                 codecs_install_packman
                 break
                 ;;
-            codecs_main)
+            codecs-main)
                 codecs_install_Main
                 break
                 ;;
-            codecs_opi)
+            codecs-opi)
                 codecs_install_opi
                 break
                 ;;
-            codecs_vlc)
+            codecs-vlc)
                 codecs_install_VLC
                 break
                 ;;
@@ -340,35 +340,32 @@ then
     sw_install_gaming-pkgs
     sw_remove_VLC-TW-Main-pkgs
     sw_install_VLC-pkgs
+
+    # Process arguments and call corresponding functions
+    for arg in "$@"
+    do
+        case "$arg" in
+            discord)
+                sw_install_Discord-script
+                ;;
+            openrgb)
+                sw_install_openRGB-script
+                ;;
+            gigabyte-sleep-fix)
+                sw_install_Gigabyte-Sleep-Fix-script
+                ;;
+            personalize)
+                sw_install_KDE-Personalization-script
+                ;;
+            remove-flatpak)
+                sw_remove_flatpak-script
+                ;;
+        esac
+    done
+
 else
     echo "[   WARNING   ] Internet Connection Unavailable! Skipping Repository Addition, Codecs and Package Installation."
 fi
-
-# Process arguments and call corresponding functions
-for arg in "$@"
-do
-    case "$arg" in
-        discord)
-            sw_install_Discord-script
-            ;;
-        openrgb)
-            sw_install_openRGB-script
-            ;;
-        gigabyte_sleep_fix)
-            sw_install_Gigabyte-Sleep-Fix-script
-            ;;
-        personalize)
-            sw_install_KDE-Personalization-script
-            ;;
-        remove_flatpak)
-            sw_remove_flatpak-script
-            ;;
-        *)
-            echo "[    ERROR    ] Unknown argument: $arg"
-            message_logger "[E] Unknown argument: $arg"
-            ;;
-    esac
-done
 
 alias_install_autoremove
 finish_cleanup

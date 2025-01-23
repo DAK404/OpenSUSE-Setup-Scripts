@@ -33,20 +33,20 @@ The `OpenSUSE-setup.sh` script may require a few arguments as per your use-case 
 
 | Argument          | Description                                                        |
 |-------------------|--------------------------------------------------------------------|
-| codecs_packman    | Installs codecs from Packman repository                            |
-| codecs_main       | Installs codecs from Repository Main (OSS)                         |
-| codecs_opi        | Installs OPI and codecs from OPI                                   |
-| codecs_vlc        | Installs codecs from official VLC repository                       |
+| codecs-packman    | Installs codecs from Packman repository                            |
+| codecs-main       | Installs codecs from Repository Main (OSS)                         |
+| codecs-opi        | Installs OPI and codecs from OPI                                   |
+| codecs-vlc        | Installs codecs from official VLC repository                       |
 | discord           | Installs Discord using my Script                                   |
 | openRGB           | Installs and sets up openRGB                                       |
-| gigabyte_sleep_fix| Fixes issues with Gigabyte systems that do not go to sleep         |
+| gigabyte-sleep-fix| Fixes issues with Gigabyte systems that do not go to sleep         |
 | personalize       | Installs themes, sound themes and wallpapers                       |
-| remove_flatpak    | Removes flatpak and flatpak applications                           |
+| remove-flatpak    | Removes flatpak and flatpak applications                           |
 
 Example:
 
 ```
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main/OpenSUSE_Installation.sh)" codecs_vlc discord openrgb gigabyte_sleep_fix personalize
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main/OpenSUSE_Installation.sh)" codecs-vlc discord openrgb gigabyte-sleep-fix personalize
 ```
 
 ## The Other Shell Scripts
@@ -70,7 +70,7 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Sc
 
 Please check the [GitHub Wiki](https://github.com/DAK404/OpenSUSE-Setup-Scripts/wiki) to learn more about the project.
 
-If you are looking for the older scripts, please check the [Legacy Branch](https://github.com/DAK404/OpenSUSE-Setup-Scripts/tree/Legacy). However, these scripts will not be maintained anymore, since `v2.0.0` of the scripts are so much better to both maintain and run.
+If you are looking for the older scripts, please check the [Legacy Branch](https://github.com/DAK404/OpenSUSE-Setup-Scripts/tree/Legacy). However, these scripts will not be maintained anymore, since the scripts in version `2.0.0` are better in all aspects.
 
 ## DISCLAIMER!
 
