@@ -162,7 +162,7 @@ sw_install_kde-pkgs()
 {
     message_logger "[I] Started: KDE Utilities Installation"
     echo "[  ATTENTION  ] Installing: KDE Utilities"
-    sudo zypper install -y kdeconnect-kde krita kdenlive partitionmanager kvantum-manager
+    sudo zypper install -y kdeconnect-kde krita kdenlive partitionmanager
     message_logger "[I] Finished: KDE Utilities Installation"
 }
 
