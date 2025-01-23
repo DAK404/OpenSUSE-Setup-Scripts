@@ -216,7 +216,7 @@ sw_install_VLC-pkgs()
 {
     message_logger "[I] Started: Installing VLC"
     echo "[  ATTENTION  ] Installing: VLC"
-    sudo zypper install --from VLC --allow-vendor-change vlc
+    sudo zypper install -y --from VLC --allow-vendor-change vlc
     sudo zypper dup -y --from VLC --allow-vendor-change
     message_logger "[I] Finished: Installing VLC"
 }
@@ -369,8 +369,3 @@ fi
 
 alias_install_autoremove
 finish_cleanup
-
-            *)
-                echo "[    ERROR    ] Unknown argument: $arg"
-                message_logger "[E] Unknown argument: $arg"
-                ;;
