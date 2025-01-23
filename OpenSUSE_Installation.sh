@@ -239,7 +239,7 @@ sw_install_OpenRGB-script()
 {
     message_logger "[I] Started: Installing OpenRGB [Script]"
     echo "[  ATTENTION  ] Installing: OpenRGB"
-    bash -c "$(curl -fsSL ${SCRIPT_PATH}OpenRGB-Install.sh)"
+    bash -c "$(curl -fsSL ${SCRIPT_PATH}OpenRGB.sh)"
     message_logger "[I] Finished: Installing OpenRGB [Script]"
 }
 
@@ -248,7 +248,7 @@ sw_install_Gigabyte-Sleep-Fix-script()
 {
     message_logger "[I] Started: Installing Sleep Fix for Gigabyte Motherboards [Script]"
     echo "[  ATTENTION  ] Installing: Sleep Fix for Gigabyte Motherboards"
-    bash -c "$(curl -fsSL ${SCRIPT_PATH}Gigabyte-Sleep-Fix.sh)"
+    bash -c "$(curl -fsSL ${SCRIPT_PATH}GigabyteDesktop_Sleep_Fix.sh)"
     message_logger "[I] Finished: Installing Sleep Fix for Gigabyte Motherboards [Script]"
 }
 
@@ -266,7 +266,7 @@ sw_remove_flatpak-script()
 {
     message_logger "[I] Started: Removing Flatpak and Flatpak Applications [Script]"
     echo "[  ATTENTION  ] Removing: Flatpak and Flatpak Applications"
-    bash -c "$(curl -fsSL ${SCRIPT_PATH}Flatpak-Remove.sh)"
+    bash -c "$(curl -fsSL ${SCRIPT_PATH}Remove_Flatpak.sh)"
     message_logger "[I] Finished: Removing Flatpak and Flatpak Applications [Script]"
 }
 
