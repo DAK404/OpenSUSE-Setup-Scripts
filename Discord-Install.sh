@@ -29,9 +29,6 @@ DISCORD_URL="https://discord.com/api/download?platform=linux&format=tar.gz"
 # Define the target directory for downloading and extracting Discord
 TARGET_DIR="/tmp/discord"
 
-# Install Discord RPC library
-sudo zypper install -y libdiscord-rpc*
-
 # Remove any existing Discord installation
 sudo rm -rf /opt/discord
 
@@ -64,5 +61,7 @@ Terminal=false
 Type=Application
 Categories=Network;InstantMessaging;
 EOF
+
+sudo zypper install -y --no-recommends libdiscord-rpc*
 
 echo "Discord installation completed!"
