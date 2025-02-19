@@ -147,7 +147,7 @@ codecs_install_VLC()
 {
     message_logger "[I] Started: Codecs Installation - VLC"
     echo "[  ATTENTION  ] Installing: Codecs from VLC Repositories"
-    sudo zypper install ffmpeg gstreamer-plugins-{good,bad,ugly,libav}
+    sudo zypper install -y ffmpeg gstreamer-plugins-{good,bad,ugly,libav}
     latest_version=$(zypper search -s libavcodec | grep -Eo 'libavcodec[0-9]+' | sort -V | tail -1)
     sudo zypper install -y --from VLC --allow-vendor-change vlc-codecs x264 x265 $latest_version
     message_logger "[I] Finished: Codecs Installation - VLC"
