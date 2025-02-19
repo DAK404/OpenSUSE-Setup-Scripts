@@ -2,19 +2,29 @@
 
 - [Changelog](#changelog)
   - [2.0.1](#201)
+    - [Additions](#additions)
     - [Modifications:](#modifications)
-  - [2.0.0](#200)
-    - [Additions:](#additions)
-    - [Modifications:](#modifications-1)
     - [Deletions:](#deletions)
+  - [2.0.0](#200)
+    - [Additions:](#additions-1)
+    - [Modifications:](#modifications-1)
+    - [Deletions:](#deletions-1)
 
 
 ## 2.0.1
 
+### Additions
+
++ Added the CHANGELOG file
+
 ### Modifications:
 
 * Function Nomenclature: Changed functions to have only underscores
-* Added `-y` to automate the installation
+* Added `-y` to automate the installation to a few commands
+
+### Deletions:
+
+- `libdiscord-rpc` is no longer installed in the Discord-Install script
 
 ## 2.0.0
 
