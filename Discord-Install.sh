@@ -62,4 +62,6 @@ Type=Application
 Categories=Network;InstantMessaging;
 EOF
 
+sudo zypper install -y --no-recommends libdiscord-rpc*
+
 echo "Discord installation completed!"
