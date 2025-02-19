@@ -11,7 +11,7 @@
 #
 ############################################################
 
-SCRIPT_VERSION="2.0.0"
+SCRIPT_VERSION="2.0.1"
 INTERNET_CONNECTION=true
 
 LOG_FILE=/tmp/DAK404-OpenSUSE-Setup.log
@@ -149,7 +149,7 @@ codecs_install_VLC()
     echo "[  ATTENTION  ] Installing: Codecs from VLC Repositories"
     sudo zypper install ffmpeg gstreamer-plugins-{good,bad,ugly,libav}
     latest_version=$(zypper search -s libavcodec | grep -Eo 'libavcodec[0-9]+' | sort -V | tail -1)
-    sudo zypper install --from VLC --allow-vendor-change vlc-codecs x264 x265 $latest_version
+    sudo zypper install -y --from VLC --allow-vendor-change vlc-codecs x264 x265 $latest_version
     message_logger "[I] Finished: Codecs Installation - VLC"
 }
 
@@ -158,7 +158,7 @@ codecs_install_VLC()
 # ********************************************************* #
 
 # Function to install KDE Utilities
-sw_install_kde-pkgs()
+sw_install_kde_pkgs()
 {
     message_logger "[I] Started: KDE Utilities Installation"
     echo "[  ATTENTION  ] Installing: KDE Utilities"
@@ -167,7 +167,7 @@ sw_install_kde-pkgs()
 }
 
 # Function to install Microsoft Edge and VS Code
-sw_install_microsoft-pkgs()
+sw_install_microsoft_pkgs()
 {
     message_logger "[I] Started: Installing Microsoft Edge and VS Code"
     echo "[  ATTENTION  ] Installing: Microsoft Edge and VS Code"
@@ -176,7 +176,7 @@ sw_install_microsoft-pkgs()
 }
 
 # Function to install GitHub Desktop and Git
-sw_install_git-github-pkgs()
+sw_install_git_github_pkgs()
 {
     message_logger "[I] Started: Installing GitHub Desktop and Git"
     echo "[  ATTENTION  ] Installing: GitHub Desktop & Git"
@@ -185,7 +185,7 @@ sw_install_git-github-pkgs()
 }
 
 # Function to install System Utilities
-sw_install_sys-util-pkgs()
+sw_install_sys_util_pkgs()
 {
     message_logger "[I] Started: Installing System Utilities"
     echo "[  ATTENTION  ] Installing: System Utilities"
@@ -194,7 +194,7 @@ sw_install_sys-util-pkgs()
 }
 
 # Function to install Gaming Components
-sw_install_gaming-pkgs()
+sw_install_gaming_pkgs()
 {
     message_logger "[I] Started: Installing WINE and Gaming Components"
     echo "[  ATTENTION  ] Installing: WINE and Gaming Components"
@@ -203,7 +203,7 @@ sw_install_gaming-pkgs()
 }
 
 # Function to install VLC and Codecs
-sw_remove_VLC-TW-Main-pkgs()
+sw_remove_VLC_Main_pkgs()
 {
     message_logger "[I] Started: Removing VLC and Codecs from Main Repository (OSS)"
     echo "[  ATTENTION  ] Removing: VLC and Codecs from Main Repository (OSS)"
@@ -212,7 +212,7 @@ sw_remove_VLC-TW-Main-pkgs()
 }
 
 # Function to install VLC and Codecs
-sw_install_VLC-pkgs()
+sw_install_VLC_pkgs()
 {
     message_logger "[I] Started: Installing VLC"
     echo "[  ATTENTION  ] Installing: VLC"
@@ -226,7 +226,7 @@ sw_install_VLC-pkgs()
 # ********************************************************* #
 
 # Function to install Discord using my script
-sw_install_Discord-script()
+sw_install_Discord_script()
 {
     message_logger "[I] Started: Installing Discord [Script]"
     echo "[  ATTENTION  ] Installing: Discord"
@@ -235,7 +235,7 @@ sw_install_Discord-script()
 }
 
 # Function to install OpenRGB using my script
-sw_install_OpenRGB-script()
+sw_install_openRGB_script()
 {
     message_logger "[I] Started: Installing OpenRGB [Script]"
     echo "[  ATTENTION  ] Installing: OpenRGB"
@@ -244,7 +244,7 @@ sw_install_OpenRGB-script()
 }
 
 # Function to install Gigabyte Sleep Fix using my script
-sw_install_Gigabyte-Sleep-Fix-script()
+sw_install_Gigabyte_Sleep_Fix_script()
 {
     message_logger "[I] Started: Installing Sleep Fix for Gigabyte Motherboards [Script]"
     echo "[  ATTENTION  ] Installing: Sleep Fix for Gigabyte Motherboards"
@@ -253,7 +253,7 @@ sw_install_Gigabyte-Sleep-Fix-script()
 }
 
 # Function to install KDE Personalization using my script
-sw_install_KDE-Personalization-script()
+sw_install_KDE_Personalization_script()
 {
     message_logger "[I] Started: Installing KDE Personalization [Script]"
     echo "[  ATTENTION  ] Installing: Wallpaper, Kvantum and Sound Themes"
@@ -262,7 +262,7 @@ sw_install_KDE-Personalization-script()
 }
 
 # Function to remove Flatpak and Flatpak Applications using my script
-sw_remove_flatpak-script()
+sw_remove_flatpak_script()
 {
     message_logger "[I] Started: Removing Flatpak and Flatpak Applications [Script]"
     echo "[  ATTENTION  ] Removing: Flatpak and Flatpak Applications"
@@ -333,32 +333,32 @@ then
         esac
     done
 
-    sw_install_kde-pkgs
-    sw_install_microsoft-pkgs
-    sw_install_git-github-pkgs
-    sw_install_sys-util-pkgs
-    sw_install_gaming-pkgs
-    sw_remove_VLC-TW-Main-pkgs
-    sw_install_VLC-pkgs
+    sw_install_kde_pkgs
+    sw_install_microsoft_pkgs
+    sw_install_git_github_pkgs
+    sw_install_sys_util_pkgs
+    sw_install_gaming_pkgs
+    sw_remove_VLC_Main_pkgs
+    sw_install_VLC_pkgs
 
     # Process arguments and call corresponding functions
     for arg in "$@"
     do
         case "$arg" in
             discord)
-                sw_install_Discord-script
+                sw_install_Discord_script
                 ;;
             openrgb)
-                sw_install_openRGB-script
+                sw_install_openRGB_script
                 ;;
             gigabyte-sleep-fix)
-                sw_install_Gigabyte-Sleep-Fix-script
+                sw_install_Gigabyte_Sleep_Fix_script
                 ;;
             personalize)
-                sw_install_KDE-Personalization-script
+                sw_install_KDE_Personalization_script
                 ;;
             remove-flatpak)
-                sw_remove_flatpak-script
+                sw_remove_flatpak_script
                 ;;
         esac
     done
