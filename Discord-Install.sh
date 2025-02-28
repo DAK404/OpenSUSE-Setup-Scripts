@@ -11,57 +11,63 @@
 #
 ############################################################
 
-# Check if curl is installed
-if ! command -v curl &> /dev/null; then
-  echo "curl is not installed. Please install it and run the script again."
-  exit 1
-fi
+# Ensure strict error handling
+set -euo pipefail
 
-# Check if tar is installed
-if ! command -v tar &> /dev/null; then
-  echo "tar is not installed. Please install it and run the script again."
-  exit 1
-fi
-
-# Define the URL for the latest Discord .tar.gz release
 DISCORD_URL="https://discord.com/api/download?platform=linux&format=tar.gz"
+INSTALL_DIR="/opt/discord"
+BIN_PATH="/usr/bin/discord"
+DESKTOP_FILE="/usr/share/applications/discord.desktop"
+TMP_DIR=$(mktemp -d)
 
-# Define the target directory for downloading and extracting Discord
-TARGET_DIR="/tmp/discord"
+# Ensure required dependencies are installed
+deps=(curl tar zypper)
+for dep in "${deps[@]}"; do
+    if ! command -v "$dep" &> /dev/null; then
+        echo "Error: $dep is not installed. Please install it and rerun the script." >&2
+        exit 1
+    fi
+done
 
 # Remove any existing Discord installation
-sudo rm -rf /opt/discord
+if [[ -d "$INSTALL_DIR" ]]; then
+    sudo rm -rf "$INSTALL_DIR"
+    echo "Removed existing Discord installation."
+fi
 
-# Create the target directory if it doesn't exist
-mkdir -p "$TARGET_DIR"
+# Download and extract Discord
+echo "Downloading Discord..."
+curl -fsSL "$DISCORD_URL" -o "$TMP_DIR/discord.tar.gz" || {
+    echo "Error: Download failed." >&2
+    exit 1
+}
 
-# Download the latest Discord .tar.gz release to the target directory
-curl -L -o "$TARGET_DIR/discord.tar.gz" "$DISCORD_URL"
+tar -xzf "$TMP_DIR/discord.tar.gz" -C "$TMP_DIR" || {
+    echo "Error: Extraction failed." >&2
+    exit 1
+}
 
-# Extract the downloaded .tar.gz file
-tar -xzf "$TARGET_DIR/discord.tar.gz" -C "$TARGET_DIR"
+sudo mv "$TMP_DIR/Discord" "$INSTALL_DIR"
+rm -rf "$TMP_DIR"
 
-# Move the extracted files to the /opt directory
-sudo mv "$TARGET_DIR/Discord" /opt/discord
+echo "Discord installed successfully in $INSTALL_DIR"
 
-# Create a symbolic link to the Discord executable in /usr/bin
-sudo ln -sf /opt/discord/Discord /usr/bin/discord
+# Ensure executable is in PATH
+sudo ln -sf "$INSTALL_DIR/Discord" "$BIN_PATH"
+echo "Created symbolic link: $BIN_PATH"
 
-# Clean up the target directory
-rm -rf "$TARGET_DIR"
-
-# Create a desktop entry for Discord
-cat <<EOF | sudo tee /usr/share/applications/discord.desktop
-[Desktop Entry]
+# Create a desktop entry
+echo "Creating desktop entry..."
+echo "[Desktop Entry]
 Name=Discord
 Comment=Discord - Chat for Communities and Friends
-Exec=/usr/bin/discord
-Icon=/opt/discord/discord.png
+Exec=$BIN_PATH
+Icon=$INSTALL_DIR/discord.png
 Terminal=false
 Type=Application
-Categories=Network;InstantMessaging;
-EOF
+Categories=Network;InstantMessaging;" | sudo tee "$DESKTOP_FILE" > /dev/null
 
-sudo zypper install -y --no-recommends libdiscord-rpc*
+# Install required libraries
+sudo zypper install -y --no-recommends libdiscord-rpc* || echo "Warning: Failed to install libdiscord-rpc."
 
-echo "Discord installation completed!"
+echo "Discord installation completed successfully."

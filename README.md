@@ -6,6 +6,8 @@ This is a set of scripts that can help in configuring and setting up repositorie
 
 Further, this can be used to configure OpenSUSE Tumbleweed on multiple systems quickly by just using a shell script.
 
+Please note that the `Testing` branch is always ahead of the `main` branch. Therefore, there may be differences. If in doubt, please use the scripts in the main branch. The testing branch is used for testing.
+
 ## Table of Contents
 
 - [OpenSUSE Tumbleweed Setup Scripts](#opensuse-tumbleweed-setup-scripts)
@@ -38,19 +40,19 @@ The `OpenSUSE-setup.sh` script may require a few arguments as per your use-case 
 | codecs-opi        | Installs OPI and codecs from OPI                                   |
 | codecs-vlc        | Installs codecs from official VLC repository                       |
 | discord           | Installs Discord using my Script                                   |
-| openRGB           | Installs and sets up openRGB                                       |
+| openrgb           | Installs and sets up openRGB                                       |
 | gigabyte-sleep-fix| Fixes issues with Gigabyte systems that do not go to sleep         |
+| zen-browser       | Installs Zen Browser |
 | personalize       | Installs themes, sound themes and wallpapers                       |
 | remove-flatpak    | Removes flatpak and flatpak applications                           |
 
 Example:
 
 ```
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main/OpenSUSE_Installation.sh)" codecs-vlc discord openrgb gigabyte-sleep-fix personalize
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main/OpenSUSE_Installation.sh)" codecs-vlc discord openrgb gigabyte-sleep-fix zen-browser personalize
 ```
 
 ## The Other Shell Scripts
-
 | Script Name          | Description                                                                                           |
 |----------------------|-------------------------------------------------------------------------------------------------------|
 | Discord-Install.sh   | Downloads and installs Discord directly from the Discord website.                                     |
@@ -59,6 +61,7 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Sc
 | Remove_Flatpak.sh    | This script will remove Flatpak and Flatpak applications installed on your system. May be helpful for anyone who does not want or use Flatpak. |
 | Personalize.sh       | A script that will download and install [Vinceliuice](https://github.com/vinceliuice)'s Colloid Theme. |
 | login_tasks.sh       | Still working on this one. Currently, it just removes the `GPUCache` directory inside the MS Edge and VSCode config directories. |
+| Zen-Browser-Install.sh        | Installs Zen Browser, a lightweight and fast web browser.                                             |
 
 You may run individual scripts by the following command (replace the `<SCRIPT_NAME>` with a valid script file name):
 

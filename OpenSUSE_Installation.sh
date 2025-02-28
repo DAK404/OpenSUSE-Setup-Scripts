@@ -11,7 +11,7 @@
 #
 ############################################################
 
-SCRIPT_VERSION="2.0.1"
+SCRIPT_VERSION="2.0.2"
 INTERNET_CONNECTION=true
 
 LOG_FILE=/tmp/DAK404-OpenSUSE-Setup.log
@@ -64,7 +64,6 @@ add_repositories()
     # --------------------------------------------- #
 
     # ----------     REPOSITORY URLS     ---------- #
-    MSEDGE_REPO_URL='https://packages.microsoft.com/yumrepos/edge'
     VSCODE_REPO_URL='https://packages.microsoft.com/yumrepos/vscode'
     GITHUB_REPO_URL='https://rpm.packages.shiftkey.dev/rpm/'
     VLC_REPO_URL='https://download.videolan.org/pub/vlc/SuSE/Tumbleweed/'
@@ -75,7 +74,6 @@ add_repositories()
     message_logger "[I] Started: Add Microsoft Repositories"
     echo "[ INFORMATION ] Adding Repositories: Microsoft"
     sudo rpm --import "$MICROSOFT_GPG_KEY_URL"
-    sudo zypper --gpg-auto-import-keys addrepo --refresh "$MSEDGE_REPO_URL" 'microsoft-edge'
     sudo zypper --gpg-auto-import-keys addrepo --refresh "$VSCODE_REPO_URL" 'Visual Studio Code'
     message_logger "[I] Finished: Add Microsoft Repositories"
 
@@ -166,13 +164,13 @@ sw_install_kde_pkgs()
     message_logger "[I] Finished: KDE Utilities Installation"
 }
 
-# Function to install Microsoft Edge and VS Code
+# Function to install Microsoft Visual Studio Code
 sw_install_microsoft_pkgs()
 {
     message_logger "[I] Started: Installing Microsoft Edge and VS Code"
-    echo "[  ATTENTION  ] Installing: Microsoft Edge and VS Code"
-    sudo zypper install -y microsoft-edge-stable code
-    message_logger "[I] Finished: Installing Microsoft Edge and VS Code"
+    echo "[  ATTENTION  ] Installing: Microsoft Visual Studio Code"
+    sudo zypper install -y code
+    message_logger "[I] Finished: Installing Microsoft Visual Studio Code"
 }
 
 # Function to install GitHub Desktop and Git
@@ -252,6 +250,15 @@ sw_install_Gigabyte_Sleep_Fix_script()
     message_logger "[I] Finished: Installing Sleep Fix for Gigabyte Motherboards [Script]"
 }
 
+# Function to install Zen Browser using my script
+sw_install_Zen_Browser_script()
+{
+    message_logger "[I] Started: Installing Zen Browser [Script]"
+    echo "[  ATTENTION  ] Installing: Zen Browser"
+    bash -c "$(curl -fsSL ${SCRIPT_PATH}Zen-Browser-Install.sh)"
+    message_logger "[I] Finished: Installing Zen Browser [Script]"
+}
+
 # Function to install KDE Personalization using my script
 sw_install_KDE_Personalization_script()
 {
@@ -294,7 +301,7 @@ finish_cleanup()
     echo "[ INFORMATION ] Cleaning Up..."
     sudo zypper packages --unneeded | awk -F'|' 'NR==0 || NR==1 || NR==2 || NR==3 || NR==4 {next} {print $3}' | grep -v Name | sudo xargs zypper remove -y --clean-deps >> ~/Cleanup.log
     mv /tmp/DAK404-OpenSUSE-Setup.log ~/
-    echo "Setup Complete! Log file saved to ~/DAK404-OpenSSE-Setup.log"
+    echo "Setup Complete! Log file saved to ~/DAK404-OpenSUSE-Setup.log"
     echo "It is recommended to restart your system to apply changes."
 }
 
@@ -310,7 +317,7 @@ check_internet_connection
 if $INTERNET_CONNECTION
 then
     add_repositories
-    
+
     for arg in "$@"
     do
         case "$arg" in
@@ -356,6 +363,9 @@ then
                 ;;
             personalize)
                 sw_install_KDE_Personalization_script
+                ;;
+            zen-browser)
+                sw_install_Zen_Browser_script
                 ;;
             remove-flatpak)
                 sw_remove_flatpak_script

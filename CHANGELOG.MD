@@ -1,13 +1,41 @@
 # Changelog
 
+This is the changelog since version 2.0.0. Each section contains divisions for each addition, modification and deletion. Please go through the commits to find specific versions of the script.
+
+# Table of Contents
 - [Changelog](#changelog)
-  - [2.0.1](#201)
+- [Table of Contents](#table-of-contents)
+  - [2.0.2](#202)
     - [Additions](#additions)
-    - [Modifications:](#modifications)
+    - [Modifications](#modifications)
+    - [Deletions](#deletions)
+  - [2.0.1](#201)
+    - [Additions](#additions-1)
+    - [Modifications](#modifications-1)
   - [2.0.0](#200)
-    - [Additions:](#additions-1)
-    - [Modifications:](#modifications-1)
-    - [Deletions:](#deletions)
+    - [Additions](#additions-2)
+    - [Modifications](#modifications-2)
+    - [Deletions](#deletions-1)
+
+---
+
+## 2.0.2
+
+### Additions
+
++ Added Zen Browser Install scripts
+
+### Modifications
+
+* Added function to install Zen Browser to be installed from the `OpenSUSE_Installation.sh` script
+* Fixed a typo.
+* Optimized `Discord-Install.sh` script code with strict error handling, dependency checks, safer temporary directory handling, and improved logging
+* Removed `:` for each version in `CHANGELOG.MD` file
+* Updated `README.md` files
+
+### Deletions
+
+- Removed code for installing Microsoft Edges
 
 
 ## 2.0.1
@@ -16,7 +44,7 @@
 
 + Added the CHANGELOG file
 
-### Modifications:
+### Modifications
 
 * Function Nomenclature: Changed functions to have only underscores
 * Added `-y` to automate the installation to a few commands
@@ -24,7 +52,7 @@
 
 ## 2.0.0
 
-### Additions:
+### Additions
 
 + Message Logger: Log messages while performing setup
 + Check Internet Connection: Checks for internet connection when running the script
@@ -35,11 +63,11 @@
 + Log File: Script statuses are saved to log file for future reference
 + More Repositories: Added Games repository
 
-### Modifications:
+### Modifications
 
 * VLC Installation: Existing VLC versions are removed before installing the ones from the official website
 * Software installation happens only if an internet connection can be established
 
-### Deletions:
+### Deletions
 
 - Check For Updates: Script does not check for updates using `zypper dup`
