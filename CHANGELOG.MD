@@ -24,6 +24,7 @@ This is the changelog since version 2.0.0. Each section contains divisions for e
 ### Additions
 
 + Added Zen Browser Install scripts
++ Added logic to install ICM profiles inside the `colors` directory
 
 ### Modifications
 
