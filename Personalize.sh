@@ -3,23 +3,12 @@
 ############################################################
 # Personalization Script
 #
-# --- CHANGELOG ---
+# ATTENTION!
+# This script can be run in a single line from your shell!
+# Simply run the following in the Terminal:
 #
-# 1.3 (05-November-2024):
-#    * Add commands to install Breeze Transparent
+#   bash -c "$(curl -fsSL https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main/Personalize.sh)"
 #
-# 1.2 (13-September-2024):
-#    * Add commands to download and install 
-#      Posy's Cursor Set
-#    * Add separators to make the script more readable
-#
-# 1.1 (14-August-2024):
-#    * Remove MacSonoma theme
-#    * Add Colloid Kvantum and GTK themes
-#      (This is done so that the UI looks consistent)
-#
-# 1.0 (02-August-2024):
-#    * Initial Commit
 ############################################################
 
 # ---------------------------------------------------------- #
@@ -109,6 +98,11 @@ echo "[ INFORMATION ] Installing: Login Task"
 mkdir ~/.scripts
 # Copy the login_tasks.sh file to '~/.scripts/' directory
 cp login_tasks.sh ~/.scripts/
+
+# ---------------------------------------------------------- #
+
+echo "[ INFORMATION ] Installing: Display ICM Profiles"
+sudo cp ./color/*.icm /users/share/color
 
 # ---------------------------------------------------------- #
 
