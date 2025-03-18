@@ -10,9 +10,9 @@
 ############################################################
 
 # Remove flatpak and KDE Plasma Discover store
-sudo zypper remove discover6 flatpak
+zypper remove discover6 flatpak
 
 # Remove the flatpak directories
-sudo rm -rf ~/.local/share/flatpak
-sudo rm -rf /etc/flatpak
-sudo rm -rf /var/lib/flatpak
+rm -rf ~/.local/share/flatpak
+rm -rf /etc/flatpak
+rm -rf /var/lib/flatpak

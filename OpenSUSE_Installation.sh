@@ -11,297 +11,64 @@
 #
 ############################################################
 
-SCRIPT_VERSION="2.0.2"
+SCRIPT_VERSION="2.1.0"
 INTERNET_CONNECTION=true
 
 LOG_FILE=/tmp/DAK404-OpenSUSE-Setup.log
 SCRIPT_PATH="https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main/"
 
-# ********************************************************* #
-#                    REQUIREMENT CHECK
-# ********************************************************* #
+CODECS_TYPE="none"
+BROWSER_TYPE="none"
 
-# Function to log messages to specified path
-message_logger()
-{
-    local message="$1"
-    local timestamp=$(date +%s)
-    echo "[$timestamp]: $message" | tee -a "$LOG_FILE"
-}
+# Declare arrays to store scriptlet names
+declare -a FIXES
+declare -a TWEAKS
+declare -a PKGS
+declare -a PRSNL
+declare -a OTHER
 
-# Function to check if computer is able to ping GitHub servers
+# Check if the script is run as root
+if [ "$EUID" -ne 0 ]; then
+  echo "Please run as root"
+  exit 1
+fi
+
+# Function to check if the computer is able to ping GitHub servers
 check_internet_connection()
 {
-    message_logger "[I] Started: Internet Connection Check"
-    message_logger "[I] Pinging: github.com"
     if ping -c 1 github.com &> /dev/null
     then
-        message_logger "[I] Ping Successful"
         echo "[ INFORMATION ] Ping to GitHub Successful."
     else
-        message_logger "[W] Ping Unsuccessful"
         echo "[ WARNING ] Ping to GitHub Failed!"
         INTERNET_CONNECTION=false
         SCRIPT_PATH="./"
     fi
 
-    message_logger "[I] FINISHED: Internet Connection Check"
     echo "[ INFORMATION ] Internet Connection Check Complete"
 }
 
-# ********************************************************* #
-#                    REPOSITORY ADDITION
-# ********************************************************* #
-
-# Function to add necessary repositories
-add_repositories()
+# Function to run scriptlets
+scriptlet_runner()
 {
-    message_logger "[I] Started: Add Repositories"
+    local scriptlet_name="$1"
+    local scriptlet_path="$SCRIPT_PATH/Scriptlets/$scriptlet_name.sh"
 
-    # ---------- REPOSITORY GPG KEY URLS ---------- #
-    MICROSOFT_GPG_KEY_URL='https://packages.microsoft.com/keys/microsoft.asc'
-    GITHUB_GPG_KEY_URL='https://rpm.packages.shiftkey.dev/gpg.key'
-    # --------------------------------------------- #
+    if [ ! -f "$scriptlet_path" ]; then
+        echo "[ ERROR ] Scriptlet $scriptlet_name not found at $scriptlet_path!"
+        return 1
+    fi
 
-    # ----------     REPOSITORY URLS     ---------- #
-    VSCODE_REPO_URL='https://packages.microsoft.com/yumrepos/vscode'
-    GITHUB_REPO_URL='https://rpm.packages.shiftkey.dev/rpm/'
-    VLC_REPO_URL='https://download.videolan.org/pub/vlc/SuSE/Tumbleweed/'
-    GAMES_REPO_URL='https://download.opensuse.org/repositories/games/openSUSE_Tumbleweed/'
-    PACKMAN_REPO_URL='https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/'
-    # --------------------------------------------- #
-
-    message_logger "[I] Started: Add Microsoft Repositories"
-    echo "[ INFORMATION ] Adding Repositories: Microsoft"
-    sudo rpm --import "$MICROSOFT_GPG_KEY_URL"
-    sudo zypper --gpg-auto-import-keys addrepo --refresh "$VSCODE_REPO_URL" 'Visual Studio Code'
-    message_logger "[I] Finished: Add Microsoft Repositories"
-
-    message_logger "[I] Started: Add GitHub Repository"
-    echo "[ INFORMATION ] Adding Repository: GitHub Desktop"
-    sudo rpm --import "$GITHUB_GPG_KEY_URL"
-    sudo zypper --gpg-auto-import-keys addrepo --refresh "$GITHUB_REPO_URL" 'GitHub Desktop'
-    message_logger "[I] Finished: Add GitHub Repository"
-
-    message_logger "[I] Started: Add VLC Repository"
-    echo "[ INFORMATION ] Adding Repository: VLC"
-    sudo zypper --gpg-auto-import-keys addrepo --refresh "$VLC_REPO_URL" 'VLC'
-    message_logger "[I] Finished: Add VLC Repository"
-
-    message_logger "[I] Started: Add OpenSUSE Games Repository"
-    echo "[ INFORMATION ] Adding Repository: OpenSUSE Games"
-    sudo zypper --gpg-auto-import-keys addrepo --refresh "$GAMES_REPO_URL" 'Games'
-    message_logger "[I] Finished: Add OpenSUSE Games Repository"
-
-    message_logger "[I] Started: Refreshing Repositories; Importing GPG Keys"
-    echo "[ INFORMATION ] Refreshing Repositories; Importing GPG Keys..."
-    message_logger "$(sudo zypper --gpg-auto-import-keys refresh)"
-    message_logger "[I] Finished: Refreshing Repositories; Importing GPG Keys"
-
-    message_logger "[I] Finished: Add Repositories"
+    sudo bash "$scriptlet_path"
 }
 
-# ********************************************************* #
-#                    CODECS INSTALLATION
-# ********************************************************* #
-
-# Function to install codecs from Packman repositories
-codecs_install_packman()
+# Function to perform clean up
+cleanup()
 {
-    message_logger "[I] Started: Add Packman Repository"
-    echo "[ INFORMATION ] Adding Repository: Packman"
-    sudo zypper --gpg-auto-import-keys addrepo --refresh "$PACKMAN_REPO_URL" "Packman"
-    message_logger "[I] Finished: Add Packman Repository"
-
-    sudo zypper --gpg-auto-import-keys refresh
-
-    message_logger "[I] Started: Codecs Installation - Packman"
-    echo "[  ATTENTION  ] Installing: Codecs from Packman Repositories"
-    sudo zypper install -y --allow-vendor-change --from Packman ffmpeg gstreamer-plugins-{good,bad,ugly,libav} libavcodec vlc-codecs
-    message_logger "[I] Finished: Codecs Installation - Packman"
-}
-
-# Function to install codecs from Main repositories
-codecs_install_Main()
-{
-    message_logger "[I] Started: Codecs Installation - Main"
-    echo "[  ATTENTION  ] Installing: Codecs from Main Repositories (OSS)"
-    sudo zypper install -y ffmpeg gstreamer-plugins-{good,bad,ugly,libav} libavcodec vlc-codecs
-    message_logger "[I] Finished: Codecs Installation - Main"
-}
-
-# Function to install codecs from OPI
-codecs_install_opi()
-{
-    message_logger "[I] Started: Codecs Installation - OPI"
-    echo "[  ATTENTION  ] Installing: Codecs from OPI"
-    sudo zypper install -y opi
-    opi codecs -n
-    message_logger "[I] Finished: Codecs Installation - OPI"
-}
-
-# Function to install codecs from VLC repositories
-codecs_install_VLC()
-{
-    message_logger "[I] Started: Codecs Installation - VLC"
-    echo "[  ATTENTION  ] Installing: Codecs from VLC Repositories"
-    sudo zypper install -y ffmpeg gstreamer-plugins-{good,bad,ugly,libav}
-    latest_version=$(zypper search -s libavcodec | grep -Eo 'libavcodec[0-9]+' | sort -V | tail -1)
-    sudo zypper install -y --from VLC --allow-vendor-change vlc-codecs x264 x265 $latest_version
-    message_logger "[I] Finished: Codecs Installation - VLC"
-}
-
-# ********************************************************* #
-#                   SOFTWARE INSTALLATION
-# ********************************************************* #
-
-# Function to install KDE Utilities
-sw_install_kde_pkgs()
-{
-    message_logger "[I] Started: KDE Utilities Installation"
-    echo "[  ATTENTION  ] Installing: KDE Utilities"
-    sudo zypper install -y kdeconnect-kde krita kdenlive partitionmanager
-    message_logger "[I] Finished: KDE Utilities Installation"
-}
-
-# Function to install Microsoft Visual Studio Code
-sw_install_microsoft_pkgs()
-{
-    message_logger "[I] Started: Installing Microsoft Edge and VS Code"
-    echo "[  ATTENTION  ] Installing: Microsoft Visual Studio Code"
-    sudo zypper install -y code
-    message_logger "[I] Finished: Installing Microsoft Visual Studio Code"
-}
-
-# Function to install GitHub Desktop and Git
-sw_install_git_github_pkgs()
-{
-    message_logger "[I] Started: Installing GitHub Desktop and Git"
-    echo "[  ATTENTION  ] Installing: GitHub Desktop & Git"
-    sudo zypper install -y github-desktop git
-    message_logger "[I] Finished: Installing GitHub Desktop and Git"
-}
-
-# Function to install System Utilities
-sw_install_sys_util_pkgs()
-{
-    message_logger "[I] Started: Installing System Utilities"
-    echo "[  ATTENTION  ] Installing: System Utilities"
-    sudo zypper install -y fde-tools bleachbit libdbusmenu-glib4 p11-kit-server
-    message_logger "[I] Finished: Installing System Utilities"
-}
-
-# Function to install Gaming Components
-sw_install_gaming_pkgs()
-{
-    message_logger "[I] Started: Installing WINE and Gaming Components"
-    echo "[  ATTENTION  ] Installing: WINE and Gaming Components"
-    sudo zypper install -y dxvk wine lutris steam gamemode
-    message_logger "[I] Finished: Installing WINE and Gaming Components"
-}
-
-# Function to install VLC and Codecs
-sw_remove_VLC_Main_pkgs()
-{
-    message_logger "[I] Started: Removing VLC and Codecs from Main Repository (OSS)"
-    echo "[  ATTENTION  ] Removing: VLC and Codecs from Main Repository (OSS)"
-    sudo zypper remove -y vlc vlc-codecs
-    message_logger "[I] Finished: Removing VLC and Codecs from Main Repository (OSS)"
-}
-
-# Function to install VLC and Codecs
-sw_install_VLC_pkgs()
-{
-    message_logger "[I] Started: Installing VLC"
-    echo "[  ATTENTION  ] Installing: VLC"
-    sudo zypper install -y --from VLC --allow-vendor-change vlc
-    sudo zypper dup -y --from VLC --allow-vendor-change
-    message_logger "[I] Finished: Installing VLC"
-}
-
-# ********************************************************* #
-#                   SCRIPT INSTALLATION
-# ********************************************************* #
-
-# Function to install Discord using my script
-sw_install_Discord_script()
-{
-    message_logger "[I] Started: Installing Discord [Script]"
-    echo "[  ATTENTION  ] Installing: Discord"
-    bash -c "$(curl -fsSL ${SCRIPT_PATH}Discord-Install.sh)"
-    message_logger "[I] Finished: Installing Discord [Script]"
-}
-
-# Function to install OpenRGB using my script
-sw_install_openRGB_script()
-{
-    message_logger "[I] Started: Installing OpenRGB [Script]"
-    echo "[  ATTENTION  ] Installing: OpenRGB"
-    bash -c "$(curl -fsSL ${SCRIPT_PATH}OpenRGB.sh)"
-    message_logger "[I] Finished: Installing OpenRGB [Script]"
-}
-
-# Function to install Gigabyte Sleep Fix using my script
-sw_install_Gigabyte_Sleep_Fix_script()
-{
-    message_logger "[I] Started: Installing Sleep Fix for Gigabyte Motherboards [Script]"
-    echo "[  ATTENTION  ] Installing: Sleep Fix for Gigabyte Motherboards"
-    bash -c "$(curl -fsSL ${SCRIPT_PATH}GigabyteDesktop_Sleep_Fix.sh)"
-    message_logger "[I] Finished: Installing Sleep Fix for Gigabyte Motherboards [Script]"
-}
-
-# Function to install Zen Browser using my script
-sw_install_Zen_Browser_script()
-{
-    message_logger "[I] Started: Installing Zen Browser [Script]"
-    echo "[  ATTENTION  ] Installing: Zen Browser"
-    bash -c "$(curl -fsSL ${SCRIPT_PATH}Zen-Browser-Install.sh)"
-    message_logger "[I] Finished: Installing Zen Browser [Script]"
-}
-
-# Function to install KDE Personalization using my script
-sw_install_KDE_Personalization_script()
-{
-    message_logger "[I] Started: Installing KDE Personalization [Script]"
-    echo "[  ATTENTION  ] Installing: Wallpaper, Kvantum and Sound Themes"
-    bash -c "$(curl -fsSL ${SCRIPT_PATH}Personalize.sh)"
-    message_logger "[I] Finished: Installing KDE Personalization [Script]"
-}
-
-# Function to remove Flatpak and Flatpak Applications using my script
-sw_remove_flatpak_script()
-{
-    message_logger "[I] Started: Removing Flatpak and Flatpak Applications [Script]"
-    echo "[  ATTENTION  ] Removing: Flatpak and Flatpak Applications"
-    bash -c "$(curl -fsSL ${SCRIPT_PATH}Remove_Flatpak.sh)"
-    message_logger "[I] Finished: Removing Flatpak and Flatpak Applications [Script]"
-}
-
-# ********************************************************* #
-#                   ALIAS INSTALLATION
-# ********************************************************* #
-
-# Function to install 'autoremove' command
-alias_install_autoremove()
-{
-    message_logger "[I] Started: Installing 'autoremove' command"
-    printf "[ INFORMATION ] Installing: \'autoremove\' command\n"
-    echo "alias autoremove=\"sudo zypper packages --unneeded | awk -F'|' 'NR==0 || NR==1 || NR==2 || NR==3 || NR==4 {next} {print $3}' | grep -v Name | sudo xargs zypper remove -y --clean-deps >> ~/Cleanup.log\"" | sudo tee -a /etc/bash.bashrc.local
-    message_logger "[I] Finished: Installing 'autoremove' command"
-}
-
-# ********************************************************* #
-#                   CLEANUP FUNCTIONS
-# ********************************************************* #
-
-# Function to finish cleanup
-finish_cleanup()
-{
-    message_logger "[I] Started: Cleaning Up"
-    echo "[ INFORMATION ] Cleaning Up..."
-    sudo zypper packages --unneeded | awk -F'|' 'NR==0 || NR==1 || NR==2 || NR==3 || NR==4 {next} {print $3}' | grep -v Name | sudo xargs zypper remove -y --clean-deps >> ~/Cleanup.log
+    sudo zypper packages --unneeded | awk -F'|' 'NR==0 || NR==1 || NR==2 || NR==3 || NR==4 {next} {print $3}' | grep -v Name | sudo xargs -r zypper remove -y --clean-deps >> ~/Cleanup.log
     mv /tmp/DAK404-OpenSUSE-Setup.log ~/
-    echo "Setup Complete! Log file saved to ~/DAK404-OpenSUSE-Setup.log"
+
+    echo "Setup Complete! Log file saved to $HOME/DAK404-OpenSUSE-Setup.log"
     echo "It is recommended to restart your system to apply changes."
 }
 
@@ -309,73 +76,82 @@ finish_cleanup()
 #                     SCRIPT ENTRY POINT
 # ********************************************************* #
 
-message_logger "[I] OpenSUSE Setup Script - Version: $SCRIPT_VERSION"
-message_logger "[I] Log File stored in: $LOG_FILE"
+echo "[I] OpenSUSE Setup Script - Version: $SCRIPT_VERSION"
+echo "[I] Log File stored in: $LOG_FILE"
 
+# Check internet connection
 check_internet_connection
 
-if $INTERNET_CONNECTION
+# If no internet connection, set script path to local
+if ! $INTERNET_CONNECTION
 then
-    add_repositories
-
-    for arg in "$@"
-    do
-        case "$arg" in
-            codecs-packman)
-                codecs_install_packman
-                break
-                ;;
-            codecs-main)
-                codecs_install_Main
-                break
-                ;;
-            codecs-opi)
-                codecs_install_opi
-                break
-                ;;
-            codecs-vlc)
-                codecs_install_VLC
-                break
-                ;;
-        esac
-    done
-
-    sw_install_kde_pkgs
-    sw_install_microsoft_pkgs
-    sw_install_git_github_pkgs
-    sw_install_sys_util_pkgs
-    sw_install_gaming_pkgs
-    sw_remove_VLC_Main_pkgs
-    sw_install_VLC_pkgs
-
-    # Process arguments and call corresponding functions
-    for arg in "$@"
-    do
-        case "$arg" in
-            discord)
-                sw_install_Discord_script
-                ;;
-            openrgb)
-                sw_install_openRGB_script
-                ;;
-            gigabyte-sleep-fix)
-                sw_install_Gigabyte_Sleep_Fix_script
-                ;;
-            personalize)
-                sw_install_KDE_Personalization_script
-                ;;
-            zen-browser)
-                sw_install_Zen_Browser_script
-                ;;
-            remove-flatpak)
-                sw_remove_flatpak_script
-                ;;
-        esac
-    done
-
-else
-    echo "[   WARNING   ] Internet Connection Unavailable! Skipping Repository Addition, Codecs and Package Installation."
+    SCRIPT_PATH="./"
 fi
 
-alias_install_autoremove
-finish_cleanup
+# Parse arguments and store scriptlet names in arrays
+for arg in "$@"
+do
+    case "$arg" in
+        codecs=*)
+            CODECS_TYPE="${arg#*=}"
+            ;;
+        browser=*)
+            BROWSER_TYPE="${arg#*=}"
+            ;;
+        Fix=*)
+            IFS=',' read -r -a fix_array <<< "${arg#*=}"
+            FIXES+=("${fix_array[@]}")
+            ;;
+        Tweak=*)
+            IFS=',' read -r -a tweak_array <<< "${arg#*=}"
+            TWEAKS+=("${tweak_array[@]}")
+            ;;
+        Pkg=*)
+            IFS=',' read -r -a pkg_array <<< "${arg#*=}"
+            PKGS+=("${pkg_array[@]}")
+            ;;
+        Prsnl=*)
+            IFS=',' read -r -a prsnl_array <<< "${arg#*=}"
+            PRSNL+=("${prsnl_array[@]}")
+            ;;
+        Other=*)
+            IFS=',' read -r -a other_array <<< "${arg#*=}"
+            OTHER+=("${other_array[@]}")
+            ;;
+        *)
+            echo "[ ERROR ] Undefined Argument: $arg"
+            ;;
+    esac
+done
+
+# Run scriptlets for codecs and browsers
+scriptlet_runner "/Codecs/$CODECS_TYPE"
+scriptlet_runner "/Browsers/$BROWSER_TYPE"
+
+# Run all Fix scriptlets
+for fixes in "${FIXES[@]}"
+do
+    scriptlet_runner "/Fixes-and-Tweaks/Fix-$fixes"
+done
+
+# Run all Tweak scriptlets
+for tweaks in "${TWEAKS[@]}"
+do
+    scriptlet_runner "/Fixes-and-Tweaks/Tweak-$tweaks"
+done
+
+# Run all Package Installation scriptlets
+for pkgs in "${PKGS[@]}"
+do
+    scriptlet_runner "/Package-Installation/Tweak-$pkgs"
+done
+
+# Run all Personalization scriptlets
+for prsnl in "${PRSNL[@]}"
+do
+    scriptlet_runner "/Personalization/Personalization-$prsnl"
+done
+
+# Perform cleanup
+cleanup
+exit 0

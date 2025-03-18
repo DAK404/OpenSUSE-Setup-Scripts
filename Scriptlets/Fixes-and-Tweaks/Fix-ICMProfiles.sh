@@ -1,0 +1,1 @@
+cp ./color/*.icm /usr/share/color

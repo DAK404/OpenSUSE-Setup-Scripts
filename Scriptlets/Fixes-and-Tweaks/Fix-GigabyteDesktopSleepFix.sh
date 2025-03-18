@@ -8,7 +8,7 @@
 # This script can be run in a single line from your shell!
 # Simply run the following in the Terminal:
 #
-#   sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main/GigabyteDesktop_Sleep_Fix.sh)"
+#   bash -c "$(curl -fsSL https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main/GigabyteDesktop_Sleep_Fix.sh)"
 #
 # ----------------------------------------------------------
 #
@@ -18,7 +18,7 @@
 #    * Bump version to 1.0
 ############################################################
 
-sudo cat > /etc/systemd/system/biosWakeupWorkaround.service << EOL
+cat > /etc/systemd/system/biosWakeupWorkaround.service << EOL
 [Unit]
 Description=Workaround for Gigabyte BIOS sleep/wakeup bug
 
@@ -30,4 +30,4 @@ ExecStart = /bin/sh -c 'if grep 'GPP0' /proc/acpi/wakeup | grep -q 'enabled'; th
 WantedBy = multi-user.target
 EOL
 
-sudo systemctl daemon-reload && sudo systemctl enable biosWakeupWorkaround.service
+systemctl daemon-reload && systemctl enable biosWakeupWorkaround.service

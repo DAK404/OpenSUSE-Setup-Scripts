@@ -5,19 +5,44 @@ This is the changelog since version 2.0.0. Each section contains divisions for e
 # Table of Contents
 - [Changelog](#changelog)
 - [Table of Contents](#table-of-contents)
-  - [2.0.2](#202)
+  - [2.1.0](#210)
     - [Additions](#additions)
     - [Modifications](#modifications)
     - [Deletions](#deletions)
-  - [2.0.1](#201)
+  - [2.0.2](#202)
     - [Additions](#additions-1)
     - [Modifications](#modifications-1)
-  - [2.0.0](#200)
+    - [Deletions](#deletions-1)
+  - [2.0.1](#201)
     - [Additions](#additions-2)
     - [Modifications](#modifications-2)
-    - [Deletions](#deletions-1)
+  - [2.0.0](#200)
+    - [Additions](#additions-3)
+    - [Modifications](#modifications-3)
+    - [Deletions](#deletions-2)
 
 ---
+
+## 2.1.0
+
+### Additions
+
++ Added Google Chrome, Brave, MS Edge and Zen Browser installation scripts
++ Added option to install codecs from Packman Essentials
++ Added a fix to turn on NumLock in SDDM
++ Added a fix to download and install the `google-noto` font for all languages (essentially, websites and apps are not broken)
++ Added a fix to install ICM profiles for your monitors
++ Added script for package installation to download and install Warp Terminal (https://warp.dev)
+
+### Modifications
+
+* All steps of the installation are independent scripts
+* All scripts are structured inside directories based on actions
+
+### Deletions
+
+- Removed `message_logger()` function in the install scripts (Will reintroduce it once the scriptlets are improved)
+- Removed Discord installation script since Flatpak is official (plus discord media will not be broken due to codecs)
 
 ## 2.0.2
 

@@ -1,0 +1,1 @@
+echo -e "[General]\nNumLock=on" | tee -a /etc/sddm.conf > /dev/null
