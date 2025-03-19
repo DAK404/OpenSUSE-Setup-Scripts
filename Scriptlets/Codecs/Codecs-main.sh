@@ -1,1 +1,3 @@
-zypper install --allow-vendor-change --from packman-essentials ffmpeg gstreamer-plugins-{good,bad,ugly,libav} libavcodec vlc-codecs
+#!/bin/bash
+
+zypper install ffmpeg gstreamer-plugins-{good,bad,ugly,libav} libavcodec vlc-codecs

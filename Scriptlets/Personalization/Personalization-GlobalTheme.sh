@@ -1,3 +1,7 @@
+#!/bin/bash
+
+# ---------------------------------------------------------- #
+
 echo "[ INFORMATION ] Installing: Kvantum Manager"
 # Install Kvantum Manager & GTK theme requirements
 zypper in -y kvantum-manager gtk2-engine-murrine sassc
@@ -41,3 +45,5 @@ rm -rf ./Colloid-icon-theme-main
 echo "[ INFORMATION ] Cleaning Up ZIP Files"
 # remove all zip files in the directory
 rm -rf ./*.zip
+
+# ---------------------------------------------------------- #

@@ -18,8 +18,8 @@ echo "[  ATTENTION  ] Installing: OpenRGB & Utilities"
 # --- Install OpenRGB Tools --- #
 zypper install -y OpenRGB i2c-tools
 
-# Just following the steps outlined in OpenRGB GitLab repository
-# https://gitlab.com/CalcProgrammer1/OpenRGB
+# Just following the steps outlined in OpenRGB Source Code
+# https://gitlab.com/CalcProgrammer1/OpenRGB/-/tree/master/Documentation?ref_type=heads
 
 # --- Load the i2c-dev kernel module --- #
 echo "[ INFORMATION ] Loading i2c-dev Kernel Module"

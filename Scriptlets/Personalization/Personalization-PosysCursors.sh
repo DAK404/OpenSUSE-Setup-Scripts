@@ -1,3 +1,5 @@
+#!/bin/bash
+
 echo "[ INFORMATION ] Installing: Posy's Cursor Set"
 # Download the Posy's Cursor Set (Thanks Michel "Posy" de Boer and Simtrani for porting this to Linux!)
 curl -LJO https://github.com/simtrami/posy-improved-cursor-linux/archive/refs/heads/main.zip

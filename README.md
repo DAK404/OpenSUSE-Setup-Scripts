@@ -42,7 +42,7 @@ The `OpenSUSE-setup.sh` script may require a few arguments as per your use-case 
 | discord           | Installs Discord using my Script                                   |
 | openrgb           | Installs and sets up openRGB                                       |
 | gigabyte-sleep-fix| Fixes issues with Gigabyte systems that do not go to sleep         |
-| zen-browser       | Installs Zen Browser |
+| zen-browser       | Installs Zen Browser                                               |
 | personalize       | Installs themes, sound themes and wallpapers                       |
 | remove-flatpak    | Removes flatpak and flatpak applications                           |
 

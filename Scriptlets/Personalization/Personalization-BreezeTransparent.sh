@@ -1,3 +1,5 @@
+#!/bin/bash
+
 echo "[ INFORMATION ] Installing: Breeze Transparent Plasma Style"
 # Download the Breeze Transparent Plasma Style (Thanks Gumbachi!)
 curl -LJO https://github.com/Gumbachi/Breeze-Transparent/archive/refs/heads/main.zip
