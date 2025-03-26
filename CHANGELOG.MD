@@ -33,6 +33,7 @@ This is the changelog since version 2.0.0. Each section contains divisions for e
 + Added a fix to download and install the `google-noto` font for all languages (essentially, websites and apps are not broken)
 + Added a fix to install ICM profiles for your monitors
 + Added script for package installation to download and install Warp Terminal (https://warp.dev)
++ Added script to add a systemd service and timer to perform system updates on every 1st day of the month
 
 ### Modifications
 
@@ -43,6 +44,7 @@ This is the changelog since version 2.0.0. Each section contains divisions for e
 
 - Removed `message_logger()` function in the install scripts (Will reintroduce it once the scriptlets are improved)
 - Removed Discord installation script since Flatpak is official (plus discord media will not be broken due to codecs)
+- Removed `login_tasks.sh` (will be back soon)
 
 ## 2.0.2
 

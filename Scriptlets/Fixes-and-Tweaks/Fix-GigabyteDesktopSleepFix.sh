@@ -3,19 +3,12 @@
 ############################################################
 # Sleep/Wakeup Fix For Gigabyte Motherboards
 #
-# ----------------------------------------------------------
 # ATTENTION!
 # This script can be run in a single line from your shell!
 # Simply run the following in the Terminal:
 #
-#   bash -c "$(curl -fsSL https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main/GigabyteDesktop_Sleep_Fix.sh)"
+#   bash -c "$(curl -fsSL https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main/Scriptlets/Fixes-and-Tweaks/Fix-GigabyteDesktopSleepFix.sh)"
 #
-# ----------------------------------------------------------
-#
-# --- CHANGELOG ---
-#
-# 1.0 (19-July-2024):
-#    * Bump version to 1.0
 ############################################################
 
 cat > /etc/systemd/system/biosWakeupWorkaround.service << EOL

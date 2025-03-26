@@ -3,15 +3,12 @@
 ############################################################
 # OpenRGB Configuration Script
 #
-# --- CHANGELOG ---
+# ATTENTION!
+# This script can be run in a single line from your shell!
+# Simply run the following in the Terminal:
 #
-# 1.1 (28-July-2024):
-#    * Move OpenRGB tools into OpenRGB.sh
+#   bash -c "$(curl -fsSL https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main/Scriptlets/Fixes-and-Tweaks/Tweak-OpenRGB.sh)"
 #
-# 1.0 (19-July-2024):
-#    * Improve comments
-#    * Segregated each step of installation
-#    * echo each stage of script
 ############################################################
 
 echo "[  ATTENTION  ] Installing: OpenRGB & Utilities"

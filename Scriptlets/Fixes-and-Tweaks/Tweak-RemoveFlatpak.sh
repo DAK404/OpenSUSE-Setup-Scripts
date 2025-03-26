@@ -3,10 +3,12 @@
 ############################################################
 # Flatpak Removal Script
 #
-# --- CHANGELOG ---
+# ATTENTION!
+# This script can be run in a single line from your shell!
+# Simply run the following in the Terminal:
 #
-# 1.0 (05-November-2024):
-#    * Initial Commit
+#   bash -c "$(curl -fsSL https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main/Scriptlets/Fixes-and-Tweaks/Tweak-RemoveFlatpak.sh)"
+#
 ############################################################
 
 # Remove flatpak and KDE Plasma Discover store
