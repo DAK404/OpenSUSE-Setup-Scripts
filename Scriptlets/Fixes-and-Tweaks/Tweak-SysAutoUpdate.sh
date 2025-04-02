@@ -17,7 +17,8 @@ SCRIPT_NAME="Timely-Update.sh"
 # Script content
 SCRIPT_CONTENT='#!/bin/bash
 zypper refresh
-zypper dup -y'
+zypper dup -y
+flatpak update -y'
 
 # Service name (without .service suffix)
 SERVICE_NAME="TW-Update"
