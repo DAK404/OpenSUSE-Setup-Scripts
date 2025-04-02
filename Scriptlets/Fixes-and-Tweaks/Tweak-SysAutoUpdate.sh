@@ -39,7 +39,9 @@ Wants=network-online.target
 
 [Service]
 Type=oneshot
+User=root
 ExecStart=/usr/local/bin/$SCRIPT_NAME"
+NoNewPrivileges=no
 
 # Timer file content
 TIMER_CONTENT="[Unit]
