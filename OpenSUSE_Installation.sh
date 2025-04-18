@@ -6,7 +6,7 @@
 # ATTENTION!
 # This script can be run in a single line from your shell!
 # Simply run the following in the Terminal:
-#   bash -c "$(curl -fsSL https://raw.githubusercontent.com/n-shamsi/OpenSUSE-Setup-Scripts/refs/heads/n-shamsi-leap-1/OpenSUSE_Installation.sh)"
+#   curl -fsSL https://raw.githubusercontent.com/n-shamsi/OpenSUSE-Setup-Scripts/refs/heads/n-shamsi-leap-1/OpenSUSE_Installation.sh | bash -s args
 #
 ############################################################
 
@@ -61,7 +61,7 @@ add_repositories()
 
     # ----------     REPOSITORY URLS     ---------- #
     VLC_REPO_URL='https://download.videolan.org/SuSE/$releasever/'
-    PACKMAN_REPO_URL='https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Leap_15.6'
+    PACKMAN_REPO_URL='https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Leap_$releasever/'
     NVIDIA_REPO_URL='https://download.nvidia.com/opensuse/leap/$releasever'
     # --------------------------------------------- #
 
