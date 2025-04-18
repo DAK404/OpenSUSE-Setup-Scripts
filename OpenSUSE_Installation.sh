@@ -260,7 +260,7 @@ finish_cleanup()
     echo "[ INFORMATION ] Cleaning Up..."
     sudo zypper packages --unneeded | awk -F'|' 'NR==0 || NR==1 || NR==2 || NR==3 || NR==4 {next} {print $3}' | grep -v Name | sudo xargs zypper remove -y --clean-deps >> ~/Cleanup.log
     mv /tmp/nis-OpenSUSE-Setup.log ~/
-    echo "Setup Complete! Log file saved to ~/DAK404-OpenSSE-Setup.log"
+    echo "Setup Complete! Log file saved to ~/nis-OpenSSE-Setup.log"
     echo "It is recommended to restart your system to apply changes."
 }
 
