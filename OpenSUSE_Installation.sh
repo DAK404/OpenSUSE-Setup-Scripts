@@ -209,16 +209,6 @@ sw_install_sci_pkgs()
     message_logger "[I] Finished: Installing Science packages"
 }
 
-# Function to install Tabby
-sw_download_tabby()
-{
-    message_logger "[I] Started: Installing Tabby"
-    echo "[  ATTENTION  ] Installing: Tabby"
-    git clone https://github.com/bertvandepoel/tabby.git
-    cd ..
-    message_logger "[I] Finished: Installing Science packages"
-}
-
 # Function to install ZSH and related tools
 sw_install_zsh_pkgs()
 {
@@ -302,11 +292,9 @@ then
     sw_install_make_pkgs
     sw_install_kde_pkgs
     sw_install_sys_util_pkgs
-    sw_install_gaming_pkgs
     sw_remove_VLC_Main_pkgs
     sw_install_VLC_pkgs
     sw_install_sci_pkgs
-    sw_download_tabby
     sw_install_zsh_pkgs
 
 else
