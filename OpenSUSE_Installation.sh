@@ -61,10 +61,8 @@ add_repositories()
 
     # ----------     REPOSITORY URLS     ---------- #
     VLC_REPO_URL='https://download.videolan.org/SuSE/$releasever/'
-    PACKMAN_REPO_URL='https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Leap_$releasever/'
-    SCIENCE_REPO_URL='https://download.opensuse.org/repositories/science/$releasever/' # linear algebra libraries
-    DATABASE_URL='https://download.opensuse.org/repositories/server:/database/$releasever/'
-    NVIDIA_URL='https://download.nvidia.com/opensuse/leap/$releasever'
+    PACKMAN_REPO_URL='https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Leap_15.6'
+    NVIDIA_REPO_URL='https://download.nvidia.com/opensuse/leap/$releasever'
     # --------------------------------------------- #
 
     message_logger "[I] Started: Add VLC Repository"
@@ -74,7 +72,7 @@ add_repositories()
 
     message_logger "[I] Started: Add OpenSUSE NVIDIA Repository"
     echo "[ INFORMATION ] Adding Repository: OpenSUSE NVIDIA"
-    sudo zypper --gpg-auto-import-keys addrepo --refresh "$NVIDIA_URL" 'NVIDIA'
+    sudo zypper --gpg-auto-import-keys addrepo --refresh "$NVIDIA_REPO_URL" 'NVIDIA'
     message_logger "[I] Finished: Add OpenSUSE NVIDIA Repository"
 
     message_logger "[I] Started: Refreshing Repositories; Importing GPG Keys"
@@ -151,7 +149,7 @@ sw_install_py_pkgs()
 {
     message_logger "[I] Started: Python3 Installation"
     echo "[  ATTENTION  ] Installing: Python3"
-    sudo zypper -y python3 python3-devel python3-pip pyinstaller
+    sudo zypper install -y python3 python3-devel python3-pip pyinstaller
     message_logger "[I] Finished: Python3"
 }
 
@@ -160,7 +158,7 @@ sw_install_cmake_pkgs()
 {
     message_logger "[I] Started: Cmake Installation"
     echo "[  ATTENTION  ] Installing: Cmake"
-    sudo zypper --non-interactive install -t pattern devel_basis cmake gcc-fortran libgomp1
+    sudo zypper install -y -t pattern devel_basis gdb cmake gcc-fortran libgomp1
     message_logger "[I] Finished: Cmake"
 }
 
@@ -211,21 +209,6 @@ sw_install_sci_pkgs()
     message_logger "[I] Finished: Installing Science packages"
 }
 
-# Function to install ZSH and related tools
-sw_install_zsh_pkgs()
-{
-    message_logger "[I] Started: Installing ZSH and Tools"
-    echo "[  ATTENTION  ] Installing: ZSH and Tools"
-    sudo zypper install -y git-core zsh
-    chsh -s $(which zsh)
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-    git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-    echo "plugins=(git zsh-autosuggestions zsh-syntax-highlighting)" >> ~/.zshrc
-    source ~/.zshrc
-    message_logger "[I] Finished: Installing ZSH and Tools"
-}
-
 # Function to install Tabby
 sw_install_tabby_pkgs()
 {
@@ -236,6 +219,21 @@ sw_install_tabby_pkgs()
     pip install .
     cd ..
     message_logger "[I] Finished: Installing Science packages"
+}
+
+# Function to install ZSH and related tools
+sw_install_zsh_pkgs()
+{
+    message_logger "[I] Started: Installing ZSH and Tools"
+    echo "[  ATTENTION  ] Installing: ZSH and Tools"
+    sudo zypper install -y git-core zsh
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+    git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+    echo "PROMPT='%n@%m %~ %# '" >> ~/.zshrc
+    echo "plugins=(git zsh-autosuggestions zsh-syntax-highlighting)" >> ~/.zshrc
+    source ~/.zshrc
+    message_logger "[I] Finished: Installing ZSH and Tools"
 }
 
 # ********************************************************* #
