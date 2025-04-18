@@ -1,14 +1,14 @@
-# OpenSUSE Tumbleweed Setup Scripts
+# OpenSUSE Leap Setup Scripts (w/ NVIDIA+CUDA)
 
-**Now with improved code in version 2.0.0 and beyond!**
+**Fork of [this](https://github.com/DAK404/OpenSUSE-Setup-Scripts) repo (version 2.0.0) for Tumbleweed**
 
 This is a set of scripts that can help in configuring and setting up repositories, codecs, packages and configure applications or systems for daily use.
 
-Further, this can be used to configure OpenSUSE Tumbleweed on multiple systems quickly by just using a shell script.
+Further, this can be used to configure OpenSUSE Leap (15.6) on multiple systems quickly by just using a shell script.
 
 ## Table of Contents
 
-- [OpenSUSE Tumbleweed Setup Scripts](#opensuse-tumbleweed-setup-scripts)
+- [OpenSUSE Leap Setup Scripts](#opensuse-tumbleweed-setup-scripts)
   - [Table of Contents](#table-of-contents)
   - [How To Use](#how-to-use)
   - [Arguments](#arguments)
@@ -21,6 +21,7 @@ Further, this can be used to configure OpenSUSE Tumbleweed on multiple systems q
 
 To run the script without the extras, you can simply copy paste the below code to get it running.
 
+TODO: edit
 ```
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main/OpenSUSE_Installation.sh)"
 ```
@@ -37,40 +38,9 @@ The `OpenSUSE-setup.sh` script may require a few arguments as per your use-case 
 | codecs-main       | Installs codecs from Repository Main (OSS)                         |
 | codecs-opi        | Installs OPI and codecs from OPI                                   |
 | codecs-vlc        | Installs codecs from official VLC repository                       |
-| discord           | Installs Discord using my Script                                   |
-| openRGB           | Installs and sets up openRGB                                       |
-| gigabyte-sleep-fix| Fixes issues with Gigabyte systems that do not go to sleep         |
-| personalize       | Installs themes, sound themes and wallpapers                       |
-| remove-flatpak    | Removes flatpak and flatpak applications                           |
-
-Example:
-
-```
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main/OpenSUSE_Installation.sh)" codecs-vlc discord openrgb gigabyte-sleep-fix personalize
-```
-
-## The Other Shell Scripts
-
-| Script Name          | Description                                                                                           |
-|----------------------|-------------------------------------------------------------------------------------------------------|
-| Discord-Install.sh   | Downloads and installs Discord directly from the Discord website.                                     |
-| OpenRGB.sh           | Downloads and configures OpenRGB for managing peripheral lighting. Also, please check the [Official OpenRGB Repository](https://gitlab.com/CalcProgrammer1/OpenRGB#smbus-access-1) for more information. |
-| GigabyteDesktop_Sleep_Fix.sh| Please check [THIS](https://www.reddit.com/r/gigabyte/comments/p5ewjn/b550i_pro_ax_f13_bios_sleep_issue_on_linux/?rdt=52322). Essentially, a few Gigabyte motherboards have issues with Linux installations of not able to sleep. |
-| Remove_Flatpak.sh    | This script will remove Flatpak and Flatpak applications installed on your system. May be helpful for anyone who does not want or use Flatpak. |
-| Personalize.sh       | A script that will download and install [Vinceliuice](https://github.com/vinceliuice)'s Colloid Theme. |
-| login_tasks.sh       | Still working on this one. Currently, it just removes the `GPUCache` directory inside the MS Edge and VSCode config directories. |
-
-You may run individual scripts by the following command (replace the `<SCRIPT_NAME>` with a valid script file name):
-
-```
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main/<SCRIPT_NAME>.sh)"
-```
-
-## I Need More Information!
-
-Please check the [GitHub Wiki](https://github.com/DAK404/OpenSUSE-Setup-Scripts/wiki) to learn more about the project.
-
-If you are looking for the older scripts, please check the [Legacy Branch](https://github.com/DAK404/OpenSUSE-Setup-Scripts/tree/Legacy). However, these scripts will not be maintained anymore, since the scripts in version `2.0.0` are better in all aspects.
+| python            | Install Python 3.13 and tools                                      |
+| zsh               | Install ZSH and Oh-My-Zsh                                          |
+| nvidia-cuda       | Install NVIDIA G06 drivers                                         |
 
 ## DISCLAIMER!
 
