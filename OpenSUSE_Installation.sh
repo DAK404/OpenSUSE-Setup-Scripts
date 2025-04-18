@@ -11,11 +11,14 @@
 #
 ############################################################
 
-SCRIPT_VERSION="2.0.1"
+TODO: add functions
+TODO: fix repos
+
+SCRIPT_VERSION="0.0.1"
 INTERNET_CONNECTION=true
 
-LOG_FILE=/tmp/DAK404-OpenSUSE-Setup.log
-SCRIPT_PATH="https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main/"
+LOG_FILE=/tmp/n-shamsi-OpenSUSE-Setup.log
+SCRIPT_PATH="https://raw.githubusercontent.com/n-shamsi/OpenSUSE-Setup-Scripts/main/"
 
 # ********************************************************* #
 #                    REQUIREMENT CHECK
@@ -59,31 +62,17 @@ add_repositories()
     message_logger "[I] Started: Add Repositories"
 
     # ---------- REPOSITORY GPG KEY URLS ---------- #
-    MICROSOFT_GPG_KEY_URL='https://packages.microsoft.com/keys/microsoft.asc'
-    GITHUB_GPG_KEY_URL='https://rpm.packages.shiftkey.dev/gpg.key'
+    TODO: add
     # --------------------------------------------- #
 
     # ----------     REPOSITORY URLS     ---------- #
-    MSEDGE_REPO_URL='https://packages.microsoft.com/yumrepos/edge'
-    VSCODE_REPO_URL='https://packages.microsoft.com/yumrepos/vscode'
-    GITHUB_REPO_URL='https://rpm.packages.shiftkey.dev/rpm/'
-    VLC_REPO_URL='https://download.videolan.org/pub/vlc/SuSE/Tumbleweed/'
-    GAMES_REPO_URL='https://download.opensuse.org/repositories/games/openSUSE_Tumbleweed/'
-    PACKMAN_REPO_URL='https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/'
+    VLC_REPO_URL='https://download.videolan.org/SuSE/$releasever/'
+    GAMES_REPO_URL='https://download.opensuse.org/repositories/games:/tools/$releasever/'
+    PACKMAN_REPO_URL='https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Leap_$releasever/'
+    SCIENCE_REPO_URL='https://download.opensuse.org/repositories/science/$releasever/' # linear algebra libraries
+    DATABASE_URL='https://download.opensuse.org/repositories/server:/database/$releasever/'
+    NVIDIA_URL='https://download.nvidia.com/opensuse/leap/$releasever'
     # --------------------------------------------- #
-
-    message_logger "[I] Started: Add Microsoft Repositories"
-    echo "[ INFORMATION ] Adding Repositories: Microsoft"
-    sudo rpm --import "$MICROSOFT_GPG_KEY_URL"
-    sudo zypper --gpg-auto-import-keys addrepo --refresh "$MSEDGE_REPO_URL" 'microsoft-edge'
-    sudo zypper --gpg-auto-import-keys addrepo --refresh "$VSCODE_REPO_URL" 'Visual Studio Code'
-    message_logger "[I] Finished: Add Microsoft Repositories"
-
-    message_logger "[I] Started: Add GitHub Repository"
-    echo "[ INFORMATION ] Adding Repository: GitHub Desktop"
-    sudo rpm --import "$GITHUB_GPG_KEY_URL"
-    sudo zypper --gpg-auto-import-keys addrepo --refresh "$GITHUB_REPO_URL" 'GitHub Desktop'
-    message_logger "[I] Finished: Add GitHub Repository"
 
     message_logger "[I] Started: Add VLC Repository"
     echo "[ INFORMATION ] Adding Repository: VLC"
@@ -94,6 +83,11 @@ add_repositories()
     echo "[ INFORMATION ] Adding Repository: OpenSUSE Games"
     sudo zypper --gpg-auto-import-keys addrepo --refresh "$GAMES_REPO_URL" 'Games'
     message_logger "[I] Finished: Add OpenSUSE Games Repository"
+
+    message_logger "[I] Started: Add OpenSUSE NVIDIA Repository"
+    echo "[ INFORMATION ] Adding Repository: OpenSUSE NVIDIA"
+    sudo zypper --gpg-auto-import-keys addrepo --refresh "$NVIDIA_URL" 'NVIDIA'
+    message_logger "[I] Finished: Add OpenSUSE NVIDIA Repository"
 
     message_logger "[I] Started: Refreshing Repositories; Importing GPG Keys"
     echo "[ INFORMATION ] Refreshing Repositories; Importing GPG Keys..."
@@ -112,7 +106,7 @@ codecs_install_packman()
 {
     message_logger "[I] Started: Add Packman Repository"
     echo "[ INFORMATION ] Adding Repository: Packman"
-    sudo zypper --gpg-auto-import-keys addrepo --refresh "$PACKMAN_REPO_URL" "Packman"
+    sudo zypper --gpg-auto-import-keys addrepo --refresh "$PACKMAN_REPO_URL" "packman"
     message_logger "[I] Finished: Add Packman Repository"
 
     sudo zypper --gpg-auto-import-keys refresh
@@ -166,24 +160,6 @@ sw_install_kde_pkgs()
     message_logger "[I] Finished: KDE Utilities Installation"
 }
 
-# Function to install Microsoft Edge and VS Code
-sw_install_microsoft_pkgs()
-{
-    message_logger "[I] Started: Installing Microsoft Edge and VS Code"
-    echo "[  ATTENTION  ] Installing: Microsoft Edge and VS Code"
-    sudo zypper install -y microsoft-edge-stable code
-    message_logger "[I] Finished: Installing Microsoft Edge and VS Code"
-}
-
-# Function to install GitHub Desktop and Git
-sw_install_git_github_pkgs()
-{
-    message_logger "[I] Started: Installing GitHub Desktop and Git"
-    echo "[  ATTENTION  ] Installing: GitHub Desktop & Git"
-    sudo zypper install -y github-desktop git
-    message_logger "[I] Finished: Installing GitHub Desktop and Git"
-}
-
 # Function to install System Utilities
 sw_install_sys_util_pkgs()
 {
@@ -219,55 +195,6 @@ sw_install_VLC_pkgs()
     sudo zypper install -y --from VLC --allow-vendor-change vlc
     sudo zypper dup -y --from VLC --allow-vendor-change
     message_logger "[I] Finished: Installing VLC"
-}
-
-# ********************************************************* #
-#                   SCRIPT INSTALLATION
-# ********************************************************* #
-
-# Function to install Discord using my script
-sw_install_Discord_script()
-{
-    message_logger "[I] Started: Installing Discord [Script]"
-    echo "[  ATTENTION  ] Installing: Discord"
-    bash -c "$(curl -fsSL ${SCRIPT_PATH}Discord-Install.sh)"
-    message_logger "[I] Finished: Installing Discord [Script]"
-}
-
-# Function to install OpenRGB using my script
-sw_install_openRGB_script()
-{
-    message_logger "[I] Started: Installing OpenRGB [Script]"
-    echo "[  ATTENTION  ] Installing: OpenRGB"
-    bash -c "$(curl -fsSL ${SCRIPT_PATH}OpenRGB.sh)"
-    message_logger "[I] Finished: Installing OpenRGB [Script]"
-}
-
-# Function to install Gigabyte Sleep Fix using my script
-sw_install_Gigabyte_Sleep_Fix_script()
-{
-    message_logger "[I] Started: Installing Sleep Fix for Gigabyte Motherboards [Script]"
-    echo "[  ATTENTION  ] Installing: Sleep Fix for Gigabyte Motherboards"
-    bash -c "$(curl -fsSL ${SCRIPT_PATH}GigabyteDesktop_Sleep_Fix.sh)"
-    message_logger "[I] Finished: Installing Sleep Fix for Gigabyte Motherboards [Script]"
-}
-
-# Function to install KDE Personalization using my script
-sw_install_KDE_Personalization_script()
-{
-    message_logger "[I] Started: Installing KDE Personalization [Script]"
-    echo "[  ATTENTION  ] Installing: Wallpaper, Kvantum and Sound Themes"
-    bash -c "$(curl -fsSL ${SCRIPT_PATH}Personalize.sh)"
-    message_logger "[I] Finished: Installing KDE Personalization [Script]"
-}
-
-# Function to remove Flatpak and Flatpak Applications using my script
-sw_remove_flatpak_script()
-{
-    message_logger "[I] Started: Removing Flatpak and Flatpak Applications [Script]"
-    echo "[  ATTENTION  ] Removing: Flatpak and Flatpak Applications"
-    bash -c "$(curl -fsSL ${SCRIPT_PATH}Remove_Flatpak.sh)"
-    message_logger "[I] Finished: Removing Flatpak and Flatpak Applications [Script]"
 }
 
 # ********************************************************* #
@@ -334,34 +261,10 @@ then
     done
 
     sw_install_kde_pkgs
-    sw_install_microsoft_pkgs
-    sw_install_git_github_pkgs
     sw_install_sys_util_pkgs
     sw_install_gaming_pkgs
     sw_remove_VLC_Main_pkgs
     sw_install_VLC_pkgs
-
-    # Process arguments and call corresponding functions
-    for arg in "$@"
-    do
-        case "$arg" in
-            discord)
-                sw_install_Discord_script
-                ;;
-            openrgb)
-                sw_install_openRGB_script
-                ;;
-            gigabyte-sleep-fix)
-                sw_install_Gigabyte_Sleep_Fix_script
-                ;;
-            personalize)
-                sw_install_KDE_Personalization_script
-                ;;
-            remove-flatpak)
-                sw_remove_flatpak_script
-                ;;
-        esac
-    done
 
 else
     echo "[   WARNING   ] Internet Connection Unavailable! Skipping Repository Addition, Codecs and Package Installation."
