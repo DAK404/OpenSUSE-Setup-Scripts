@@ -35,10 +35,7 @@ The `OpenSUSE-setup.sh` script may require a few arguments as per your use-case 
 | codecs-packman    | Installs codecs from Packman repository                            |
 | codecs-main       | Installs codecs from Repository Main (OSS)                         |
 | codecs-opi        | Installs OPI and codecs from OPI                                   |
-| codecs-vlc        | Installs codecs from official VLC repository                       |
-| python            | Install Python 3.13 and tools                                      |
-| zsh               | Install ZSH and Oh-My-Zsh                                          |
-| nvidia-cuda       | Install NVIDIA G06 drivers                                         |
+| codecs-vlc        | Installs codecs from official VLC 
 
 ## DISCLAIMER!
 
