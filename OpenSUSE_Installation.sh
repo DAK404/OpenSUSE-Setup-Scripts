@@ -11,13 +11,12 @@
 #
 ############################################################
 
-TODO: add functions
-TODO: fix repos
+TODO: add NVIDIA G06 drivers install
 
 SCRIPT_VERSION="0.0.1"
 INTERNET_CONNECTION=true
 
-LOG_FILE=/tmp/n-shamsi-OpenSUSE-Setup.log
+LOG_FILE=/tmp/nis-OpenSUSE-Setup.log
 SCRIPT_PATH="https://raw.githubusercontent.com/n-shamsi/OpenSUSE-Setup-Scripts/main/"
 
 # ********************************************************* #
@@ -61,10 +60,6 @@ add_repositories()
 {
     message_logger "[I] Started: Add Repositories"
 
-    # ---------- REPOSITORY GPG KEY URLS ---------- #
-    TODO: add
-    # --------------------------------------------- #
-
     # ----------     REPOSITORY URLS     ---------- #
     VLC_REPO_URL='https://download.videolan.org/SuSE/$releasever/'
     PACKMAN_REPO_URL='https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Leap_$releasever/'
@@ -102,7 +97,6 @@ codecs_install_packman()
     echo "[ INFORMATION ] Adding Repository: Packman"
     sudo zypper --gpg-auto-import-keys addrepo --refresh "$PACKMAN_REPO_URL" "packman"
     message_logger "[I] Finished: Add Packman Repository"
-
     sudo zypper --gpg-auto-import-keys refresh
 
     message_logger "[I] Started: Codecs Installation - Packman"
@@ -145,12 +139,20 @@ codecs_install_VLC()
 #                   SOFTWARE INSTALLATION
 # ********************************************************* #
 
+mk_tools_dir()
+{
+    message_logger "[I] Started: Making tools directory"
+    echo "[ ATTENTION ] Making: Tools directory"
+    mkdir tools
+    cd tools
+}
+
 # Function to install python
 sw_install_py_pkgs()
 {
     message_logger "[I] Started: Python3 Installation"
     echo "[  ATTENTION  ] Installing: Python3"
-    sudo zypper -y python3 python3-devel
+    sudo zypper -y python3 python3-devel python3-pip pyinstaller
     message_logger "[I] Finished: Python3"
 }
 
@@ -210,6 +212,33 @@ sw_install_sci_pkgs()
     message_logger "[I] Finished: Installing Science packages"
 }
 
+# Function to install ZSH and related tools
+sw_install_zsh_pkgs()
+{
+    message_logger "[I] Started: Installing ZSH and Tools"
+    echo "[  ATTENTION  ] Installing: ZSH and Tools"
+    sudo zypper install -y git-core zsh
+    chsh -s $(which zsh)
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+    git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+    echo "plugins=(git zsh-autosuggestions zsh-syntax-highlighting)" >> ~/.zshrc
+    source ~/.zshrc
+    message_logger "[I] Finished: Installing ZSH and Tools"
+}
+
+# Function to install Tabby
+sw_install_tabby_pkgs()
+{
+    message_logger "[I] Started: Installing Tabby"
+    echo "[  ATTENTION  ] Installing: Tabby"
+    git clone https://github.com/bertvandepoel/tabby.git
+    cd tabby
+    pip install .
+    cd ..
+    message_logger "[I] Finished: Installing Science packages"
+}
+
 # ********************************************************* #
 #                   ALIAS INSTALLATION
 # ********************************************************* #
@@ -233,7 +262,7 @@ finish_cleanup()
     message_logger "[I] Started: Cleaning Up"
     echo "[ INFORMATION ] Cleaning Up..."
     sudo zypper packages --unneeded | awk -F'|' 'NR==0 || NR==1 || NR==2 || NR==3 || NR==4 {next} {print $3}' | grep -v Name | sudo xargs zypper remove -y --clean-deps >> ~/Cleanup.log
-    mv /tmp/DAK404-OpenSUSE-Setup.log ~/
+    mv /tmp/nis-OpenSUSE-Setup.log ~/
     echo "Setup Complete! Log file saved to ~/DAK404-OpenSSE-Setup.log"
     echo "It is recommended to restart your system to apply changes."
 }
@@ -273,11 +302,17 @@ then
         esac
     done
 
+    mk_tools_dir
+    sw_install_py_pkgs
+    sw_install_cmake_pkgs
     sw_install_kde_pkgs
     sw_install_sys_util_pkgs
     sw_install_gaming_pkgs
     sw_remove_VLC_Main_pkgs
     sw_install_VLC_pkgs
+    sw_install_sci_pkgs
+    sw_install_zsh_pkgs
+    sw_install_tabby_pkgs
 
 else
     echo "[   WARNING   ] Internet Connection Unavailable! Skipping Repository Addition, Codecs and Package Installation."
