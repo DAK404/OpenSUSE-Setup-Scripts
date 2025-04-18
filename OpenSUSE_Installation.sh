@@ -149,7 +149,7 @@ sw_install_py_pkgs()
 {
     message_logger "[I] Started: Python3 Installation"
     echo "[  ATTENTION  ] Installing: Python3"
-    sudo zypper install -y python3 python3-devel python3-pip pyinstaller
+    sudo zypper install -y python311 python311-devel python311-pip python311-setuptools
     message_logger "[I] Finished: Python3 Installation"
 }
 
@@ -158,7 +158,7 @@ sw_install_make_pkgs()
 {
     message_logger "[I] Started: Make Installation"
     echo "[  ATTENTION  ] Installing: Make + Related Tools"
-    sudo zypper install -y -t pattern devel_basis gdb
+    sudo zypper install -y -t pattern devel_basis
     message_logger "[I] Finished: Make Installation"
 }
 
@@ -210,13 +210,11 @@ sw_install_sci_pkgs()
 }
 
 # Function to install Tabby
-sw_install_tabby_pkgs()
+sw_download_tabby()
 {
     message_logger "[I] Started: Installing Tabby"
     echo "[  ATTENTION  ] Installing: Tabby"
     git clone https://github.com/bertvandepoel/tabby.git
-    cd tabby
-    pip install .
     cd ..
     message_logger "[I] Finished: Installing Science packages"
 }
@@ -308,7 +306,7 @@ then
     sw_remove_VLC_Main_pkgs
     sw_install_VLC_pkgs
     sw_install_sci_pkgs
-    sw_install_tabby_pkgs
+    sw_download_tabby
     sw_install_zsh_pkgs
 
 else
