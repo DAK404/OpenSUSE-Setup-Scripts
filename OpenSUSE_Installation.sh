@@ -150,16 +150,16 @@ sw_install_py_pkgs()
     message_logger "[I] Started: Python3 Installation"
     echo "[  ATTENTION  ] Installing: Python3"
     sudo zypper install -y python3 python3-devel python3-pip pyinstaller
-    message_logger "[I] Finished: Python3"
+    message_logger "[I] Finished: Python3 Installation"
 }
 
-# Function to install cmake + related dev tools
-sw_install_cmake_pkgs()
+# Function to install make + related dev tools
+sw_install_make_pkgs()
 {
-    message_logger "[I] Started: Cmake Installation"
-    echo "[  ATTENTION  ] Installing: Cmake"
-    sudo zypper install -y -t pattern devel_basis gdb cmake gcc-fortran libgomp1
-    message_logger "[I] Finished: Cmake"
+    message_logger "[I] Started: Make Installation"
+    echo "[  ATTENTION  ] Installing: Make + Related Tools"
+    sudo zypper install -y -t pattern devel_basis gdb
+    message_logger "[I] Finished: Make Installation"
 }
 
 
@@ -177,7 +177,7 @@ sw_install_sys_util_pkgs()
 {
     message_logger "[I] Started: Installing System Utilities"
     echo "[  ATTENTION  ] Installing: System Utilities"
-    sudo zypper install -y fde-tools bleachbit libdbusmenu-glib4 p11-kit-server
+    sudo zypper install -y bleachbit libdbusmenu-glib4 # no official fde-tools for Leap 15.6
     message_logger "[I] Finished: Installing System Utilities"
 }
 
@@ -301,15 +301,15 @@ then
 
     mk_tools_dir
     sw_install_py_pkgs
-    sw_install_cmake_pkgs
+    sw_install_make_pkgs
     sw_install_kde_pkgs
     sw_install_sys_util_pkgs
     sw_install_gaming_pkgs
     sw_remove_VLC_Main_pkgs
     sw_install_VLC_pkgs
     sw_install_sci_pkgs
-    sw_install_zsh_pkgs
     sw_install_tabby_pkgs
+    sw_install_zsh_pkgs
 
 else
     echo "[   WARNING   ] Internet Connection Unavailable! Skipping Repository Addition, Codecs and Package Installation."
