@@ -12,8 +12,6 @@ Further, this can be used to configure OpenSUSE Leap (15.6) on multiple systems 
   - [Table of Contents](#table-of-contents)
   - [How To Use](#how-to-use)
   - [Arguments](#arguments)
-  - [The Other Shell Scripts](#the-other-shell-scripts)
-  - [I Need More Information!](#i-need-more-information)
   - [DISCLAIMER!](#disclaimer)
 
 
