@@ -6,8 +6,7 @@
 # ATTENTION!
 # This script can be run in a single line from your shell!
 # Simply run the following in the Terminal:
-#
-#   bash -c "$(curl -fsSL https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main/OpenSUSE_Installation.sh)"
+#   bash -c "$(curl -fsSL https://raw.githubusercontent.com/n-shamsi/OpenSUSE-Setup-Scripts/refs/heads/n-shamsi-leap-1/OpenSUSE_Installation.sh)"
 #
 ############################################################
 
@@ -17,7 +16,7 @@ SCRIPT_VERSION="0.0.1"
 INTERNET_CONNECTION=true
 
 LOG_FILE=/tmp/nis-OpenSUSE-Setup.log
-SCRIPT_PATH="https://raw.githubusercontent.com/n-shamsi/OpenSUSE-Setup-Scripts/main/"
+SCRIPT_PATH="https://raw.githubusercontent.com/n-shamsi/OpenSUSE-Setup-Scripts/refs/heads/n-shamsi-leap-1/OpenSUSE_Installation.sh"
 
 # ********************************************************* #
 #                    REQUIREMENT CHECK
