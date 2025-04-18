@@ -67,7 +67,6 @@ add_repositories()
 
     # ----------     REPOSITORY URLS     ---------- #
     VLC_REPO_URL='https://download.videolan.org/SuSE/$releasever/'
-    GAMES_REPO_URL='https://download.opensuse.org/repositories/games:/tools/$releasever/'
     PACKMAN_REPO_URL='https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Leap_$releasever/'
     SCIENCE_REPO_URL='https://download.opensuse.org/repositories/science/$releasever/' # linear algebra libraries
     DATABASE_URL='https://download.opensuse.org/repositories/server:/database/$releasever/'
@@ -78,11 +77,6 @@ add_repositories()
     echo "[ INFORMATION ] Adding Repository: VLC"
     sudo zypper --gpg-auto-import-keys addrepo --refresh "$VLC_REPO_URL" 'VLC'
     message_logger "[I] Finished: Add VLC Repository"
-
-    message_logger "[I] Started: Add OpenSUSE Games Repository"
-    echo "[ INFORMATION ] Adding Repository: OpenSUSE Games"
-    sudo zypper --gpg-auto-import-keys addrepo --refresh "$GAMES_REPO_URL" 'Games'
-    message_logger "[I] Finished: Add OpenSUSE Games Repository"
 
     message_logger "[I] Started: Add OpenSUSE NVIDIA Repository"
     echo "[ INFORMATION ] Adding Repository: OpenSUSE NVIDIA"
@@ -151,6 +145,25 @@ codecs_install_VLC()
 #                   SOFTWARE INSTALLATION
 # ********************************************************* #
 
+# Function to install python
+sw_install_py_pkgs()
+{
+    message_logger "[I] Started: Python3 Installation"
+    echo "[  ATTENTION  ] Installing: Python3"
+    sudo zypper -y python3 python3-devel
+    message_logger "[I] Finished: Python3"
+}
+
+# Function to install cmake + related dev tools
+sw_install_cmake_pkgs()
+{
+    message_logger "[I] Started: Cmake Installation"
+    echo "[  ATTENTION  ] Installing: Cmake"
+    sudo zypper --non-interactive install -t pattern devel_basis cmake gcc-fortran libgomp1
+    message_logger "[I] Finished: Cmake"
+}
+
+
 # Function to install KDE Utilities
 sw_install_kde_pkgs()
 {
@@ -167,15 +180,6 @@ sw_install_sys_util_pkgs()
     echo "[  ATTENTION  ] Installing: System Utilities"
     sudo zypper install -y fde-tools bleachbit libdbusmenu-glib4 p11-kit-server
     message_logger "[I] Finished: Installing System Utilities"
-}
-
-# Function to install Gaming Components
-sw_install_gaming_pkgs()
-{
-    message_logger "[I] Started: Installing WINE and Gaming Components"
-    echo "[  ATTENTION  ] Installing: WINE and Gaming Components"
-    sudo zypper install -y dxvk wine lutris steam gamemode
-    message_logger "[I] Finished: Installing WINE and Gaming Components"
 }
 
 # Function to install VLC and Codecs
@@ -195,6 +199,15 @@ sw_install_VLC_pkgs()
     sudo zypper install -y --from VLC --allow-vendor-change vlc
     sudo zypper dup -y --from VLC --allow-vendor-change
     message_logger "[I] Finished: Installing VLC"
+}
+
+# Function to install Science packages
+sw_install_sci_pkgs()
+{
+    message_logger "[I] Started: Installing Science packages"
+    echo "[  ATTENTION  ] Installing: Science packages"
+    sudo zypper install -y blas-devel lapack-devel 
+    message_logger "[I] Finished: Installing Science packages"
 }
 
 # ********************************************************* #
