@@ -136,14 +136,6 @@ codecs_install_VLC()
 #                   SOFTWARE INSTALLATION
 # ********************************************************* #
 
-mk_tools_dir()
-{
-    message_logger "[I] Started: Making tools directory"
-    echo "[ ATTENTION ] Making: Tools directory"
-    mkdir tools
-    cd tools
-}
-
 # Function to install python
 sw_install_py_pkgs()
 {
@@ -220,6 +212,8 @@ sw_install_zsh_pkgs()
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
     echo "PROMPT='%n@%m %~ %# '" >> ~/.zshrc
     echo "plugins=(git zsh-autosuggestions zsh-syntax-highlighting)" >> ~/.zshrc
+    chsh -s $(which zsh) $(whoami)
+    zsh
     source ~/.zshrc
     message_logger "[I] Finished: Installing ZSH and Tools"
 }
@@ -287,7 +281,6 @@ then
         esac
     done
 
-    mk_tools_dir
     sw_install_py_pkgs
     sw_install_make_pkgs
     sw_install_kde_pkgs
