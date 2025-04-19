@@ -141,9 +141,9 @@ nvidia_install()
 {
     message_logger "[I] Started: NVIDIA G06 driver Installation"
     echo "[  ATTENTION  ] Installing: NVIDIA G06 driver"
-    zypper install -y --auto-agree-with-licenses nvidia-video-G06
-    zypper install -y --auto-agree-with-licenses nvidia-gl-G06
-    zypper install -y --auto-agree-with-licenses nvidia-compute-G06 nvidia-compute-utils-G06
+    sudo zypper install -y --auto-agree-with-licenses nvidia-video-G06
+    sudo zypper install -y --auto-agree-with-licenses nvidia-gl-G06
+    sudo zypper install -y --auto-agree-with-licenses nvidia-compute-G06 nvidia-compute-utils-G06
     message_logger "[I] Finished: NVIDIA G06 driver installation"
 }
 
@@ -338,11 +338,13 @@ else
     echo "[   WARNING   ] Internet Connection Unavailable! Skipping Repository Addition, Codecs and Package Installation."
 fi
 
-alias_install_autoremove
-finish_cleanup
-
+# shell modifications
 chsh -s $(which zsh)
 zsh
 source ~/.zshrc
 source ~/miniconda3/bin/activate
 conda init --all
+
+# clean up
+alias_install_autoremove
+finish_cleanup
