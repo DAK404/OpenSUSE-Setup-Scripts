@@ -98,7 +98,7 @@ codecs_install_packman()
 
     message_logger "[I] Started: Codecs Installation - Packman"
     echo "[  ATTENTION  ] Installing: Codecs from Packman Repositories"
-    sudo zypper install -y --allow-vendor-change --from Packman ffmpeg gstreamer-plugins-{good,bad,ugly,libav} libavcodec vlc-codecs
+    sudo zypper install -y --allow-vendor-change --from Packman ffmpeg gstreamer-plugins-{good,bad,ugly,libav} libavcodec
     message_logger "[I] Finished: Codecs Installation - Packman"
 }
 
@@ -107,7 +107,7 @@ codecs_install_Main()
 {
     message_logger "[I] Started: Codecs Installation - Main"
     echo "[  ATTENTION  ] Installing: Codecs from Main Repositories (OSS)"
-    sudo zypper install -y ffmpeg gstreamer-plugins-{good,bad,ugly,libav} libavcodec vlc-codecs
+    sudo zypper install -y ffmpeg gstreamer-plugins-{good,bad,ugly,libav} libavcodec
     message_logger "[I] Finished: Codecs Installation - Main"
 }
 
@@ -128,7 +128,7 @@ codecs_install_VLC()
     echo "[  ATTENTION  ] Installing: Codecs from VLC Repositories"
     sudo zypper install -y ffmpeg gstreamer-plugins-{good,bad,ugly,libav}
     latest_version=$(zypper search -s libavcodec | grep -Eo 'libavcodec[0-9]+' | sort -V | tail -1)
-    sudo zypper install -y --from VLC --allow-vendor-change vlc-codecs x264 x265 $latest_version
+    sudo zypper install -y --from VLC --allow-vendor-change vlc-vdpau x264 x265 $latest_version
     message_logger "[I] Finished: Codecs Installation - VLC"
 }
 
@@ -158,8 +158,6 @@ miniconda_install()
     echo "[  ATTENTION  ] Installing: Miniconda"
     wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
     bash ~/Miniconda3-latest-Linux-x86_64.sh -b
-    source ~/miniconda3/bin/activate
-    conda init --all
     message_logger "[I] Finished: Miniconda installation"
 }
 
@@ -210,7 +208,7 @@ sw_remove_VLC_Main_pkgs()
 {
     message_logger "[I] Started: Removing VLC and Codecs from Main Repository (OSS)"
     echo "[  ATTENTION  ] Removing: VLC and Codecs from Main Repository (OSS)"
-    sudo zypper remove -y vlc vlc-codecs
+    sudo zypper remove -y vlc vlc-vdpau
     message_logger "[I] Finished: Removing VLC and Codecs from Main Repository (OSS)"
 }
 
@@ -244,9 +242,6 @@ sw_install_zsh_pkgs()
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
     echo "PROMPT='%n@%m %~ %# '" >> ~/.zshrc
     echo "plugins=(git zsh-autosuggestions zsh-syntax-highlighting)" >> ~/.zshrc
-    chsh -s $(which zsh) $(whoami)
-    zsh
-    source ~/.zshrc
     message_logger "[I] Finished: Installing ZSH and Tools"
 }
 
@@ -320,13 +315,13 @@ then
 
     sw_install_py_pkgs
     
-    for arg in "$@"; do
-      if [[ $arg == {{nvidia-g06}} ]]; then
+    
+    if [[ "$@" =~ "nvidia-g06" ]]; then
         echo "Skipping Make and dev tools as already installed"
-      else
+    else
         sw_install_make_pkgs
-      fi
-    done
+        break
+    fi
     
     sw_install_kde_pkgs
     sw_install_sys_util_pkgs
@@ -335,18 +330,19 @@ then
     sw_install_sci_pkgs
     sw_install_zsh_pkgs
 
-    for arg in "$@"; do
-      if [[ $arg == {{miniconda}} ]]; then
+    if [[ "$@" =~ "miniconda" ]]; then
         miniconda_install
-      else
-        echo "Skipping Miniconda installation"
-      fi
-    done
+    fi
     
-
 else
     echo "[   WARNING   ] Internet Connection Unavailable! Skipping Repository Addition, Codecs and Package Installation."
 fi
 
 alias_install_autoremove
 finish_cleanup
+
+chsh -s $(which zsh)
+zsh
+source ~/.zshrc
+source ~/miniconda3/bin/activate
+conda init --all
