@@ -36,7 +36,7 @@ The `OpenSUSE-setup.sh` script may require a few arguments as per your use-case 
 | codecs-main       | Installs codecs from Repository Main (OSS)                         |
 | codecs-opi        | Installs OPI and codecs from OPI                                   |
 | codecs-vlc        | Installs codecs from official VLC                                  |
-| nvidia-g06        | Installs NVIDIA G06 drivers (the [easy](https://en.opensuse.org/SDB:NVIDIA_the_hard_way) way)                         |
+| nvidia-g06        | Installs NVIDIA G06 drivers (the easy way, see [also](https://en.opensuse.org/SDB:NVIDIA_the_hard_way))                         |
 
 ## DISCLAIMER!
 
