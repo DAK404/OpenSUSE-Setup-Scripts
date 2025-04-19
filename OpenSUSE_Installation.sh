@@ -148,6 +148,22 @@ nvidia_install()
 }
 
 # ********************************************************* #
+#                   Miniconda INSTALLATION
+# ********************************************************* #
+
+# Function to install Miniconda
+miniconda_install()
+{
+    message_logger "[I] Started: Miniconda Installation"
+    echo "[  ATTENTION  ] Installing: Miniconda"
+    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+    bash ~/Miniconda3-latest-Linux-x86_64.sh -b
+    source ~/miniconda3/bin/activate
+    conda init --all
+    message_logger "[I] Finished: Miniconda installation"
+}
+
+# ********************************************************* #
 #                   SOFTWARE INSTALLATION
 # ********************************************************* #
 
@@ -295,6 +311,7 @@ then
                 break
                 ;;
             nvidia-g06)
+                sw_install_make_pkgs
                 nvidia_install
                 break
                 ;;
@@ -302,13 +319,30 @@ then
     done
 
     sw_install_py_pkgs
-    sw_install_make_pkgs
+    
+    for arg in "$@"; do
+      if [[ $arg == {{nvidia-g06}} ]]; then
+        echo "Skipping Make and dev tools as already installed"
+      else
+        sw_install_make_pkgs
+      fi
+    done
+    
     sw_install_kde_pkgs
     sw_install_sys_util_pkgs
     sw_remove_VLC_Main_pkgs
     sw_install_VLC_pkgs
     sw_install_sci_pkgs
     sw_install_zsh_pkgs
+
+    for arg in "$@"; do
+      if [[ $arg == {{miniconda}} ]]; then
+        miniconda_install
+      else
+        echo "Skipping Miniconda installation"
+      fi
+    done
+    
 
 else
     echo "[   WARNING   ] Internet Connection Unavailable! Skipping Repository Addition, Codecs and Package Installation."
