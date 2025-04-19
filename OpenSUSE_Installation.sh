@@ -10,7 +10,7 @@
 #
 ############################################################
 
-TODO: add NVIDIA G06 drivers install
+TODO: test
 
 SCRIPT_VERSION="0.0.1"
 INTERNET_CONNECTION=true
@@ -133,6 +133,21 @@ codecs_install_VLC()
 }
 
 # ********************************************************* #
+#                   NVIDIA + CUDA INSTALLATION
+# ********************************************************* #
+
+# Function to install NVIDIA G06 drivers
+nvidia_install()
+{
+    message_logger "[I] Started: NVIDIA G06 driver Installation"
+    echo "[  ATTENTION  ] Installing: NVIDIA G06 driver"
+    zypper install -y --auto-agree-with-licenses nvidia-video-G06
+    zypper install -y --auto-agree-with-licenses nvidia-gl-G06
+    zypper install -y --auto-agree-with-licenses nvidia-compute-G06 nvidia-compute-utils-G06
+    message_logger "[I] Finished: NVIDIA G06 driver installation"
+}
+
+# ********************************************************* #
 #                   SOFTWARE INSTALLATION
 # ********************************************************* #
 
@@ -150,7 +165,8 @@ sw_install_make_pkgs()
 {
     message_logger "[I] Started: Make Installation"
     echo "[  ATTENTION  ] Installing: Make + Related Tools"
-    sudo zypper install -y -t pattern devel_basis
+    sudo zypper install -y -t pattern devel_basis 
+    sudo zypper install -y -t pattern devel_C_C++ devel_kernel
     message_logger "[I] Finished: Make Installation"
 }
 
@@ -276,6 +292,10 @@ then
                 ;;
             codecs-vlc)
                 codecs_install_VLC
+                break
+                ;;
+            nvidia-g06)
+                nvidia_install
                 break
                 ;;
         esac
