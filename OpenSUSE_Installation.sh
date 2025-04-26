@@ -26,7 +26,7 @@ SCRIPT_PATH="https://raw.githubusercontent.com/n-shamsi/OpenSUSE-Setup-Scripts/r
 message_logger()
 {
     local message="$1"
-    local timestamp=$(date +%s)
+    local timestamp=$(date +%s)570.133.07_k6.4.0_150600.21-150600.3.43.2
     echo "[$timestamp]: $message" | tee -a "$LOG_FILE"
 }
 
@@ -63,6 +63,7 @@ add_repositories()
     VLC_REPO_URL='https://download.videolan.org/SuSE/$releasever/'
     PACKMAN_REPO_URL='https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Leap_$releasever/'
     NVIDIA_REPO_URL='https://download.nvidia.com/opensuse/leap/$releasever'
+    CUDA_REPO_URL='https://developer.download.nvidia.com/compute/cuda/repos/opensuse15/x86_64/cuda-opensuse15.repo'
     # --------------------------------------------- #
 
     message_logger "[I] Started: Add VLC Repository"
@@ -73,6 +74,11 @@ add_repositories()
     message_logger "[I] Started: Add OpenSUSE NVIDIA Repository"
     echo "[ INFORMATION ] Adding Repository: OpenSUSE NVIDIA"
     sudo zypper --gpg-auto-import-keys addrepo --refresh "$NVIDIA_REPO_URL" 'NVIDIA'
+    message_logger "[I] Finished: Add OpenSUSE NVIDIA Repository"
+
+    message_logger "[I] Started: Add CUDA Repository"
+    echo "[ INFORMATION ] Adding Repository: CUDA x86_64 Repository"
+    sudo zypper --gpg-auto-import-keys addrepo --refresh "$CUDA_REPO_URL"
     message_logger "[I] Finished: Add OpenSUSE NVIDIA Repository"
 
     message_logger "[I] Started: Refreshing Repositories; Importing GPG Keys"
@@ -116,7 +122,7 @@ codecs_install_opi()
 {
     message_logger "[I] Started: Codecs Installation - OPI"
     echo "[  ATTENTION  ] Installing: Codecs from OPI"
-    sudo zypper install -y opi
+    sudo zypper install -y opi 
     opi codecs -n
     message_logger "[I] Finished: Codecs Installation - OPI"
 }
@@ -136,14 +142,19 @@ codecs_install_VLC()
 #                   NVIDIA + CUDA INSTALLATION
 # ********************************************************* #
 
+NVIDIA_DRIVER_VERSION="${!#}"
+
 # Function to install NVIDIA G06 drivers
 nvidia_install()
 {
-    message_logger "[I] Started: NVIDIA G06 driver Installation"
-    echo "[  ATTENTION  ] Installing: NVIDIA G06 driver"
-    sudo zypper install -y --auto-agree-with-licenses nvidia-video-G06
-    sudo zypper install -y --auto-agree-with-licenses nvidia-gl-G06
-    sudo zypper install -y --auto-agree-with-licenses nvidia-compute-G06 nvidia-compute-utils-G06
+    message_logger "[I] Started: NVIDIA G06 drivers and CUDA Installation"
+    echo "[  ATTENTION  ] Installing: NVIDIA G06 drivers and CUDA"
+    sudo zypper install -y cuda-toolkit
+    sudo zypper install -y --auto-agree-with-licenses nvidia-video-G06-"$NVIDIA_DRIVER_VERSION"
+    sudo zypper install -y --auto-agree-with-licenses nvidia-gl-G06-"$NVIDIA_DRIVER_VERSION"
+    sudo zypper install -y --auto-agree-with-licenses nvidia-compute-G06-"$NVIDIA_DRIVER_VERSION" nvidia-compute-utils-G06-"$NVIDIA_DRIVER_VERSION"
+    sudo zypper install -y --auto-agree-with-licenses nvidia-libXNVCtrl-"$NVIDIA_DRIVER_VERSION"
+    sudo zypper install -y --auto-agree-with-licenses nvidia-settings-"$NVIDIA_DRIVER_VERSION"
     message_logger "[I] Finished: NVIDIA G06 driver installation"
 }
 
@@ -231,20 +242,6 @@ sw_install_sci_pkgs()
     message_logger "[I] Finished: Installing Science packages"
 }
 
-# Function to install ZSH and related tools
-sw_install_zsh_pkgs()
-{
-    message_logger "[I] Started: Installing ZSH and Tools"
-    echo "[  ATTENTION  ] Installing: ZSH and Tools"
-    sudo zypper install -y git-core zsh
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-    git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-    echo "PROMPT='%n@%m %~ %# '" >> ~/.zshrc
-    echo "plugins=(git zsh-autosuggestions zsh-syntax-highlighting)" >> ~/.zshrc
-    message_logger "[I] Finished: Installing ZSH and Tools"
-}
-
 # ********************************************************* #
 #                   ALIAS INSTALLATION
 # ********************************************************* #
@@ -305,19 +302,14 @@ then
                 codecs_install_VLC
                 break
                 ;;
-            nvidia-g06)
-                sw_install_make_pkgs
-                nvidia_install
-                break
-                ;;
         esac
     done
 
     sw_install_py_pkgs
     
-    
     if [[ "$@" =~ "nvidia-g06" ]]; then
-        echo "Skipping Make and dev tools as already installed"
+        sw_install_make_pkgs
+        nvidia_install
     else
         sw_install_make_pkgs
         break
@@ -339,9 +331,6 @@ else
 fi
 
 # shell modifications
-chsh -s $(which zsh)
-zsh
-source ~/.zshrc
 source ~/miniconda3/bin/activate
 conda init --all
 
