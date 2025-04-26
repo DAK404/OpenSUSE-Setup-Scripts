@@ -24,7 +24,7 @@ SCRIPT_PATH="https://raw.githubusercontent.com/n-shamsi/OpenSUSE-Setup-Scripts/r
 message_logger()
 {
     local message="$1"
-    local timestamp=$(date +%s)570.133.07_k6.4.0_150600.21-150600.3.43.2
+    local timestamp=$(date +%s)
     echo "[$timestamp]: $message" | tee -a "$LOG_FILE"
 }
 
