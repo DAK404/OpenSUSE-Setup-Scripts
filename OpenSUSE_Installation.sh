@@ -310,7 +310,6 @@ then
         nvidia_install
     else
         sw_install_make_pkgs
-        break
     fi
     
     sw_install_kde_pkgs
