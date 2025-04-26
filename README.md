@@ -41,7 +41,7 @@ The `OpenSUSE-setup.sh` script may require a few arguments as per your use-case 
 
 ### NVIDIA Driver Install
 
-The bash arg  `nvidia-g06` has to be followed by the `driver-version`
+If installing NVIDIA drivers, then include the `driver-version`; has to be the last bash arg.
 
 ## DISCLAIMER!
 
