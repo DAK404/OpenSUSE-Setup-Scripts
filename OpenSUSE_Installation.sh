@@ -10,9 +10,7 @@
 #
 ############################################################
 
-TODO: test
-
-SCRIPT_VERSION="0.0.1"
+SCRIPT_VERSION="0.1.0"
 INTERNET_CONNECTION=true
 
 LOG_FILE=/tmp/nis-OpenSUSE-Setup.log
