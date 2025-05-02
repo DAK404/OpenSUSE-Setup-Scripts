@@ -1,4 +1,4 @@
-# [Not Ready to Use] OpenSUSE Leap Setup Scripts (w/ NVIDIA G06 Drivers)
+# OpenSUSE Leap Setup Scripts (w/ NVIDIA G06 Drivers)
 
 **Fork of [this](https://github.com/DAK404/OpenSUSE-Setup-Scripts) repo (version 2.0.0) for Tumbleweed**
 
