@@ -43,6 +43,8 @@ The `OpenSUSE-setup.sh` script may require a few arguments as per your use-case 
 
 If installing NVIDIA drivers, then include the `driver-version`; has to be the last bash arg.
 
+If you have secure boot enabled, follow [these steps](https://en.opensuse.org/SDB:NVIDIA_drivers#Secureboot) to sign the kernel.
+
 ## DISCLAIMER!
 
 **Use at Your Own Risk**
