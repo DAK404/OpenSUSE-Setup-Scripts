@@ -35,8 +35,8 @@ SERVICE_DESCRIPTION="OpenSUSE Tumbleweed Distribution Update"
 # Service file content
 SERVICE_CONTENT="[Unit]
 Description=$SERVICE_DESCRIPTION
-After=network-online.target
-Wants=network-online.target
+After=graphical.target
+Wants=graphical.target
 
 [Service]
 Type=oneshot
