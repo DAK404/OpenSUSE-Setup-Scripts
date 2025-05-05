@@ -1,371 +1,347 @@
 #!/bin/bash
 
-############################################################
-# OpenSUSE Setup Script
+# Check if the script is run as root
+if [ "$EUID" -ne 0 ]; then
+  echo "Please run as root"
+  exit 1
+fi
+
+##########################################
+# ----- GUIDED INSTALLATION SCRIPT ----- #
+##########################################
 #
-# ATTENTION!
-# This script can be run in a single line from your shell!
-# Simply run the following in the Terminal:
+# Guided installation for users who want a
+# step by step approach to configuring and
+# installing packages and software.
 #
-#   bash -c "$(curl -fsSL https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main/OpenSUSE_Installation.sh)"
-#
-############################################################
+##########################################
 
-SCRIPT_VERSION="2.0.1"
-INTERNET_CONNECTION=true
+SCRIPT_VERSION="2.1.0"
+INTERNET_CONNECTION=false
+SCRIPT_PATH="https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main"
 
-LOG_FILE=/tmp/DAK404-OpenSUSE-Setup.log
-SCRIPT_PATH="https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main/"
+BROWSER_TYPE="NONE"
+CODECS_TYPE="NONE"
 
-# ********************************************************* #
-#                    REQUIREMENT CHECK
-# ********************************************************* #
+# Declare arrays to store scriptlet names
+declare -a FIXES
+declare -a TWEAKS
+declare -a PKGS
+declare -a PRSNL
+declare -a OTHER
 
-# Function to log messages to specified path
-message_logger()
-{
-    local message="$1"
-    local timestamp=$(date +%s)
-    echo "[$timestamp]: $message" | tee -a "$LOG_FILE"
-}
-
-# Function to check if computer is able to ping GitHub servers
+# Function to check if the computer is able to ping GitHub servers
 check_internet_connection()
 {
-    message_logger "[I] Started: Internet Connection Check"
-    message_logger "[I] Pinging: github.com"
     if ping -c 1 github.com &> /dev/null
     then
-        message_logger "[I] Ping Successful"
         echo "[ INFORMATION ] Ping to GitHub Successful."
+        INTERNET_CONNECTION=true
     else
-        message_logger "[W] Ping Unsuccessful"
         echo "[ WARNING ] Ping to GitHub Failed!"
-        INTERNET_CONNECTION=false
-        SCRIPT_PATH="./"
+        SCRIPT_PATH="."
     fi
 
-    message_logger "[I] FINISHED: Internet Connection Check"
     echo "[ INFORMATION ] Internet Connection Check Complete"
 }
 
-# ********************************************************* #
-#                    REPOSITORY ADDITION
-# ********************************************************* #
-
-# Function to add necessary repositories
-add_repositories()
+# Function to run scriptlets
+scriptlet_runner()
 {
-    message_logger "[I] Started: Add Repositories"
+    local scriptlet_name="$1"
+    local scriptlet_path="$SCRIPT_PATH/Scriptlets/$scriptlet_name.sh"
 
-    # ---------- REPOSITORY GPG KEY URLS ---------- #
-    MICROSOFT_GPG_KEY_URL='https://packages.microsoft.com/keys/microsoft.asc'
-    GITHUB_GPG_KEY_URL='https://rpm.packages.shiftkey.dev/gpg.key'
-    # --------------------------------------------- #
+    if [ ! -f "$scriptlet_path" ]; then
+        echo "[ ERROR ] Scriptlet $scriptlet_name not found at $scriptlet_path!"
+        return 1
+    fi
 
-    # ----------     REPOSITORY URLS     ---------- #
-    MSEDGE_REPO_URL='https://packages.microsoft.com/yumrepos/edge'
-    VSCODE_REPO_URL='https://packages.microsoft.com/yumrepos/vscode'
-    GITHUB_REPO_URL='https://rpm.packages.shiftkey.dev/rpm/'
-    VLC_REPO_URL='https://download.videolan.org/pub/vlc/SuSE/Tumbleweed/'
-    GAMES_REPO_URL='https://download.opensuse.org/repositories/games/openSUSE_Tumbleweed/'
-    PACKMAN_REPO_URL='https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/'
-    # --------------------------------------------- #
-
-    message_logger "[I] Started: Add Microsoft Repositories"
-    echo "[ INFORMATION ] Adding Repositories: Microsoft"
-    sudo rpm --import "$MICROSOFT_GPG_KEY_URL"
-    sudo zypper --gpg-auto-import-keys addrepo --refresh "$MSEDGE_REPO_URL" 'microsoft-edge'
-    sudo zypper --gpg-auto-import-keys addrepo --refresh "$VSCODE_REPO_URL" 'Visual Studio Code'
-    message_logger "[I] Finished: Add Microsoft Repositories"
-
-    message_logger "[I] Started: Add GitHub Repository"
-    echo "[ INFORMATION ] Adding Repository: GitHub Desktop"
-    sudo rpm --import "$GITHUB_GPG_KEY_URL"
-    sudo zypper --gpg-auto-import-keys addrepo --refresh "$GITHUB_REPO_URL" 'GitHub Desktop'
-    message_logger "[I] Finished: Add GitHub Repository"
-
-    message_logger "[I] Started: Add VLC Repository"
-    echo "[ INFORMATION ] Adding Repository: VLC"
-    sudo zypper --gpg-auto-import-keys addrepo --refresh "$VLC_REPO_URL" 'VLC'
-    message_logger "[I] Finished: Add VLC Repository"
-
-    message_logger "[I] Started: Add OpenSUSE Games Repository"
-    echo "[ INFORMATION ] Adding Repository: OpenSUSE Games"
-    sudo zypper --gpg-auto-import-keys addrepo --refresh "$GAMES_REPO_URL" 'Games'
-    message_logger "[I] Finished: Add OpenSUSE Games Repository"
-
-    message_logger "[I] Started: Refreshing Repositories; Importing GPG Keys"
-    echo "[ INFORMATION ] Refreshing Repositories; Importing GPG Keys..."
-    message_logger "$(sudo zypper --gpg-auto-import-keys refresh)"
-    message_logger "[I] Finished: Refreshing Repositories; Importing GPG Keys"
-
-    message_logger "[I] Finished: Add Repositories"
+    sudo bash "$scriptlet_path"
 }
 
-# ********************************************************* #
-#                    CODECS INSTALLATION
-# ********************************************************* #
-
-# Function to install codecs from Packman repositories
-codecs_install_packman()
+# Function to install browser packages
+sw_install_browers()
 {
-    message_logger "[I] Started: Add Packman Repository"
-    echo "[ INFORMATION ] Adding Repository: Packman"
-    sudo zypper --gpg-auto-import-keys addrepo --refresh "$PACKMAN_REPO_URL" "Packman"
-    message_logger "[I] Finished: Add Packman Repository"
-
-    sudo zypper --gpg-auto-import-keys refresh
-
-    message_logger "[I] Started: Codecs Installation - Packman"
-    echo "[  ATTENTION  ] Installing: Codecs from Packman Repositories"
-    sudo zypper install -y --allow-vendor-change --from Packman ffmpeg gstreamer-plugins-{good,bad,ugly,libav} libavcodec vlc-codecs
-    message_logger "[I] Finished: Codecs Installation - Packman"
+    scriptlet_runner "Browsers/Browser-$BROWSER_TYPE"
 }
 
-# Function to install codecs from Main repositories
-codecs_install_Main()
+sw_install_codecs()
 {
-    message_logger "[I] Started: Codecs Installation - Main"
-    echo "[  ATTENTION  ] Installing: Codecs from Main Repositories (OSS)"
-    sudo zypper install -y ffmpeg gstreamer-plugins-{good,bad,ugly,libav} libavcodec vlc-codecs
-    message_logger "[I] Finished: Codecs Installation - Main"
+    scriptlet_runner "Codecs/Codecs-$CODECS_TYPE"
 }
 
-# Function to install codecs from OPI
-codecs_install_opi()
+sw_install_fixes()
 {
-    message_logger "[I] Started: Codecs Installation - OPI"
-    echo "[  ATTENTION  ] Installing: Codecs from OPI"
-    sudo zypper install -y opi
-    opi codecs -n
-    message_logger "[I] Finished: Codecs Installation - OPI"
+    scriptlet_runner "Fixes-and-Tweaks/Fix-$1"
 }
 
-# Function to install codecs from VLC repositories
-codecs_install_VLC()
+sw_install_tweaks()
 {
-    message_logger "[I] Started: Codecs Installation - VLC"
-    echo "[  ATTENTION  ] Installing: Codecs from VLC Repositories"
-    sudo zypper install -y ffmpeg gstreamer-plugins-{good,bad,ugly,libav}
-    latest_version=$(zypper search -s libavcodec | grep -Eo 'libavcodec[0-9]+' | sort -V | tail -1)
-    sudo zypper install -y --from VLC --allow-vendor-change vlc-codecs x264 x265 $latest_version
-    message_logger "[I] Finished: Codecs Installation - VLC"
+    scriptlet_runner "Fixes-and-Tweaks/Tweak-$1"
 }
 
-# ********************************************************* #
-#                   SOFTWARE INSTALLATION
-# ********************************************************* #
-
-# Function to install KDE Utilities
-sw_install_kde_pkgs()
+sw_install_packages()
 {
-    message_logger "[I] Started: KDE Utilities Installation"
-    echo "[  ATTENTION  ] Installing: KDE Utilities"
-    sudo zypper install -y kdeconnect-kde krita kdenlive partitionmanager
-    message_logger "[I] Finished: KDE Utilities Installation"
+    scriptlet_runner "Package-Installation/Pkg-$1"
 }
 
-# Function to install Microsoft Edge and VS Code
-sw_install_microsoft_pkgs()
+sw_install_personalization()
 {
-    message_logger "[I] Started: Installing Microsoft Edge and VS Code"
-    echo "[  ATTENTION  ] Installing: Microsoft Edge and VS Code"
-    sudo zypper install -y microsoft-edge-stable code
-    message_logger "[I] Finished: Installing Microsoft Edge and VS Code"
+    scriptlet_runner "Personalization/Personalization-$1"
 }
 
-# Function to install GitHub Desktop and Git
-sw_install_git_github_pkgs()
+script_helpfile()
 {
-    message_logger "[I] Started: Installing GitHub Desktop and Git"
-    echo "[  ATTENTION  ] Installing: GitHub Desktop & Git"
-    sudo zypper install -y github-desktop git
-    message_logger "[I] Finished: Installing GitHub Desktop and Git"
+    curl -s https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main/Documentation/OpenSUSE-Setup-Scripts.help | less
 }
 
-# Function to install System Utilities
-sw_install_sys_util_pkgs()
+# Function to perform clean up
+cleanup()
 {
-    message_logger "[I] Started: Installing System Utilities"
-    echo "[  ATTENTION  ] Installing: System Utilities"
-    sudo zypper install -y fde-tools bleachbit libdbusmenu-glib4 p11-kit-server
-    message_logger "[I] Finished: Installing System Utilities"
-}
-
-# Function to install Gaming Components
-sw_install_gaming_pkgs()
-{
-    message_logger "[I] Started: Installing WINE and Gaming Components"
-    echo "[  ATTENTION  ] Installing: WINE and Gaming Components"
-    sudo zypper install -y dxvk wine lutris steam gamemode
-    message_logger "[I] Finished: Installing WINE and Gaming Components"
-}
-
-# Function to install VLC and Codecs
-sw_remove_VLC_Main_pkgs()
-{
-    message_logger "[I] Started: Removing VLC and Codecs from Main Repository (OSS)"
-    echo "[  ATTENTION  ] Removing: VLC and Codecs from Main Repository (OSS)"
-    sudo zypper remove -y vlc vlc-codecs
-    message_logger "[I] Finished: Removing VLC and Codecs from Main Repository (OSS)"
-}
-
-# Function to install VLC and Codecs
-sw_install_VLC_pkgs()
-{
-    message_logger "[I] Started: Installing VLC"
-    echo "[  ATTENTION  ] Installing: VLC"
-    sudo zypper install -y --from VLC --allow-vendor-change vlc
-    sudo zypper dup -y --from VLC --allow-vendor-change
-    message_logger "[I] Finished: Installing VLC"
-}
-
-# ********************************************************* #
-#                   SCRIPT INSTALLATION
-# ********************************************************* #
-
-# Function to install Discord using my script
-sw_install_Discord_script()
-{
-    message_logger "[I] Started: Installing Discord [Script]"
-    echo "[  ATTENTION  ] Installing: Discord"
-    bash -c "$(curl -fsSL ${SCRIPT_PATH}Discord-Install.sh)"
-    message_logger "[I] Finished: Installing Discord [Script]"
-}
-
-# Function to install OpenRGB using my script
-sw_install_openRGB_script()
-{
-    message_logger "[I] Started: Installing OpenRGB [Script]"
-    echo "[  ATTENTION  ] Installing: OpenRGB"
-    bash -c "$(curl -fsSL ${SCRIPT_PATH}OpenRGB.sh)"
-    message_logger "[I] Finished: Installing OpenRGB [Script]"
-}
-
-# Function to install Gigabyte Sleep Fix using my script
-sw_install_Gigabyte_Sleep_Fix_script()
-{
-    message_logger "[I] Started: Installing Sleep Fix for Gigabyte Motherboards [Script]"
-    echo "[  ATTENTION  ] Installing: Sleep Fix for Gigabyte Motherboards"
-    bash -c "$(curl -fsSL ${SCRIPT_PATH}GigabyteDesktop_Sleep_Fix.sh)"
-    message_logger "[I] Finished: Installing Sleep Fix for Gigabyte Motherboards [Script]"
-}
-
-# Function to install KDE Personalization using my script
-sw_install_KDE_Personalization_script()
-{
-    message_logger "[I] Started: Installing KDE Personalization [Script]"
-    echo "[  ATTENTION  ] Installing: Wallpaper, Kvantum and Sound Themes"
-    bash -c "$(curl -fsSL ${SCRIPT_PATH}Personalize.sh)"
-    message_logger "[I] Finished: Installing KDE Personalization [Script]"
-}
-
-# Function to remove Flatpak and Flatpak Applications using my script
-sw_remove_flatpak_script()
-{
-    message_logger "[I] Started: Removing Flatpak and Flatpak Applications [Script]"
-    echo "[  ATTENTION  ] Removing: Flatpak and Flatpak Applications"
-    bash -c "$(curl -fsSL ${SCRIPT_PATH}Remove_Flatpak.sh)"
-    message_logger "[I] Finished: Removing Flatpak and Flatpak Applications [Script]"
-}
-
-# ********************************************************* #
-#                   ALIAS INSTALLATION
-# ********************************************************* #
-
-# Function to install 'autoremove' command
-alias_install_autoremove()
-{
-    message_logger "[I] Started: Installing 'autoremove' command"
-    printf "[ INFORMATION ] Installing: \'autoremove\' command\n"
-    echo "alias autoremove=\"sudo zypper packages --unneeded | awk -F'|' 'NR==0 || NR==1 || NR==2 || NR==3 || NR==4 {next} {print $3}' | grep -v Name | sudo xargs zypper remove -y --clean-deps >> ~/Cleanup.log\"" | sudo tee -a /etc/bash.bashrc.local
-    message_logger "[I] Finished: Installing 'autoremove' command"
-}
-
-# ********************************************************* #
-#                   CLEANUP FUNCTIONS
-# ********************************************************* #
-
-# Function to finish cleanup
-finish_cleanup()
-{
-    message_logger "[I] Started: Cleaning Up"
-    echo "[ INFORMATION ] Cleaning Up..."
-    sudo zypper packages --unneeded | awk -F'|' 'NR==0 || NR==1 || NR==2 || NR==3 || NR==4 {next} {print $3}' | grep -v Name | sudo xargs zypper remove -y --clean-deps >> ~/Cleanup.log
+    sudo zypper packages --unneeded | awk -F'|' 'NR==0 || NR==1 || NR==2 || NR==3 || NR==4 {next} {print $3}' | grep -v Name | sudo xargs -r zypper remove -y --clean-deps >> ~/Cleanup.log
     mv /tmp/DAK404-OpenSUSE-Setup.log ~/
-    echo "Setup Complete! Log file saved to ~/DAK404-OpenSSE-Setup.log"
+
+    echo "Setup Complete! Log file saved to $HOME/DAK404-OpenSUSE-Setup.log"
     echo "It is recommended to restart your system to apply changes."
 }
 
-# ********************************************************* #
-#                     SCRIPT ENTRY POINT
-# ********************************************************* #
+# Function to display the menu
+display_menu()
+{
+    clear
+    echo "---------------------------------------------"
+    echo "OpenSUSE Setup Scripts - Guided Installation"
+    echo "Version: $SCRIPT_VERSION"
+    echo "---------------------------------------------"
+    echo
+    echo "Please choose an option:"
+    echo
+    echo "---------- BROWSERS ----------"
+    echo
+    echo "1. Install Brave Browser"
+    echo "2. Install Chrome Browser"
+    echo "3. Install MSEdge Browser"
+    echo "4. Install Zen Browser"
+    echo
+    echo "----------- CODECS -----------"
+    echo
+    echo "5. Packman Codecs"
+    echo "6. Packman Essentials Codecs"
+    echo "7. Main Repository Codecs"
+    echo
+    echo "------- FIX AND TWEAKS -------"
+    echo
+    echo "8. Gigabyte Desktop Sleep Fix"
+    echo "9. Install ICM Profiles"
+    echo "10. Install Missing Fonts"
+    echo "11. SDDM Number Lock Fix"
+    echo "12. Tweak Aliases"
+    echo "13. Tweak Firewall Rules for mDNS"
+    echo "14. Install and Configure openRGB"
+    echo "15. Install Monthly Automatic System Updates"
+    echo
+    echo "---- PACKAGE INSTALLATION ----"
+    echo
+    echo "16. Gaming Packages"
+    echo "17. Git and GitHub Desktop"
+    echo "18. Essential System Utilities"
+    echo "19. Visual Studio Code"
+    echo "20. Warp Terminal (warp.dev)"
+    echo
+    echo "------- PERSONALIZATION ------"
+    echo
+    echo "21. Install Global Theme (Plasma and GTK)"
+    echo "22. Install Posy's Cursors"
+    echo "23. Install Breeze Transparent Plasma Style"
+    echo
+    echo "------------------------------"
+    echo
+    echo "0. Exit"
+    echo "?. Help"
+    echo
+}
 
-message_logger "[I] OpenSUSE Setup Script - Version: $SCRIPT_VERSION"
-message_logger "[I] Log File stored in: $LOG_FILE"
+# Function to handle user input
+handle_input() {
+    case $1 in
+        0)
+            echo "Exiting..."
+            exit 0
+            ;;
+        1)
+            BROWSER_TYPE='Brave'
+            sw_install_browers
+            ;;
+        2)
+            BROWSER_TYPE='Chrome'
+            sw_install_browers
+            ;;
+        3)
+            BROWSER_TYPE='MSEdge'
+            sw_install_browers
+            ;;
+        4)
+            BROWSER_TYPE='Zen'
+            sw_install_browers
+            ;;
+        5)
+            CODECS_TYPE='opi'
+            sw_install_codecs
+            ;;
+        6)
+            CODECS_TYPE='packman-essentials'
+            sw_install_codecs
+            ;;
+        7)
+            CODECS_TYPE='main'
+            sw_install_codecs
+            ;;
+        8)
+            sw_install_fixes 'GigabyteDesktopSleepFix'
+            ;;
+        9)
+            sw_install_fixes 'ICMProfiles'
+            ;;
+        10)
+            sw_install_fixes 'MissingFonts'
+            ;;
+        11)
+            sw_install_fixes 'SDDMNumLock'
+            ;;
+        12)
+            sw_install_tweaks 'Aliases'
+            ;;
+        13)
+            sw_install_tweaks 'mDNSFirewallRules'
+            ;;
+        14)
+            sw_install_tweaks 'OpenRGB'
+            ;;
+        15)
+            sw_install_tweaks 'SysAutoUpdate'
+            ;;
+        16)
+            sw_install_packages 'Gaming'
+            ;;
+        17)
+            sw_install_packages 'GitHubDesktop'
+            ;;
+        18)
+            sw_install_packages 'SysUtilities'
+            ;;
+        19)
+            sw_install_packages 'VSCode'
+            ;;
+        20)
+            sw_install_packages 'WarpTerminal'
+            ;;
+        21)
+            sw_install_personalization 'GlobalTheme'
+            ;;
+        22)
+            sw_install_personalization 'PosysCursors'
+            ;;
+        23)
+            sw_install_personalization 'BreezeTransparent'
+            ;;
+        ?)
+            script_helpfile
+            ;;
+        *)
+            echo "Invalid option, please choose a valid option!"
+            ;;
+    esac
+}
 
+# Check internet connection
 check_internet_connection
 
-if $INTERNET_CONNECTION
-then
-    add_repositories
-    
-    for arg in "$@"
-    do
-        case "$arg" in
-            codecs-packman)
-                codecs_install_packman
-                break
-                ;;
-            codecs-main)
-                codecs_install_Main
-                break
-                ;;
-            codecs-opi)
-                codecs_install_opi
-                break
-                ;;
-            codecs-vlc)
-                codecs_install_VLC
-                break
-                ;;
-        esac
+if [ $# -eq 0 ]; then
+    # Main loop
+    while true; do
+        display_menu
+        read -p "Enter your choice (1-23): " choice
+        handle_input $choice
+        read -p "Press Enter to continue..."
     done
-
-    sw_install_kde_pkgs
-    sw_install_microsoft_pkgs
-    sw_install_git_github_pkgs
-    sw_install_sys_util_pkgs
-    sw_install_gaming_pkgs
-    sw_remove_VLC_Main_pkgs
-    sw_install_VLC_pkgs
-
-    # Process arguments and call corresponding functions
-    for arg in "$@"
-    do
-        case "$arg" in
-            discord)
-                sw_install_Discord_script
-                ;;
-            openrgb)
-                sw_install_openRGB_script
-                ;;
-            gigabyte-sleep-fix)
-                sw_install_Gigabyte_Sleep_Fix_script
-                ;;
-            personalize)
-                sw_install_KDE_Personalization_script
-                ;;
-            remove-flatpak)
-                sw_remove_flatpak_script
-                ;;
-        esac
-    done
-
 else
-    echo "[   WARNING   ] Internet Connection Unavailable! Skipping Repository Addition, Codecs and Package Installation."
+
+    ##########################################
+    # ---- UNGUIDED INSTALLATION SCRIPT ---- #
+    ##########################################
+    #
+    # Scripts are run by parsing the arguments
+    # passed to the script. This requires no
+    # user interaction and is useful for
+    # automation or unattended installations.
+    #
+    ##########################################
+
+    # Parse arguments and store scriptlet names in arrays
+    for arg in "$@"
+    do
+        case "$arg" in
+            codecs=*)
+                CODECS_TYPE="${arg#*=}"
+                ;;
+            browser=*)
+                BROWSER_TYPE="${arg#*=}"
+                ;;
+            Fix=*)
+                IFS=',' read -r -a fix_array <<< "${arg#*=}"
+                FIXES+=("${fix_array[@]}")
+                ;;
+            Tweak=*)
+                IFS=',' read -r -a tweak_array <<< "${arg#*=}"
+                TWEAKS+=("${tweak_array[@]}")
+                ;;
+            Pkg=*)
+                IFS=',' read -r -a pkg_array <<< "${arg#*=}"
+                PKGS+=("${pkg_array[@]}")
+                ;;
+            Prsnl=*)
+                IFS=',' read -r -a prsnl_array <<< "${arg#*=}"
+                PRSNL+=("${prsnl_array[@]}")
+                ;;
+            Other=*)
+                IFS=',' read -r -a other_array <<< "${arg#*=}"
+                OTHER+=("${other_array[@]}")
+                ;;
+            *)
+                echo "[ ERROR ] Undefined Argument: $arg"
+                ;;
+        esac
+    done
+
+    # Run scriptlets for codecs and browsers
+    sw_install_codecs "$CODECS_TYPE"
+    sw_install_browers "$BROWSER_TYPE"
+
+    # Run all selected  Fix scriptlets
+    for fixes in "${FIXES[@]}"
+    do
+        sw_install_fixes "$fixes"
+    done
+
+    # Run all selected  Tweak scriptlets
+    for tweaks in "${TWEAKS[@]}"
+    do
+        sw_install_tweaks "$tweaks"
+    done
+
+    # Run all selected  Package Installation scriptlets
+    for pkgs in "${PKGS[@]}"
+    do
+        sw_install_packages "$pkgs"
+    done
+
+    # Run all selected Personalization scriptlets
+    for prsnl in "${PRSNL[@]}"
+    do
+        sw_install_personalization "$prsnl"
+    done
 fi
 
-alias_install_autoremove
-finish_cleanup
+# Perform cleanup
+cleanup
+exit 0

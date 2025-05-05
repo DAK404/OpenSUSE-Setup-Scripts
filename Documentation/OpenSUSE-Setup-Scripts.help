@@ -1,0 +1,269 @@
+====================================
+ OpenSUSE Setup Scripts - Help File
+====================================
+
+Welcome to OpenSUSE Setup Scripts!
+
+1. Introduction
+
+This is a manual that will help the users to use the OpenSUSE Setup Scripts. If you are seeing this screen, it means that you
+selected the `?` option in the guided setup. If you want to exit out of this help document, press the `Q` key. It is 
+recommended to read the documentation through to understand what the scripts do. Additionally, it is possible for the user 
+(and is encouraged) to read the source code of the script files before running them.
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+1A. ⚠️ WARNING
+
+The user will need to run the scripts as root. This means that the scripts may modify the system configuration and packages.
+Remember, with great power comes great responsibility!
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+1B. ℹ️ DISCLAIMER
+
+Use at Your Own Risk
+
+This script is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties
+of merchantability, fitness for a particular purpose, and non-infringement. In no event shall the authors or copyright holders
+be liable for any claim, damages, or other liability, whether in an action of contract, tort, or otherwise, arising from, out 
+of, or in connection with the software or the use or other dealings in the software.
+
+Before You Run the Script
+
+Backup Your Data: Always perform a full backup of your system and important files before running any script that modifies your
+system.
+Understand the Script: Read through the script carefully to understand what it does. Ensure that it meets your specific 
+requirements and that you trust it to interact with your system.
+Test Environment: If possible, test the script in a virtual machine or a non-production environment first to avoid any 
+unintended consequences.
+Dependencies: Make sure that all dependencies and required software are installed on your system before running the script.
+This includes any necessary packages, libraries, or external tools.
+
+Liability
+
+By using this script, you acknowledge and agree that the authors shall not be held responsible for any damage or loss of data
+that may occur as a result of using the script. You are solely responsible for the consequences of running the script, 
+including any issues that may arise on your system.
+
+Permissions
+
+You may modify and distribute the script as per the project's license. However, you must include this disclaimer in any copies
+of the script or substantial portions of it.
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+1C. License
+
+The repository and the script files are under the GNU LESSER GENERAL PUBLIC LICENSE v2.1. Please see the full terms in the
+LICENSE file, found in the root of the repository.
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+2. The Guided Setup
+
+The guided setup is to help users have a CLI menu for showing the list of supported scripts. It is aimed at novice and
+intermediate users who would like to manually choose the scripts to be run. Here in the menu, please choose the corresponding 
+number to the script that the user would like to run. If unsure about which script to run, please continue to read the help 
+document.
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+2A. 🌐 Browser Installation
+
+There are 4 scripts available for the user:
+A) Brave Browser (https://brave.com/)
+B) Google Chrome Browser (https://www.google.com/chrome/index.html)
+C) Microsoft Edge Browser (https://www.microsoft.com/en-us/edge/?form=MA13FJ)
+D) Zen Browser (https://zen-browser.app/)
+
+Brave, Google Chrome and Microsoft Edge have official repositories for OpenSUSE with rpm packages available.
+
+Zen Browser does not have such a package, therefore, the tar.gz file is downloaded from the GitHub releases and is installed
+under the `/opt` directory. There is no uninstaller for this yet.
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+2B. 📼 Codecs Installation
+
+OpenSUSE does not ship multimedia codecs by default. This would mean that many of the multimedia files may not open correctly. 
+To solve this problem, there are 3 scripts available for the user:
+
+A) Codecs from the Packman repository (RECOMMENDED)
+B) Codecs from the Packman Essentials repository
+C) Codecs from the Main repository
+
+More can be read about the Codecs here: 
+A) https://en.opensuse.org/Codecs
+B) https://en.opensuse.org/SDB:Installing_codecs_from_Packman_repositories
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+2C. 🛠️ Fixes And Tweaks
+
+These are a set of fixes and tweaks to make things easier. Each of the fixes and tweaks are explained in detail below.
+
+---------------------------------------------------------------
+
+2C.1. Gigabyte Desktop Sleep Fix
+
+Please read the full discussion on Reddit here: https://www.reddit.com/r/gigabyte/comments/p5ewjn/b550i_pro_ax_f13_bios_sleep_issue_on_linux
+
+In some Gigabyte motherboards, there is an issue where the system cannot be put to sleep. The system shall instantly wake up
+when put to sleep. This script will make the necessary changes to allow the system to go to sleep.
+
+Should this script not work, please take a look at Percy Panelo's version on the same on:
+https://github.com/PercyPanleo/OpenSUSE-Setup-Scripts
+
+(Thank you, Percy Panelo!)
+
+⚠️ WARNING
+
+THIS FIX IS ONLY FOR GIGABYTE MOTHERBOARDS! DO NOT USE ON NON-GIGABYTE SYSTEMS!
+
+---------------------------------------------------------------
+
+2C.2. Install ICM Profiles
+
+In the present working directory, the user needs to create a directory called `color` and place their monitor ICM profiles
+inside it. The user will need to manually use the KDE Plasma display settings and locate the ICM profile under 
+`/usr/share/color/` and set that as the color profile.
+
+---------------------------------------------------------------
+
+2C.3. Install Missing Fonts
+
+This script will download all the Google Noto fonts from the OpenSUSE repository. This ensures that the symbols from other
+languages can be rendered correctly. Usually, without this fix, any symbols from non-Latin symbols may be rendered in squares.
+
+---------------------------------------------------------------
+
+2C.4. SDDM Number Lock Fix
+
+When the system starts up and boots to SDDM, the number lock is usually off. It becomes inconvenient for people to turn on 
+the number lock every single time the system boots. This fix shall ensure that the number lock is turned on by default every 
+time the system boots.
+
+---------------------------------------------------------------
+
+2C.5. Tweak Aliases
+
+Certain aliases can be installed to the system to help in administrating the system. This script shall install the aliases to 
+the `/etc/bash.bashrc.local` file
+
+---------------------------------------------------------------
+
+2C.6. mDNS Firewall Rules
+
+In OpenSUSE Tumbleweed, the mDNS is not fully configured with regards to the firewall. This means that the system cannot list 
+the shares available locally when using KDE Plasma. This script will allow the mDNS service to be in the `Public` and `External`
+zones and allowing the shares to be discovered in Dolphin File Manager.
+
+---------------------------------------------------------------
+
+2C.7. OpenRGB
+
+This script shall install and configure OpenRGB to support peripheral lighting.
+
+⚠️ WARNING
+
+THE CONFIGURATION SUPPORTED IS FOR AMD PCS ONLY! IF THE USER HAS AN INTEL CPU, PLEASE MAKE THE NECESSARY CHANGES IN THE SCRIPT 
+FILE BEFORE RUNNING IT! FURTHER, A FEW MOTHERBOARDS MAY REQUIRE MORE CONFIGURATION TO GET THE OPENRGB TO WORK CORRECTLY. PLEASE 
+CHECK THE OPENRGB WEBSITE, THE GITLAB REPOSITORY AND THE DOCUMENTATION FOR MORE INFORMATION.
+
+---------------------------------------------------------------
+
+2C.8. Install Monthly System Auto Updates
+
+This script will create a systemd service and timer to update the system on the first day of every month. This is a setup once 
+and forget script. If there are any package conflicts during the update, the update will be canceled by default. The user will 
+then manually need to go check the conflicts and resolve them.
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+2D. 📥 Package Installation
+
+The following scripts shall download and install the packages from the OpenSUSE repositories.
+
+---------------------------------------------------------------
+
+2D.1. Gaming Packages
+
+This script will install all the essentials required for playing Windows games on Linux. Steam is included since the user can
+add non-Steam games and play it on Linux using Proton.
+
+---------------------------------------------------------------
+
+2D.2. GitHub Desktop
+
+This script shall download and install the GitHub Desktop package. GitHub Desktop is used for managing and synchronizing your 
+GitHub repositories using a GUI. It is aimed at developers who use GitHub to store their code on.
+
+---------------------------------------------------------------
+
+2D.3. System Utilities
+
+This script shall install necessary system utilities to help in expanding the functionalities. It is highly recommended for 
+users to install these packages.
+
+---------------------------------------------------------------
+
+2D.4. Visual Studio Code
+
+This script will download and install Visual Studio Code on the system. Visual Studio Code is an application that can be used
+to write code with IntelliSense autocomplete features. It is used mainly by developers.
+
+---------------------------------------------------------------
+
+2D.5. Warp Terminal (warp.dev)
+
+Warp Terminal is an application that is AI powered terminal. It is intuitive and can execute workflows easily.
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+2E. Personalization
+
+These scripts shall help in personalizing your OpenSUSE install. The changes made are purely cosmetic in nature. The user may
+skip installing these should they have their own personalization preferences.
+
+---------------------------------------------------------------
+
+2E.1. Global Theme (KDE and GTK)
+
+This script shall download and install the Colloid Plasma Theme, Colloid GTK theme and Colloid Icon packs (Thanks, Vinceliuice!)
+The themes give a uniform look to the system, giving it a clean look across components of the OS.
+
+---------------------------------------------------------------
+
+2E.2. Posy's Cursors
+
+This script downloads and installs Posy's Cursors (Thanks Michel "Posy" de Boer and Simtrani for porting this to Linux!) which
+gives a clean set of cursors to use.
+
+---------------------------------------------------------------
+
+2E.3. Breeze Transparent Plasma Style
+
+This makes the panels and the menu elements transparent for the default Breeze theme (Thanks Gumbachi!)
+The user may want this should they wish to have an "Aero" style of blurring effects.
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+3. ❓ FAQs and Support
+
+A) How do I run the scripts?
+Answer: Please check the readme file.
+
+B) The script failed to run. Help!
+Answer: Check the configuration, and please open an issue on the GitHub repository.
+
+C) ICM profiles do not get installed! Help!
+Answer: The user needs to make a `color` directory in the present working directory. Then the ICM files should be placed in
+the `color` directory for the script to install it. Please do note that in KDE Plasma, the user will need to select the ICM
+file in Settings -> Display -> Select ICM Profile and locate the ICM file under `/usr/share/color` directory.
+
+D) OpenRGB did not work for me!
+Answer: The user will need to make additional configurations for non-AMD hardware. A few motherboards will require special
+configurations for the OpenRGB application to work. Please check the OpenRGB documentation for the same.
+
+-------------------------------------------------------------------------------------------------------------------------------
