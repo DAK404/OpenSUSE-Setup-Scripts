@@ -1,6 +1,6 @@
 # OpenSUSE Tumbleweed Setup Scripts
 
-**Now with improved code in version 2.0.0 and beyond!**
+**Now with improved code in version 2.1.0 and beyond!**
 
 This is a set of scripts that can help in configuring and setting up repositories, codecs, packages and configure applications or systems for daily use.
 
@@ -12,60 +12,68 @@ Please note that the `Testing` branch is always ahead of the `main` branch. Ther
 
 - [OpenSUSE Tumbleweed Setup Scripts](#opensuse-tumbleweed-setup-scripts)
   - [Table of Contents](#table-of-contents)
-  - [How To Use](#how-to-use)
+  - [Quick Run](#quick-run)
   - [Arguments](#arguments)
-  - [The Other Shell Scripts](#the-other-shell-scripts)
   - [I Need More Information!](#i-need-more-information)
   - [DISCLAIMER!](#disclaimer)
 
+## Quick Run
 
-## How To Use
+For normal users, you may run this command:
 
-To run the script without the extras, you can simply copy paste the below code to get it running.
-
+```bash
+sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main/OpenSUSE_Installation.sh)"
 ```
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main/OpenSUSE_Installation.sh)"
-```
+
+This will bring up a CLI menu based installer to know what to install.
 
 Please see [Arguments](README.MD#arguments) for more options.
 
 ## Arguments
 
-The `OpenSUSE-setup.sh` script may require a few arguments as per your use-case or needs. The following arguments and the description of each is as follows:
+The `OpenSUSE-Installation.sh` script may require a few arguments as per your use-case or needs. The following arguments and the description of each is as follows:
 
-| Argument          | Description                                                        |
-|-------------------|--------------------------------------------------------------------|
-| codecs-packman    | Installs codecs from Packman repository                            |
-| codecs-main       | Installs codecs from Repository Main (OSS)                         |
-| codecs-opi        | Installs OPI and codecs from OPI                                   |
-| codecs-vlc        | Installs codecs from official VLC repository                       |
-| discord           | Installs Discord using my Script                                   |
-| openrgb           | Installs and sets up openRGB                                       |
-| gigabyte-sleep-fix| Fixes issues with Gigabyte systems that do not go to sleep         |
-| zen-browser       | Installs Zen Browser                                               |
-| personalize       | Installs themes, sound themes and wallpapers                       |
-| remove-flatpak    | Removes flatpak and flatpak applications                           |
+| Type            | Argument                  | Description                                                |
+| --------------- | ------------------------- | ---------------------------------------------------------- |
+| Browser         | Browser-Brave             | Installs the Brave Browser                                 |
+| Browser         | Browser-Chrome            | Installs the Google Chrome Browser                         |
+| Browser         | Browser-MSEdge            | Installs the Microsoft Edge Browser                        |
+| Browser         | Browser-Zen               | Installs the Zen Browser                                   |
+| Codecs          | Codecs-packman-essentials | Installs codecs from Packman Essential repository          |
+| Codecs          | Codecs-opi                | Installs OPI and codecs from OPI                           |
+| Codecs          | Codecs-main               | Installs codecs from Repository Main (OSS)                 |
+| Fix             | GigabyteDesktopSleepFix   | Fixes issues with Gigabyte systems that do not go to sleep |
+| Fix             | ICMProfiles               | Installs ICM profiles                                      |
+| Fix             | MissingFonts              | Installs Missing Fonts (Google Noto fonts pack)            |
+| Fix             | SDDMNumLock               | Enables NumLock on boot to SDDM                            |
+| Tweak           | Aliases                   | Installs useful aliases to the system                      |
+| Tweak           | mDNSFirewallRules         | Adds mDNS to public and external zones in the firewall     |
+| Tweak           | OpenRGB                   | Installs and sets up openRGB                               |
+| Tweak           | SysAutoUpdate             | Adds service to update system on 1st day of every month    |
+| Pkg             | Gaming                    | Installs Gaming components to the system                   |
+| Pkg             | GitHubDesktop             | Installs GitHub Desktop and Git                            |
+| Pkg             | SysUtilities              | Installs Essential System Utilities                        |
+| Pkg             | VSCode                    | Installs Visual Studio Code                                |
+| Pkg             | WarpTerminal              | Installs Warp Terminal (warp.dev)                          |
+| Personalization | BreezeTransparent         | Installs Breeze Transparent Plasma Style                   |
+| Personalization | GlobalTheme               | Installs Colloid KDE Plasma, GTK and Icon themes           |
+| Personalization | PosysCursors              | Installs Posy's Cursors                                    |
 
+
+For using the arguments, use the following syntax:
+
+```bash
+Type1=Option1,Option2,Option3... Type2=Option1,Option2,Option3...
+```
 Example:
 
+```bash
+Browser=Brave Codecs=opi Fix=SDDMNumLock,ICMProfiles
 ```
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main/OpenSUSE_Installation.sh)" codecs-vlc discord openrgb gigabyte-sleep-fix zen-browser personalize
-```
-
-## The Other Shell Scripts
-| Script Name          | Description                                                                                           |
-|----------------------|-------------------------------------------------------------------------------------------------------|
-| Discord-Install.sh   | Downloads and installs Discord directly from the Discord website.                                     |
-| OpenRGB.sh           | Downloads and configures OpenRGB for managing peripheral lighting. Also, please check the [Official OpenRGB Repository](https://gitlab.com/CalcProgrammer1/OpenRGB#smbus-access-1) for more information. |
-| GigabyteDesktop_Sleep_Fix.sh| Please check [THIS](https://www.reddit.com/r/gigabyte/comments/p5ewjn/b550i_pro_ax_f13_bios_sleep_issue_on_linux/?rdt=52322). Essentially, a few Gigabyte motherboards have issues with Linux installations of not able to sleep. |
-| Remove_Flatpak.sh    | This script will remove Flatpak and Flatpak applications installed on your system. May be helpful for anyone who does not want or use Flatpak. |
-| Personalize.sh       | A script that will download and install [Vinceliuice](https://github.com/vinceliuice)'s Colloid Theme. |
-| login_tasks.sh       | Still working on this one. Currently, it just removes the `GPUCache` directory inside the MS Edge and VSCode config directories. |
-| Zen-Browser-Install.sh        | Installs Zen Browser, a lightweight and fast web browser.                                             |
 
 You may run individual scripts by the following command (replace the `<SCRIPT_NAME>` with a valid script file name):
 
-```
+```bash
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main/<SCRIPT_NAME>.sh)"
 ```
 

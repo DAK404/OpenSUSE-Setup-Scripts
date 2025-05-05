@@ -43,6 +43,7 @@ This is the changelog since version 2.0.0. Each section contains divisions for e
 * Added Filelight to be included in SysUtilities
 * All steps of the installation are independent scripts
 * All scripts are structured inside directories based on actions
+* Updated the documentation
 
 ### Deletions
 
