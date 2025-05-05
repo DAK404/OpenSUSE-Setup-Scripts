@@ -28,3 +28,5 @@ rm -rf ./Breeze-Transparent-main
 
 # Delete the downloaded zip file to clean up
 rm -rf ./Breeze-Transparent-main.zip
+
+echo "[ INFORMATION ] Breeze Transparent Plasma Style Installed"

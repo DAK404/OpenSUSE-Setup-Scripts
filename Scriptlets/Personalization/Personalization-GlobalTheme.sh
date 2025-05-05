@@ -79,3 +79,5 @@ echo "[ INFORMATION ] Cleaning Up ZIP Files"
 rm -rf ./*.zip
 
 # ---------------------------------------------------------- #
+
+echo "[ INFORMATION ] Global Theme Installed"

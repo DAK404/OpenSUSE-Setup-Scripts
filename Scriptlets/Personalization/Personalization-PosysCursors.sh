@@ -32,3 +32,5 @@ rm -rf ./posy-improved-cursor-linux-main/
 
 # Delete the downloaded zip file to clean up
 rm -rf ./posy-improved-cursor-linux-main.zip
+
+echo "[ INFORMATION ] Posy's Cursor Set Installed"

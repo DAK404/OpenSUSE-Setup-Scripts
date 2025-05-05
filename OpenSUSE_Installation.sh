@@ -17,9 +17,11 @@ fi
 ##########################################
 
 SCRIPT_VERSION="2.1.0"
-INTERNET_CONNECTION=true
-LOG_FILE=/tmp/DAK404-OpenSUSE-Setup.log
+INTERNET_CONNECTION=false
 SCRIPT_PATH="https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main"
+
+BROWSER_TYPE="NONE"
+CODECS_TYPE="NONE"
 
 # Declare arrays to store scriptlet names
 declare -a FIXES
@@ -34,10 +36,10 @@ check_internet_connection()
     if ping -c 1 github.com &> /dev/null
     then
         echo "[ INFORMATION ] Ping to GitHub Successful."
+        INTERNET_CONNECTION=true
     else
         echo "[ WARNING ] Ping to GitHub Failed!"
-        INTERNET_CONNECTION=false
-        SCRIPT_PATH="./"
+        SCRIPT_PATH="."
     fi
 
     echo "[ INFORMATION ] Internet Connection Check Complete"
@@ -60,37 +62,37 @@ scriptlet_runner()
 # Function to install browser packages
 sw_install_browers()
 {
-    scriptlet_runner "/Browsers/Browser-$BROWSER_TYPE"
+    scriptlet_runner "Browsers/Browser-$BROWSER_TYPE"
 }
 
 sw_install_codecs()
 {
-    scriptlet_runner "/Codecs/Codecs-$CODECS_TYPE"
+    scriptlet_runner "Codecs/Codecs-$CODECS_TYPE"
 }
 
 sw_install_fixes()
 {
-    scriptlet_runner "/Fixes-and-Tweaks/Fix-$1"
+    scriptlet_runner "Fixes-and-Tweaks/Fix-$1"
 }
 
 sw_install_tweaks()
 {
-    scriptlet_runner "/Fixes-and-Tweaks/Tweak-$1"
+    scriptlet_runner "Fixes-and-Tweaks/Tweak-$1"
 }
 
 sw_install_packages()
 {
-    scriptlet_runner "/Packages-Installation/Pkg-$1"
+    scriptlet_runner "Package-Installation/Pkg-$1"
 }
 
 sw_install_personalization()
 {
-    scriptlet_runner "/Personalization/Personalize-$1"
+    scriptlet_runner "Personalization/Personalization-$1"
 }
 
 script_helpfile()
 {
-    less ./Documentation/OpenSUSE-Setup-Scripts.help
+    curl -s https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main/Documentation/OpenSUSE-Setup-Scripts.help | less
 }
 
 # Function to perform clean up
@@ -117,8 +119,8 @@ display_menu()
     echo "---------- BROWSERS ----------"
     echo
     echo "1. Install Brave Browser"
-    echo "2. Install Firefox Browser"
-    echo "3. Install Chrome Browser"
+    echo "2. Install Chrome Browser"
+    echo "3. Install MSEdge Browser"
     echo "4. Install Zen Browser"
     echo
     echo "----------- CODECS -----------"
@@ -167,25 +169,32 @@ handle_input() {
             exit 0
             ;;
         1)
-            sw_install_browers 'Browser-Brave'
+            BROWSER_TYPE='Brave'
+            sw_install_browers
             ;;
         2)
-            sw_install_browers 'Browser-Chrome'
+            BROWSER_TYPE='Chrome'
+            sw_install_browers
             ;;
         3)
-            sw_install_browers 'Browser-MSEdge'
+            BROWSER_TYPE='MSEdge'
+            sw_install_browers
             ;;
         4)
-            sw_install_browers 'Browser-Zen'
+            BROWSER_TYPE='Zen'
+            sw_install_browers
             ;;
         5)
-            sw_install_codecs 'Codecs-opi'
+            CODECS_TYPE='opi'
+            sw_install_codecs
             ;;
         6)
-            sw_install_codecs 'Codecs-packman-essentials'
+            CODECS_TYPE='packman-essentials'
+            sw_install_codecs
             ;;
         7)
-            sw_install_codecs 'Codecs-main'
+            CODECS_TYPE='main'
+            sw_install_codecs
             ;;
         8)
             sw_install_fixes 'GigabyteDesktopSleepFix'
@@ -197,7 +206,7 @@ handle_input() {
             sw_install_fixes 'MissingFonts'
             ;;
         11)
-            sw_install_fixes 'SDDMNumberLockFix'
+            sw_install_fixes 'SDDMNumLock'
             ;;
         12)
             sw_install_tweaks 'Aliases'
@@ -230,7 +239,7 @@ handle_input() {
             sw_install_personalization 'GlobalTheme'
             ;;
         22)
-            sw_install_personalization 'PosysCursor'
+            sw_install_personalization 'PosysCursors'
             ;;
         23)
             sw_install_personalization 'BreezeTransparent'

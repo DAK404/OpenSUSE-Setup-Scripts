@@ -11,6 +11,10 @@
 #
 ############################################################
 
+sudo systemctl start firewalld
+
 firewall-cmd --permanent --zone=public --add-service=mdns
 firewall-cmd --permanent --zone=external --add-service=mdns
 firewall-cmd --reload
+
+echo "[ INFORMATION ] mDNS Firewall Rules Added"

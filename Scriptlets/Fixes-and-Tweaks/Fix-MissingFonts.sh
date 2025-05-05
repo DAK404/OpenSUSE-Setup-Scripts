@@ -12,3 +12,5 @@
 ############################################################
 
 zypper in -y google-noto-*
+
+echo "[ INFORMATION ] Missing Fonts Installed"

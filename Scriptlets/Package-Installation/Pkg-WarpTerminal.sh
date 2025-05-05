@@ -13,4 +13,4 @@
 
 rpm --import https://releases.warp.dev/linux/keys/warp.asc
 zypper addrepo https://releases.warp.dev/linux/rpm/stable warpdotdev
-zypper install warp-terminal
+zypper install -y warp-terminal

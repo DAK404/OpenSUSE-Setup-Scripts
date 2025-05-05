@@ -109,4 +109,4 @@ EOF
 # Run the setup
 setup_automation
 
-echo "Automated setup complete."
+echo "[ INFORMATION ] System Auto Update Script Setup Complete"
