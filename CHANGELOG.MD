@@ -27,6 +27,9 @@ This is the changelog since version 2.0.0. Each section contains divisions for e
 
 ### Additions
 
+* Added a Guided Installation option
+* Added Tweak to configure firewall rules for mDNS
+* Added a help file to help users understand the script features
 + Added Google Chrome, Brave, MS Edge and Zen Browser installation scripts
 + Added option to install codecs from Packman Essentials
 + Added a fix to turn on NumLock in SDDM
@@ -37,6 +40,7 @@ This is the changelog since version 2.0.0. Each section contains divisions for e
 
 ### Modifications
 
+* Added Filelight to be included in SysUtilities
 * All steps of the installation are independent scripts
 * All scripts are structured inside directories based on actions
 

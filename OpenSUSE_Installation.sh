@@ -125,8 +125,8 @@ do
 done
 
 # Run scriptlets for codecs and browsers
-scriptlet_runner "/Codecs/$CODECS_TYPE"
-scriptlet_runner "/Browsers/$BROWSER_TYPE"
+scriptlet_runner "/Codecs/Codecs-$CODECS_TYPE"
+scriptlet_runner "/Browsers/Browser-$BROWSER_TYPE"
 
 # Run all Fix scriptlets
 for fixes in "${FIXES[@]}"
