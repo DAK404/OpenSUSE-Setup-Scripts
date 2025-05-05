@@ -12,10 +12,20 @@ Please note that the `Testing` branch is always ahead of the `main` branch. Ther
 
 - [OpenSUSE Tumbleweed Setup Scripts](#opensuse-tumbleweed-setup-scripts)
   - [Table of Contents](#table-of-contents)
+  - [IMPORTANT](#important)
   - [Quick Run](#quick-run)
   - [Arguments](#arguments)
   - [I Need More Information!](#i-need-more-information)
   - [DISCLAIMER!](#disclaimer)
+
+## IMPORTANT
+
+I would like to highlight 2 of the forks that is significant.
+
+1. N Shamsi's Fork: https://github.com/n-shamsi/OpenSUSE-Setup-Scripts - This is a modified version of the scripts for OpenSUSE Leap versions.
+2. Percy Panelo's Fork: https://github.com/PercyPanleo/OpenSUSE-Setup-Scripts - This contains an alternative fix for Gigabyte sleep issues. If the version provided does not work as expected, please use Percy Panelo's version.
+
+A big thank you to you both for contributing to this project!
 
 ## Quick Run
 
