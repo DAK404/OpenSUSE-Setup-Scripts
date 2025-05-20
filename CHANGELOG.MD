@@ -33,6 +33,7 @@ This is the changelog since version 2.0.0. Each section contains divisions for e
 + Added JetBrains Toolbox installation Script
 + Added zsh installation and customization script
 + Made adjustments to guided installer to fit new items
++ Added CREDITS file
 
 ### Modifications
 

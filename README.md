@@ -27,6 +27,8 @@ I would like to highlight 2 of the forks that is significant.
 
 A big thank you to you both for contributing to this project!
 
+Please see the [CREDITS](CREDITS.MD) file to check-out all the contributors to the project!
+
 ## Quick Run
 
 For normal users, you may run this command:
