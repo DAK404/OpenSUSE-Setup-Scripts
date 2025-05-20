@@ -5,7 +5,7 @@
 #
 # Based on original script by: JanPokorny
 # Modified and adapted by: wz790
-# Reviewed by by: DAK404
+# Reviewed by: DAK404
 #
 # ⚠️ ATTENTION!
 # This script can be run in a single line from your shell!
