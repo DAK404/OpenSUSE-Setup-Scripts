@@ -1,1 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A set of scripts to help configure OpenSUSE Tumbleweed: repositories, codecs, packages, and system tweaks. Version 2.1.1 and beyond.">
+    <title>OpenSUSE Tumbleweed Setup Scripts | Effortless Configuration</title>
 
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚙️</text></svg>">
+
+    <!-- Google Fonts: Inter for text, Fira Code for code (with ligatures) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<!-- data-theme attribute managed by JavaScript -->
+<body>
+
+    <!-- Page Overlay for Mobile Menu background dimming -->
+    <div class="page-overlay" id="pageOverlay" aria-hidden="true"></div>
+
+    <!-- Site Header -->
+    <header class="site-header" id="siteHeader">
+        <div class="container header-container">
+            <a href="#home" class="logo" aria-label="OpenSUSE Setup Scripts Homepage">
+                <span class="logo-icon" aria-hidden="true">⚙️</span>
+                <span class="logo-text">OpenSUSE Setup Scripts</span>
+            </a>
+            <nav class="main-nav" id="mainNav" aria-label="Main site navigation">
+                <ul>
+                    <li><a href="#about">About</a></li> <!-- Corresponds to README intro -->
+                    <li><a href="#important-info">Important Info</a></li> <!-- Corresponds to "IMPORTANT" section -->
+                    <li><a href="#quick-run">Quick Run</a></li>
+                    <li><a href="#arguments">Arguments</a></li>
+                    <li><a href="#more-info">More Info</a></li> <!-- Corresponds to "I Need More Information!" -->
+                    <li><a href="#disclaimer">Disclaimer</a></li>
+                </ul>
+            </nav>
+            <div class="header-controls">
+                <button class="theme-switcher" id="themeSwitcher" type="button" aria-label="Toggle color theme" aria-live="polite" title="Toggle color theme">
+                    <span class="icon sun-icon" aria-hidden="true">☀️</span>
+                    <span class="icon moon-icon" aria-hidden="true">🌙</span>
+                </button>
+                <button class="mobile-nav-toggle" id="mobileNavToggle" type="button" aria-label="Toggle mobile navigation" aria-expanded="false" aria-controls="mainNav">
+                    <span class="mobile-nav-toggle-icon" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="mainContent">
+        <!-- Hero Section -->
+        <section class="hero-section" id="home" aria-labelledby="hero-heading">
+            <div class="hero-background-elements" aria-hidden="true">
+                <div class="hero-blur-circle circle-1"></div>
+                <div class="hero-blur-circle circle-2"></div>
+                <div class="hero-blur-circle circle-3"></div>
+            </div>
+            <div class="container hero-content">
+                <span class="version-badge animate-on-scroll" data-animation-delay="0.3s">Now with improved code in version 2.1.1 and beyond!</span>
+                <h1 id="hero-heading" class="animate-on-scroll" data-animation-delay="0s">OpenSUSE Tumbleweed Setup Scripts</h1>
+                <p class="subtitle animate-on-scroll" data-animation-delay="0.1s">Your go-to scripts for setting up OpenSUSE Tumbleweed. Configure repositories, codecs, packages, and system settings for daily use, fast and easy.</p>
+                <a href="#quick-run" class="button button-primary hero-button animate-on-scroll" data-animation-delay="0.2s">
+                    <span class="icon" aria-hidden="true">🚀</span> Jump to Quick Run
+                </a>
+            </div>
+        </section>
+
+        <!-- About Section (Corresponds to README intro) -->
+        <section id="about" class="content-section" aria-labelledby="about-heading">
+            <div class="container">
+                <h2 id="about-heading" class="section-title animate-on-scroll"><span class="icon" aria-hidden="true">ℹ️</span>What's This About?</h2>
+                <div class="card animate-on-scroll">
+                    <p>This is a set of scripts that can help in configuring and setting up repositories, codecs, packages and configure applications or systems for daily use on OpenSUSE Tumbleweed.</p>
+                    <p>You can use these scripts to get multiple OpenSUSE Tumbleweed systems up and running quickly, just by using a shell script.</p>
+                    <p><strong>Heads up:</strong> The <code>Testing</code> branch is always ahead of the <code>main</code> branch and is used for, well, testing. So, there might be differences. If you're not sure, stick with the scripts in the <code>main</code> branch for stability.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- IMPORTANT Section (Corresponds to README "IMPORTANT") -->
+        <section id="important-info" class="content-section alt-bg" aria-labelledby="important-heading">
+            <div class="container">
+                <h2 id="important-heading" class="section-title animate-on-scroll"><span class="icon" aria-hidden="true">📌</span>Important Info & Forks</h2>
+                <div class="card animate-on-scroll">
+                    <p>I'd like to give a shout-out to 2 significant forks:</p>
+                    <ol class="styled-list-ordered">
+                        <li>
+                            <strong>N Shamsi's Fork:</strong>
+                            <a href="https://github.com/n-shamsi/OpenSUSE-Setup-Scripts" target="_blank" rel="noopener noreferrer" class="external-link">
+                                github.com/n-shamsi/OpenSUSE-Setup-Scripts <span class="external-link-icon" aria-hidden="true">↗</span>
+                            </a>
+                            <br>This is a modified version of the scripts specifically for OpenSUSE Leap versions.
+                        </li>
+                        <li>
+                            <strong>Percy Panelo's Fork:</strong>
+                            <a href="https://github.com/PercyPanleo/OpenSUSE-Setup-Scripts" target="_blank" rel="noopener noreferrer" class="external-link">
+                                github.com/PercyPanleo/OpenSUSE-Setup-Scripts <span class="external-link-icon" aria-hidden="true">↗</span>
+                            </a>
+                            <br>This fork contains an alternative fix for Gigabyte sleep issues. If the version provided here doesn't work as expected for you, try Percy Panelo's version.
+                        </li>
+                    </ol>
+                    <p>A big thank you to both N Shamsi and Percy Panelo for contributing to this project!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Run Section -->
+        <section id="quick-run" class="content-section" aria-labelledby="quickrun-heading">
+            <div class="container">
+                <h2 id="quickrun-heading" class="section-title animate-on-scroll"><span class="icon" aria-hidden="true">⚡</span>Quick Run</h2>
+                <div class="card animate-on-scroll">
+                    <p>For normal users, you can run this command:</p>
+                    <div class="code-block-wrapper">
+                        <pre tabindex="0"><code class="language-bash">sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main/OpenSUSE_Installation.sh)"</code></pre>
+                    </div>
+                    <p>This will bring up a CLI menu-based installer to let you know what to install. For more options, please see the <a href="#arguments">Arguments section</a>.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Arguments Section -->
+        <section id="arguments" class="content-section alt-bg" aria-labelledby="arguments-heading">
+            <div class="container">
+                <h2 id="arguments-heading" class="section-title animate-on-scroll"><span class="icon" aria-hidden="true">🛠️</span>Arguments</h2>
+                <div class="card animate-on-scroll">
+                    <p>The <code>OpenSUSE-Installation.sh</code> script can take a few arguments depending on your use-case or needs. Here are the arguments and what they do:</p>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Argument</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Browser</td><td><code>Browser-Brave</code></td><td>Installs the Brave Browser</td></tr>
+                                <tr><td>Browser</td><td><code>Browser-Chrome</code></td><td>Installs the Google Chrome Browser</td></tr>
+                                <tr><td>Browser</td><td><code>Browser-MSEdge</code></td><td>Installs the Microsoft Edge Browser</td></tr>
+                                <tr><td>Browser</td><td><code>Browser-Zen</code></td><td>Installs the Zen Browser</td></tr>
+                                <tr><td>Codecs</td><td><code>Codecs-packman-essentials</code></td><td>Installs codecs from Packman Essential repository</td></tr>
+                                <tr><td>Codecs</td><td><code>Codecs-opi</code></td><td>Installs OPI and codecs from OPI</td></tr>
+                                <tr><td>Codecs</td><td><code>Codecs-main</code></td><td>Installs codecs from Repository Main (OSS)</td></tr>
+                                <tr><td>Fix</td><td><code>GigabyteDesktopSleepFix</code></td><td>Fixes issues with Gigabyte systems that do not go to sleep</td></tr>
+                                <tr><td>Fix</td><td><code>ICMProfiles</code></td><td>Installs ICM profiles</td></tr>
+                                <tr><td>Fix</td><td><code>MissingFonts</code></td><td>Installs Missing Fonts (Google Noto fonts pack)</td></tr>
+                                <tr><td>Fix</td><td><code>SDDMNumLock</code></td><td>Enables NumLock on boot to SDDM</td></tr>
+                                <tr><td>Tweak</td><td><code>Aliases</code></td><td>Installs useful aliases to the system</td></tr>
+                                <tr><td>Tweak</td><td><code>mDNSFirewallRules</code></td><td>Adds mDNS to public and external zones in the firewall</td></tr>
+                                <tr><td>Tweak</td><td><code>OpenRGB</code></td><td>Installs and sets up openRGB</td></tr>
+                                <tr><td>Tweak</td><td><code>SysAutoUpdate</code></td><td>Adds service to update system on 1st day of every month</td></tr>
+                                <tr><td>Pkg</td><td><code>Gaming</code></td><td>Installs Gaming components to the system</td></tr>
+                                <tr><td>Pkg</td><td><code>GitHubDesktop</code></td><td>Installs GitHub Desktop and Git</td></tr>
+                                <tr><td>Pkg</td><td><code>SysUtilities</code></td><td>Installs Essential System Utilities</td></tr>
+                                <tr><td>Pkg</td><td><code>VSCode</code></td><td>Installs Visual Studio Code</td></tr>
+                                <tr><td>Pkg</td><td><code>JetBrains Toolbox</code></td><td>Installs JetBrains Toolbox</td></tr>
+                                <tr><td>Pkg</td><td><code>WarpTerminal</code></td><td>Installs Warp Terminal (warp.dev)</td></tr>
+                                <tr><td>Personalization</td><td><code>BreezeTransparent</code></td><td>Installs Breeze Transparent Plasma Style</td></tr>
+                                <tr><td>Personalization</td><td><code>GlobalTheme</code></td><td>Installs Colloid KDE Plasma, GTK and Icon themes</td></tr>
+                                <tr><td>Personalization</td><td><code>PosysCursors</code></td><td>Installs Posy's Cursors</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 class="subsection-title">How to Use Arguments</h3>
+                    <p>To use the arguments, use this syntax:</p>
+                    <div class="code-block-wrapper">
+                        <pre tabindex="0"><code class="language-bash">Type1=Option1,Option2,Option3... Type2=Option1,Option2,Option3...</code></pre>
+                    </div>
+                    <p><strong>Example:</strong></p>
+                    <div class="code-block-wrapper">
+                        <pre tabindex="0"><code class="language-bash">Browser=Brave Codecs=opi Fix=SDDMNumLock,ICMProfiles</code></pre>
+                    </div>
+
+                    <h3 class="subsection-title">Running Individual Scripts</h3>
+                    <p>You can run individual scripts by using the following command (just replace <code><SCRIPT_NAME></code> with a valid script file name):</p>
+                    <div class="code-block-wrapper">
+                        <pre tabindex="0"><code class="language-bash">bash -c "$(curl -fsSL https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main/<SCRIPT_NAME>.sh)"</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- More Information Section (Corresponds to README "I Need More Information!") -->
+        <section id="more-info" class="content-section" aria-labelledby="moreinfo-heading">
+            <div class="container">
+                <h2 id="moreinfo-heading" class="section-title animate-on-scroll"><span class="icon" aria-hidden="true">📚</span>Need More Information?</h2>
+                <div class="card animate-on-scroll">
+                    <p>Please check the <strong><a href="https://github.com/DAK404/OpenSUSE-Setup-Scripts/wiki" target="_blank" rel="noopener noreferrer" class="external-link">GitHub Wiki <span class="external-link-icon" aria-hidden="true">↗</span></a></strong> to learn more about the project.</p>
+                    <p>If you're looking for the older scripts, please check the <strong><a href="https://github.com/DAK404/OpenSUSE-Setup-Scripts/tree/Legacy" target="_blank" rel="noopener noreferrer" class="external-link">Legacy Branch <span class="external-link-icon" aria-hidden="true">↗</span></a></strong>. However, these scripts won't be maintained anymore, since the scripts in version <code>2.0.0</code> are better in all aspects.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Disclaimer Section -->
+        <section id="disclaimer" class="content-section alt-bg" aria-labelledby="disclaimer-heading">
+            <div class="container">
+                <h2 id="disclaimer-heading" class="section-title animate-on-scroll"><span class="icon" aria-hidden="true">⚠️</span>DISCLAIMER!</h2>
+                <div class="card disclaimer-box animate-on-scroll">
+                    <h3 class="disclaimer-subtitle">Use at Your Own Risk</h3>
+                    <p>This script is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, and non-infringement. In no event shall the authors or copyright holders be liable for any claim, damages, or other liability, whether in an action of contract, tort, or otherwise, arising from, out of, or in connection with the software or the use or other dealings in the software.</p>
+
+                    <h3 class="disclaimer-subtitle">Before You Run the Script</h3>
+                    <ol class="styled-list-ordered">
+                        <li><strong>Backup Your Data:</strong> Always perform a full backup of your system and important files before running any script that modifies your system.</li>
+                        <li><strong>Understand the Script:</strong> Read through the script carefully to understand what it does. Ensure that it meets your specific requirements and that you trust it to interact with your system.</li>
+                        <li><strong>Test Environment:</strong> If possible, test the script in a virtual machine or a non-production environment first to avoid any unintended consequences.</li>
+                        <li><strong>Dependencies:</strong> Make sure that all dependencies and required software are installed on your system before running the script. This includes any necessary packages, libraries, or external tools.</li>
+                    </ol>
+
+                    <h3 class="disclaimer-subtitle">Liability</h3>
+                    <p>By using this script, you acknowledge and agree that the authors shall not be held responsible for any damage or loss of data that may occur as a result of using the script. You are solely responsible for the consequences of running the script, including any issues that may arise on your system.</p>
+
+                    <h3 class="disclaimer-subtitle">Permissions</h3>
+                    <p>You may modify and distribute the script as per the project's license. However, you must include this disclaimer in any copies of the script or substantial portions of it.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Site Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <p>© <span id="currentYear"></span> DAK404 & Contributors. All Rights Reserved.</p>
+            <p class="social-links">
+                Find this project on
+                <a href="https://github.com/DAK404/OpenSUSE-Setup-Scripts" target="_blank" rel="noopener noreferrer" title="View Project on GitHub" class="footer-link">
+                    <svg class="github-icon" viewBox="0 0 16 16" version="1.1" width="18" height="18" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+                    GitHub
+                </a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTopBtn" class="scroll-to-top" type="button" title="Scroll to top of page" aria-label="Scroll to top">
+        <span class="scroll-to-top-icon" aria-hidden="true">↑</span>
+    </button>
+
+    <!-- JavaScript - Placed at the end for optimal page load performance -->
+    <script src="js/script.js"></script>
+</body>
+</html>
