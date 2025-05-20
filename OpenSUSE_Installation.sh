@@ -146,13 +146,14 @@ display_menu()
     echo "17. Git and GitHub Desktop"
     echo "18. Essential System Utilities"
     echo "19. Visual Studio Code"
-    echo "20. Warp Terminal (warp.dev)"
+    echo "20. JetBrains Toolbox"
+    echo "21. Warp Terminal (warp.dev)"
     echo
     echo "------- PERSONALIZATION ------"
     echo
-    echo "21. Install Global Theme (Plasma and GTK)"
-    echo "22. Install Posy's Cursors"
-    echo "23. Install Breeze Transparent Plasma Style"
+    echo "22. Install Global Theme (Plasma and GTK)"
+    echo "23. Install Posy's Cursors"
+    echo "24. Install Breeze Transparent Plasma Style"
     echo
     echo "------------------------------"
     echo
@@ -233,15 +234,18 @@ handle_input() {
             sw_install_packages 'VSCode'
             ;;
         20)
-            sw_install_packages 'WarpTerminal'
+            sw_install_packages 'JetBrainsToolbox'
             ;;
         21)
-            sw_install_personalization 'GlobalTheme'
+            sw_install_packages 'WarpTerminal'
             ;;
         22)
-            sw_install_personalization 'PosysCursors'
+            sw_install_personalization 'GlobalTheme'
             ;;
         23)
+            sw_install_personalization 'PosysCursors'
+            ;;
+        24)
             sw_install_personalization 'BreezeTransparent'
             ;;
         ?)
