@@ -5,6 +5,10 @@ This is the changelog since version 2.0.0. Each section contains divisions for e
 # Table of Contents
 - [Changelog](#changelog)
 - [Table of Contents](#table-of-contents)
+  - [2.1.1](#211)
+    - [Additions](#additions)
+    - [Modifications](#modifications)
+    - [Deletions](#deletions)
   - [2.1.0](#210)
     - [Additions](#additions)
     - [Modifications](#modifications)
@@ -22,6 +26,18 @@ This is the changelog since version 2.0.0. Each section contains divisions for e
     - [Deletions](#deletions-2)
 
 ---
+
+## 2.1.1
+
+### Additions
+
+* Added JetBrains Toolbox installation Script
+
+### Modifications
+
+* Updated the documentation
+
+### Deletions
 
 ## 2.1.0
 
