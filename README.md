@@ -1,6 +1,6 @@
 # OpenSUSE Tumbleweed Setup Scripts
 
-**Now with improved code in version 2.1.0 and beyond!**
+**Now with improved code in version 2.1.1 and beyond!**
 
 This is a set of scripts that can help in configuring and setting up repositories, codecs, packages and configure applications or systems for daily use.
 
@@ -64,6 +64,7 @@ The `OpenSUSE-Installation.sh` script may require a few arguments as per your us
 | Pkg             | GitHubDesktop             | Installs GitHub Desktop and Git                            |
 | Pkg             | SysUtilities              | Installs Essential System Utilities                        |
 | Pkg             | VSCode                    | Installs Visual Studio Code                                |
+| Pkg             | JetBrains Toolbox         | Installs JetBrains Toolbox                                 |
 | Pkg             | WarpTerminal              | Installs Warp Terminal (warp.dev)                          |
 | Personalization | BreezeTransparent         | Installs Breeze Transparent Plasma Style                   |
 | Personalization | GlobalTheme               | Installs Colloid KDE Plasma, GTK and Icon themes           |
