@@ -186,12 +186,19 @@ body {
     color: var(--color-button-text); /* Text color needs to contrast well. */
     border-color: var(--color-accent-primary);
 }
-.button-primary:hover, .button-primary:focus-visible {
+
+/* MODIFIED RULE - START */
+.button-primary:hover,
+.button-primary:focus-visible,
+.button-primary:active { /* Added :active */
     background-color: var(--color-accent-primary-hover);
     border-color: var(--color-accent-primary-hover);
+    color: var(--color-button-text); /* Added explicit color to ensure visibility */
     transform: translateY(-2px) scale(1.03); /* A little lift and grow. */
     box-shadow: 0 4px 10px 0 var(--color-shadow), 0 2px 4px -2px var(--color-shadow); /* More shadow on hover. */
 }
+/* MODIFIED RULE - END */
+
 /* Note: Text color on hover for dark theme is handled by the --color-button-text variable being set to dark. */
 .button .icon { font-size: 1.1em; }
 
