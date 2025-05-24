@@ -30,7 +30,8 @@ This is the changelog since version 2.0.0. Each section contains divisions for e
 
 ### Additions
 
-+ Added JetBrains Toolbox installation Script
++ Added JetBrains Toolbox installation Script [wz790](https://github.com/wz790)
++ Added an awesome website [wz790](https://github.com/wz790)
 + Added zsh installation and customization script
 + Made adjustments to guided installer to fit new items
 + Added CREDITS file

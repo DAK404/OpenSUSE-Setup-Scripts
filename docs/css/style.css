@@ -67,7 +67,7 @@
     --color-accent-primary: var(--opensuse-green); /* Our main green! */
     --color-accent-primary-hover: #1a5223;     /* A slightly darker shade for hover. */
     --color-accent-primary-rgb: 32, 103, 44;   /* RGB for when we need transparency. */
-    --color-accent-secondary: #5a83b6;         /* A complementary accessible blue (inspired by some openSUSE toolings) */
+    --color-accent-secondary: #04a527d0;         /* A complementary accessible blue (inspired by some openSUSE toolings) */
     --color-accent-secondary-hover: #486a94;
     --color-accent-secondary-rgb: 90, 131, 182;
     --color-surface: #ffffff;                       /* Cards and modals get a clean white. */
@@ -102,8 +102,8 @@
     --color-accent-primary: var(--opensuse-green-dark-theme);
     --color-accent-primary-hover: #73ba25;        /* Slightly less bright for hover. */
     --color-accent-primary-rgb: 134, 220, 61;
-    --color-accent-secondary: #6fa0d8;            /* A lighter, brighter blue for dark mode. */
-    --color-accent-secondary-hover: #5a83b6;
+    --color-accent-secondary: #005e10;            /* A lighter, brighter blue for dark mode. */
+    --color-accent-secondary-hover: #1ba100;
     --color-accent-secondary-rgb: 111, 160, 216;
     --color-surface: var(--opensuse-dark-surface);
     --color-border: var(--opensuse-dark-border);

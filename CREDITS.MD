@@ -3,7 +3,8 @@
 A big thank you to:
 
 + [wz790](https://github.com/wz790)
-    * Helped implement te logic for installing JetBrains toolbox.
+    * Helped implement the logic for installing JetBrains toolbox.
+    * Made an awesome website for this project!
 + [n-shamsi](https://github.com/n-shamsi)
     * Made an alternative repo for Leap users with Nvidia Installation.
 + [PercyPanleo](https://github.com/PercyPanleo)
