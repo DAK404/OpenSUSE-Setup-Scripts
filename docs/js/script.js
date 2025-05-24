@@ -1,283 +1,304 @@
-"use strict"; // Enforces stricter parsing and error handling in JavaScript.
+"use strict"; // Keeps our JavaScript clean and strict!
 
-// Wait for the DOM to be fully loaded before running any scripts.
+// Let's wait for the entire page to be ready before we start messing with it.
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- DOM ELEMENT SELECTORS ---
-    // Cache common DOM elements to avoid repeated lookups.
+    // --- GRABBING OUR DOM ELEMENTS ---
+    // It's good practice to grab these once and store them, rather than searching the DOM repeatedly.
     const body = document.body;
     const siteHeader = document.getElementById('siteHeader');
     const themeSwitcher = document.getElementById('themeSwitcher');
-    const sunIcon = themeSwitcher?.querySelector('.sun-icon'); // Optional chaining in case themeSwitcher is not found
-    const moonIcon = themeSwitcher?.querySelector('.moon-icon');
-    const mobileNavToggle = document.getElementById('mobileNavToggle');
-    const mainNav = document.getElementById('mainNav');
-    const pageOverlay = document.getElementById('pageOverlay');
-    const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+    const sunIcon = themeSwitcher?.querySelector('.sun-icon'); // The little sun for light mode
+    const moonIcon = themeSwitcher?.querySelector('.moon-icon'); // The little moon for dark mode
+    const mobileNavToggle = document.getElementById('mobileNavToggle'); // The hamburger button
+    const mainNav = document.getElementById('mainNav'); // The navigation menu itself
+    const pageOverlay = document.getElementById('pageOverlay'); // The dim overlay for mobile nav
+    const scrollToTopBtn = document.getElementById('scrollToTopBtn'); // Our trusty "back to top" button
+    const currentYearSpan = document.getElementById('currentYear'); // For the copyright year
 
-    // --- THEME SWITCHER LOGIC ---
-    // Handles switching between light and dark themes and persisting the choice.
+    // --- THEME SWITCHER: Light, Dark, and openSUSE Green! ---
     if (themeSwitcher && sunIcon && moonIcon) {
-        const THEME_KEY = 'user-preferred-theme'; // Key for storing theme in localStorage.
+        const THEME_KEY = 'user-preferred-theme'; // How we remember the user's choice in their browser
 
-        // Function to apply the selected theme to the page.
+        // This function actually applies the chosen theme.
         const applyTheme = (theme) => {
-            body.setAttribute('data-theme', theme); // Set data-theme attribute on body for CSS styling.
-            localStorage.setItem(THEME_KEY, theme); // Save preference to localStorage.
-
+            body.setAttribute('data-theme', theme); // This tells our CSS which theme to use.
+            localStorage.setItem(THEME_KEY, theme); // Save it for next time!
             const isDarkMode = theme === 'dark';
 
-            // Toggle visibility of sun/moon icons.
+            // Show the correct sun/moon icon.
             sunIcon.style.display = isDarkMode ? 'none' : 'inline-block';
             moonIcon.style.display = isDarkMode ? 'inline-block' : 'none';
 
-            // Update ARIA attributes for accessibility.
+            // Make sure screen readers know what's up.
             themeSwitcher.setAttribute('aria-label', `Switch to ${isDarkMode ? 'light' : 'dark'} theme`);
             themeSwitcher.setAttribute('aria-pressed', isDarkMode.toString());
 
-            // Update CSS custom property for --color-accent-primary-rgb based on theme.
-            // This is used for rgba() colors that need the primary accent.
+            // Our CSS uses RGB versions of accent colors for transparency (rgba).
+            // Let's make sure these are correctly set when the theme changes.
             const rootStyle = document.documentElement.style;
+            const computedStyles = getComputedStyle(document.documentElement);
+
+            // It's a bit verbose, but this tries to get the RGB values defined in CSS.
+            // If for some reason they aren't there, it uses sensible fallbacks for the openSUSE theme.
             if (isDarkMode) {
-                // Dark theme primary accent: #00f5d4 (RGB: 0, 245, 212)
-                rootStyle.setProperty('--color-accent-primary-rgb', '0, 245, 212');
+                // Fallbacks for openSUSE dark theme greens/blues
+                rootStyle.setProperty('--color-accent-primary-rgb', computedStyles.getPropertyValue('--color-accent-primary-rgb').trim() || '134, 220, 61');
+                rootStyle.setProperty('--color-accent-secondary-rgb', computedStyles.getPropertyValue('--color-accent-secondary-rgb').trim() || '111, 160, 216');
             } else {
-                // Light theme primary accent: #003aee (RGB: 0, 58, 238) - UPDATED
-                rootStyle.setProperty('--color-accent-primary-rgb', '0, 58, 238');
+                // Fallbacks for openSUSE light theme greens/blues
+                rootStyle.setProperty('--color-accent-primary-rgb', computedStyles.getPropertyValue('--color-accent-primary-rgb').trim() || '32, 103, 44');
+                rootStyle.setProperty('--color-accent-secondary-rgb', computedStyles.getPropertyValue('--color-accent-secondary-rgb').trim() || '90, 131, 182');
             }
         };
 
-        // Function to initialize the theme on page load.
+        // When the page first loads, figure out which theme to show.
         const initializeTheme = () => {
-            let preferredTheme = localStorage.getItem(THEME_KEY);
-            if (!preferredTheme) {
-                // If no preference stored, use system preference.
+            let preferredTheme = localStorage.getItem(THEME_KEY); // Did the user pick one last time?
+            if (!preferredTheme) { // Nope? Okay, let's see what their OS prefers.
                 preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
             }
-            applyTheme(preferredTheme);
+            // We add a tiny delay here. Sometimes, CSS variables (especially those defined in :root)
+            // might not be fully parsed and available to JS immediately on DOMContentLoaded.
+            // This helps ensure getComputedStyle can read them accurately.
+            setTimeout(() => applyTheme(preferredTheme), 10);
         };
 
-        initializeTheme(); // Set initial theme.
+        initializeTheme(); // Let's get this theme party started!
 
-        // Event listener for the theme switcher button.
+        // When the theme switcher button is clicked...
         themeSwitcher.addEventListener('click', () => {
             const currentTheme = body.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            applyTheme(newTheme);
+            applyTheme(currentTheme === 'dark' ? 'light' : 'dark'); // Flip it!
         });
     } else {
-        console.warn("Theme switcher elements not found. Theme functionality may be impaired.");
+        // If we can't find the theme switcher stuff, let's log a little note.
+        console.warn("Theme switcher elements (button, sun/moon icons) are missing. Theme functionality might be a bit sad.");
     }
 
-    // --- MOBILE NAVIGATION HANDLING ---
-    // Manages the opening and closing of the mobile navigation menu.
-    if (mobileNavToggle && mainNav && pageOverlay) {
-        // Toggles the navigation state (open/closed).
-        // Can be forced open/closed by passing a boolean to `forceOpen`.
-        const toggleMobileNav = (forceOpen) => {
-            const isOpen = typeof forceOpen === 'boolean' ? forceOpen : !mainNav.classList.contains('active');
+    // --- HEADER SCROLL BEHAVIOR: Adding a shadow when you scroll down ---
+    if (siteHeader) {
+        const headerScrollHandler = () => {
+            // If the page is scrolled down even a tiny bit (10 pixels)...
+            if (window.pageYOffset > 10) {
+                siteHeader.classList.add('scrolled'); // ...add a class. CSS will handle the shadow.
+            } else {
+                siteHeader.classList.remove('scrolled'); // Otherwise, remove it.
+            }
+        };
+        window.addEventListener('scroll', headerScrollHandler, { passive: true }); // Listen for scrolls.
+        headerScrollHandler(); // Check right away when the page loads.
+    }
 
+
+    // --- MOBILE NAVIGATION: Making the hamburger menu work its magic ---
+    if (mobileNavToggle && mainNav && pageOverlay) {
+        const toggleMobileNav = (forceOpen) => {
+            // Figure out if we're opening or closing.
+            const isOpen = typeof forceOpen === 'boolean' ? forceOpen : !mainNav.classList.contains('active');
+            // Toggle all the 'active' classes and ARIA attributes.
             mainNav.classList.toggle('active', isOpen);
-            mobileNavToggle.classList.toggle('active', isOpen); // For hamburger icon animation
+            mobileNavToggle.classList.toggle('active', isOpen); // Animates the hamburger -> X
             mobileNavToggle.setAttribute('aria-expanded', isOpen.toString());
-            pageOverlay.classList.toggle('active', isOpen); // Show/hide overlay
-            body.classList.toggle('no-scroll', isOpen); // Prevent body scroll when nav is open
+            pageOverlay.classList.toggle('active', isOpen); // Show/hide the dim background.
+            body.classList.toggle('no-scroll', isOpen); // Stop the page from scrolling underneath.
         };
 
-        // Event listener for mobile navigation toggle button.
-        mobileNavToggle.addEventListener('click', () => toggleMobileNav());
+        mobileNavToggle.addEventListener('click', () => toggleMobileNav()); // Click the hamburger.
 
-        // Close mobile nav when a nav link is clicked (for anchor links).
+        // If a nav link is clicked (like an anchor #link to a section)...
         mainNav.querySelectorAll('a[href^="#"]').forEach(link => {
             link.addEventListener('click', () => {
-                if (mainNav.classList.contains('active')) {
-                    toggleMobileNav(false); // Force close
-                }
+                if (mainNav.classList.contains('active')) toggleMobileNav(false); // ...close the nav.
             });
         });
 
-        // Close mobile nav when the overlay is clicked.
+        // Clicking the dim overlay also closes the nav.
         pageOverlay.addEventListener('click', () => {
-            if (mainNav.classList.contains('active')) {
-                 toggleMobileNav(false); // Force close
-            }
+            if (mainNav.classList.contains('active')) toggleMobileNav(false);
         });
 
-        // Close mobile nav when the 'Escape' key is pressed.
+        // Pressing 'Escape' should also close it - good for keyboard users!
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && mainNav.classList.contains('active')) {
-                toggleMobileNav(false); // Force close
-            }
+            if (e.key === 'Escape' && mainNav.classList.contains('active')) toggleMobileNav(false);
         });
     } else {
-        console.warn("Mobile navigation elements not found. Mobile menu functionality may be impaired.");
+        console.warn("Mobile navigation elements (toggle, nav panel, overlay) are missing. The mobile menu might not work.");
     }
 
-    // --- ACTIVE NAVIGATION LINK HIGHLIGHTING ON SCROLL ---
-    // Highlights the current section's link in the navigation as the user scrolls.
-    const navLinks = mainNav?.querySelectorAll('a[href^="#"]'); // Links in the main navigation
-    const contentSections = document.querySelectorAll('main section[id]'); // Sections in main content with an ID
+    // --- ACTIVE NAVIGATION LINK HIGHLIGHTING: Showing where you are on the page ---
+    const navLinks = mainNav?.querySelectorAll('a[href^="#"]'); // All the links in our main nav.
+    const contentSections = document.querySelectorAll('main section[id]'); // All the sections with an ID.
 
     if (navLinks && navLinks.length > 0 && contentSections && contentSections.length > 0 && siteHeader) {
-        let scrollTimeout; // To debounce scroll events for performance
-        const headerHeight = siteHeader.offsetHeight; // Height of the sticky header
+        let scrollTimeout; // To avoid running this function too often while scrolling (performance).
+        const getHeaderHeight = () => siteHeader.offsetHeight; // Get header height dynamically, as it might change.
 
         const highlightActiveLink = () => {
-            // Determine current scroll position with an offset for the fixed header and a small buffer.
-            // The buffer helps activate the link slightly before the section strictly hits the top.
-            const scrollPosition = window.pageYOffset + headerHeight + 50; // 50px buffer
+            const currentHeaderHeight = getHeaderHeight();
+            // We calculate the scroll position, taking the sticky header into account,
+            // plus a small buffer (10% of viewport height or 50px, whichever is smaller).
+            // This makes the link activate a bit before the section strictly hits the top.
+            const scrollThreshold = window.pageYOffset + currentHeaderHeight + Math.min(50, window.innerHeight * 0.1);
             let activeSectionId = null;
 
-            // Find which section is currently in view.
+            // Loop through our sections to see which one is currently "active".
             contentSections.forEach(section => {
-                // Check if the scroll position is within the bounds of this section.
-                if (scrollPosition >= section.offsetTop && scrollPosition < section.offsetTop + section.offsetHeight) {
+                if (section.offsetTop <= scrollThreshold && (section.offsetTop + section.offsetHeight) > scrollThreshold) {
                     activeSectionId = section.id;
                 }
             });
 
-            // Special case: If near the bottom of the page, and the last section is visible, make its link active.
-            // This handles cases where the last section is too short to fill the viewport height.
-            if ((window.innerHeight + window.pageYOffset) >= (document.body.offsetHeight - 5) && contentSections.length > 0) { // 5px buffer from bottom
+            // A little tweak: if we're scrolled all the way to the bottom, make sure the last section's link is active.
+            // This helps with short final sections.
+            if ((window.innerHeight + window.pageYOffset + 10) >= document.body.offsetHeight && contentSections.length > 0) { // 10px buffer from bottom
                 activeSectionId = contentSections[contentSections.length - 1].id;
             }
 
-            // Update 'active' class on navigation links.
+            // Now, update the 'active' class on the nav links.
             navLinks.forEach(link => {
-                // `link.hash` includes the '#', e.g., "#about"
                 link.classList.toggle('active', link.hash === `#${activeSectionId}`);
             });
         };
 
-        // Listen to scroll events, but debounce for performance.
-        window.addEventListener('scroll', () => {
+        // We listen for scroll events, but "debounce" the handler.
+        // This means it only runs after scrolling has paused for a moment (60ms here).
+        const debouncedHighlight = () => {
             clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(highlightActiveLink, 75); // Debounce by 75ms
-        }, { passive: true }); // Use passive listener for scroll performance.
+            scrollTimeout = setTimeout(highlightActiveLink, 60);
+        };
+        window.addEventListener('scroll', debouncedHighlight, { passive: true });
+        window.addEventListener('resize', debouncedHighlight, { passive: true }); // Also on resize, header height might change.
 
-        highlightActiveLink(); // Initial call to set active link on page load/refresh.
+        setTimeout(highlightActiveLink, 100); // Run it once after the page loads too.
     }
 
-    // --- SMOOTH SCROLLING FOR ANCHOR LINKS (Considering Fixed Header) ---
-    // Overrides default anchor link behavior for smoother scrolling and header offset.
+    // --- SMOOTH SCROLLING FOR ANCHOR LINKS: Graceful jumps to sections ---
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             const targetId = this.hash; // e.g., "#about"
-
-            // Ensure targetId is not just "#" (empty hash) and an element with that ID exists.
-            if (targetId.length > 1 && document.querySelector(targetId)) {
+            if (targetId.length > 1) { // Make sure it's not just a lonely "#"
                 const targetElement = document.querySelector(targetId);
-                if (targetElement && siteHeader) { // Ensure target and header exist
-                    e.preventDefault(); // Prevent default jump
-                    const headerOffset = siteHeader.offsetHeight; // Get current height of sticky header
-                    const elementPosition = targetElement.getBoundingClientRect().top; // Position relative to viewport
-                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset; // Calculate final scroll position
+                if (targetElement) {
+                    e.preventDefault(); // Stop the browser's default jump.
+                    const headerOffset = siteHeader ? siteHeader.offsetHeight : 0; // Account for sticky header.
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: 'smooth' // Smooth scroll animation
-                    });
+                    window.scrollTo({ top: offsetPosition, behavior: 'smooth' }); // Smoothly scroll there.
+
+                    // After scrolling, let's try to focus the target element if it's focusable.
+                    // This is good for accessibility. A small delay helps ensure scrolling is done.
+                    setTimeout(() => {
+                        // Check if the element is genuinely focusable or has a tabindex.
+                        const isFocusable = targetElement.hasAttribute('tabindex') || ['INPUT', 'SELECT', 'BUTTON', 'A', 'TEXTAREA'].includes(targetElement.tagName);
+                        if (isFocusable || targetElement.tabIndex !== -1) {
+                            targetElement.focus({ preventScroll: true }); // preventScroll stops it from jumping again.
+                        }
+                    }, 500); // Adjust delay if smooth scroll takes longer.
                 }
             }
         });
     });
 
-    // --- CODE BLOCK COPY FUNCTIONALITY ---
-    // Adds a "Copy" button to each <pre> element inside a .code-block-wrapper.
+    // --- CODE BLOCK COPY FUNCTIONALITY: One-click copy for code snippets! ---
     document.querySelectorAll('.code-block-wrapper pre').forEach(preElement => {
         const codeElement = preElement.querySelector('code');
-        if (!codeElement) return; // Skip if no <code> tag found inside <pre>
-
-        // Create the copy button
-        const copyButton = document.createElement('button');
-        copyButton.type = 'button'; // Good practice for buttons not submitting forms
-        copyButton.classList.add('copy-button');
-        copyButton.setAttribute('aria-label', 'Copy code to clipboard');
-        copyButton.innerHTML = 'Copy <span class="icon" aria-hidden="true">📋</span>'; // Initial text with icon
-
-        // Insert the button. It should be a sibling of <pre> if <pre> is wrapped.
-        if (preElement.parentNode.classList.contains('code-block-wrapper')) {
-            preElement.parentNode.appendChild(copyButton); // Append to wrapper
-        } else {
-            // Fallback: insert after <pre> if not directly wrapped as expected (less ideal structure)
-            preElement.insertAdjacentElement('afterend', copyButton);
+        if (!codeElement) { // Should always have a <code> inside <pre> for this.
+            console.warn("Found a <pre> without a <code> child in .code-block-wrapper. Copy button skipped.", preElement);
+            return;
         }
 
-        // Event listener for the copy button.
+        const copyButton = document.createElement('button');
+        copyButton.type = 'button'; // It's a button, not a form submitter.
+        copyButton.classList.add('copy-button');
+        copyButton.setAttribute('aria-label', 'Copy code to clipboard');
+        copyButton.setAttribute('aria-live', 'polite'); // So screen readers announce changes (like "Copied!").
+        copyButton.innerHTML = 'Copy <span class="icon" aria-hidden="true">📋</span>'; // Initial text and icon.
+
+        // Add the button to the DOM.
+        if (preElement.parentNode.classList.contains('code-block-wrapper')) {
+            preElement.parentNode.appendChild(copyButton);
+        } else {
+            // Fallback, though ideally the structure is consistent.
+            preElement.insertAdjacentElement('afterend', copyButton);
+            console.warn("Copy button added as sibling to <pre>, not child of .code-block-wrapper. Layout might be affected.", preElement);
+        }
+
+        // What happens when you click "Copy"...
         copyButton.addEventListener('click', () => {
             navigator.clipboard.writeText(codeElement.innerText)
-                .then(() => {
-                    // Success: Update button text and style
+                .then(() => { // Success!
                     copyButton.innerHTML = 'Copied! <span class="icon" aria-hidden="true">✅</span>';
                     copyButton.classList.add('copied');
-                    // Revert button text after a delay
+                    copyButton.setAttribute('aria-label', 'Code copied to clipboard!'); // Update for screen readers.
+                    // Change it back after a bit.
                     setTimeout(() => {
                         copyButton.innerHTML = 'Copy <span class="icon" aria-hidden="true">📋</span>';
                         copyButton.classList.remove('copied');
-                    }, 2500); // Revert after 2.5 seconds
+                        copyButton.setAttribute('aria-label', 'Copy code to clipboard');
+                    }, 2800); // A good amount of time to see the "Copied!" message.
                 })
-                .catch(err => {
-                    // Error: Log error and briefly show error message on button
+                .catch(err => { // Oops, something went wrong.
                     console.error('Failed to copy code:', err);
                     copyButton.textContent = 'Error';
-                    setTimeout(() => {
+                    copyButton.setAttribute('aria-label', 'Error copying code');
+                    setTimeout(() => { // Change it back.
                         copyButton.innerHTML = 'Copy <span class="icon" aria-hidden="true">📋</span>';
-                    }, 2500);
+                        copyButton.setAttribute('aria-label', 'Copy code to clipboard');
+                    }, 2800);
                 });
         });
     });
 
-    // --- DYNAMIC FOOTER YEAR ---
-    // Automatically updates the copyright year in the footer.
-    const yearSpan = document.getElementById('currentYear');
-    if (yearSpan) {
-        yearSpan.textContent = new Date().getFullYear();
+    // --- DYNAMIC FOOTER YEAR: Always up-to-date copyright! ---
+    if (currentYearSpan) {
+        currentYearSpan.textContent = new Date().getFullYear();
     }
 
-    // --- SCROLL TO TOP BUTTON VISIBILITY & FUNCTIONALITY ---
-    // Shows/hides the "Scroll to Top" button and handles its click event.
+    // --- SCROLL TO TOP BUTTON: Helping users get back up quickly ---
     if (scrollToTopBtn) {
-        // Toggles button visibility based on scroll position.
         const toggleScrollTopVisibility = () => {
-            // Show button if scrolled more than 300px down.
-            scrollToTopBtn.classList.toggle('visible', window.pageYOffset > 300);
+            // Show the button if the user has scrolled down about 40% of the viewport height.
+            scrollToTopBtn.classList.toggle('visible', window.pageYOffset > (window.innerHeight * 0.4));
         };
-
         window.addEventListener('scroll', toggleScrollTopVisibility, { passive: true });
-        toggleScrollTopVisibility(); // Initial check on page load.
+        toggleScrollTopVisibility(); // Check on load.
 
-        // Event listener for scroll to top button click.
         scrollToTopBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' }); // Smooth scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' }); // Zoom to the top!
         });
     }
 
-    // --- INTERSECTION OBSERVER FOR SCROLL ANIMATIONS ---
-    // Animates elements into view as they are scrolled to.
+    // --- INTERSECTION OBSERVER FOR SCROLL ANIMATIONS: Making elements appear gracefully ---
     const animatedElements = document.querySelectorAll('.animate-on-scroll');
-    if (animatedElements.length > 0 && 'IntersectionObserver' in window) {
+    if (animatedElements.length > 0 && 'IntersectionObserver' in window) { // Check if browser supports it.
         const observerOptions = {
-            root: null, // Observe against the viewport.
-            rootMargin: '0px', // No margin around the root.
-            threshold: 0.15 // Trigger when 15% of the element is visible.
+            root: null, // Observe against the main viewport.
+            rootMargin: '0px 0px -50px 0px', // Trigger a bit earlier when scrolling up (bottom margin is negative).
+            threshold: 0.1 // Element is 10% visible.
         };
 
         const animationObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) { // If the element is in view
-                    const delay = entry.target.dataset.animationDelay || '0s'; // Get delay from data-attribute
-                    entry.target.style.transitionDelay = delay; // Apply delay
-                    entry.target.classList.add('is-visible'); // Add class to trigger animation
-                    observer.unobserve(entry.target); // Stop observing once animated (animate only once).
+                if (entry.isIntersecting) { // If the element is now in view...
+                    const delay = entry.target.dataset.animationDelay || '0s'; // Get custom delay from HTML.
+                    entry.target.style.setProperty('--animation-delay', delay); // Apply it.
+                    entry.target.classList.add('is-visible'); // Add class to trigger CSS animation.
+                    observer.unobserve(entry.target); // Animate only once, then stop watching.
                 }
             });
         }, observerOptions);
-
-        animatedElements.forEach(el => animationObserver.observe(el)); // Start observing each animated element.
+        animatedElements.forEach(el => animationObserver.observe(el)); // Start watching each element.
     } else {
-        // Fallback for browsers without IntersectionObserver or if no elements to animate.
-        // Simply make all elements visible immediately.
+        // If IntersectionObserver isn't supported, or no elements to animate,
+        // just make them all visible so content isn't hidden.
         animatedElements.forEach(el => el.classList.add('is-visible'));
+        if (animatedElements.length > 0 && !('IntersectionObserver' in window)) {
+            console.warn("IntersectionObserver API not supported. Scroll animations will use a fallback (elements shown immediately).");
+        }
     }
 
-}); // End of DOMContentLoaded
+    console.log("openSUSE-themed UI scripts initialized! Happy Tumbleweeding! 🦎");
+
+}); // End of DOMContentLoaded. Phew!
