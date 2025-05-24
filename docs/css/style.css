@@ -1,3 +1,4 @@
+/* Universal Box Sizing Reset */
 *,
 *::before,
 *::after {
@@ -18,7 +19,7 @@
     --font-weight-bold: 700;
     --font-weight-extrabold: 800;
 
-    /* Spacing Scale */
+    /* Spacing Scale (used for margins, paddings, gaps) */
     --space-xs: 0.25rem;  /* 4px */
     --space-sm: 0.5rem;   /* 8px */
     --space-md: 1rem;     /* 16px */
@@ -31,7 +32,7 @@
     --border-radius-sm: 4px;
     --border-radius-md: 8px;
     --border-radius-lg: 12px;
-    --border-radius-pill: 50px;
+    --border-radius-pill: 50px; /* For pill-shaped elements */
     --border-width: 1px;
     --border-width-thick: 2px;
 
@@ -39,43 +40,45 @@
     --transition-duration-fast: 0.15s;
     --transition-duration-medium: 0.3s;
     --transition-duration-slow: 0.5s;
-    --transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); /* Standard easing */
 
-    /* Z-Indexes */
+    /* Z-Indexes (for stacking order) */
     --z-overlay: 10;
-    --z-modal: 20;
-    --z-navigation: 30;
-    --z-sticky-header: 40;
+    --z-modal: 20;       /* For pop-ups or modal-like elements */
+    --z-navigation: 30;  /* For mobile nav or dropdowns */
+    --z-sticky-header: 40; /* Ensures header stays on top */
 
-    /* Light Theme ("Aurora Sky - Day") */
-    --color-bg: #f7faff;
-    --color-text-primary: #1a202c;
-    --color-text-secondary: #4a5568;
-    --color-accent-primary: #007acc;
-    --color-accent-primary-hover: #005c99;
-    --color-accent-secondary: #38b2ac;
-    --color-surface: #ffffff;
-    --color-border: #e2e8f0;
-    --color-code-bg: #f0f4f8;
-    --color-code-text: #2d3748;
-    --color-shadow: rgba(45, 55, 72, 0.1);
-    --color-header-bg: rgba(247, 250, 255, 0.85);
-    --color-link-external-icon: var(--color-accent-primary);
-    --icon-emoji-filter: none;
-    --hero-blur-circle-1: rgba(0, 122, 204, 0.15);
-    --hero-blur-circle-2: rgba(56, 178, 172, 0.1);
-    --hero-blur-circle-3: rgba(0, 92, 153, 0.12);
-    --color-accent-primary-rgb: 0, 122, 204;
+    /* --- Light Theme ("Aurora Sky - Day") --- */
+    /* This is the default theme */
+    --color-bg: #f7faff;                            /* Main background color */
+    --color-text-primary: #1a202c;                  /* Primary text color (headings, important text) */
+    --color-text-secondary: #4a5568;                /* Secondary text color (paragraphs, less important text) */
+    --color-accent-primary: #003aee;                /* UPDATED: Primary accent color (links, buttons, highlights) - User requested blue */
+    --color-accent-primary-hover: #002baf;          /* UPDATED: Hover state for primary accent */
+    --color-accent-secondary: #38b2ac;              /* Secondary accent (e.g., other highlights, borders) */
+    --color-surface: #ffffff;                       /* Background for cards, modals, etc. */
+    --color-border: #e2e8f0;                        /* Border color for elements */
+    --color-code-bg: #f0f4f8;                       /* Background for code blocks */
+    --color-code-text: #2d3748;                     /* Text color within code blocks */
+    --color-shadow: rgba(45, 55, 72, 0.1);          /* Shadow color for depth */
+    --color-header-bg: rgba(247, 250, 255, 0.85);   /* Header background with slight transparency */
+    --color-link-external-icon: var(--color-accent-primary); /* Color for the external link icon */
+    --icon-emoji-filter: none;                      /* Filter for emoji icons (e.g., to adjust brightness in dark mode) */
+    --hero-blur-circle-1: rgba(0, 58, 238, 0.15);   /* UPDATED: Color for hero background decorative circle 1 */
+    --hero-blur-circle-2: rgba(56, 178, 172, 0.1);  /* Color for hero background decorative circle 2 */
+    --hero-blur-circle-3: rgba(0, 43, 175, 0.12);   /* UPDATED: Color for hero background decorative circle 3 */
+    --color-accent-primary-rgb: 0, 58, 238;         /* UPDATED: RGB version of primary accent for rgba() usage */
+    --color-button-text: #ffffff;                   /* Default text color for primary buttons */
 }
 
 [data-theme="dark"] {
-    /* Dark Theme ("Aurora Night") */
+    /* --- Dark Theme ("Aurora Night") --- */
     --color-bg: #121826;
     --color-text-primary: #e2e8f0;
     --color-text-secondary: #a0aec0;
-    --color-accent-primary: #00f5d4;
-    --color-accent-primary-hover: #00c7a8;
-    --color-accent-secondary: #9f7aea;
+    --color-accent-primary: #00f5d4;                /* Primary accent (bright teal for good contrast on dark) */
+    --color-accent-primary-hover: #00c7a8;          /* Hover for primary accent (becomes lighter) */
+    --color-accent-secondary: #9f7aea;              /* Secondary accent (purple) */
     --color-surface: #1a202c;
     --color-border: #2d3748;
     --color-code-bg: #0f131e;
@@ -83,36 +86,39 @@
     --color-shadow: rgba(0, 0, 0, 0.2);
     --color-header-bg: rgba(18, 24, 38, 0.85);
     --color-link-external-icon: var(--color-accent-primary);
-    --icon-emoji-filter: brightness(0.9) contrast(1.1);
+    --icon-emoji-filter: brightness(0.9) contrast(1.1); /* Slight adjustment for emojis in dark mode */
     --hero-blur-circle-1: rgba(0, 245, 212, 0.18);
     --hero-blur-circle-2: rgba(159, 122, 234, 0.12);
     --hero-blur-circle-3: rgba(0, 200, 168, 0.15);
     --color-accent-primary-rgb: 0, 245, 212;
+    /* --color-button-text is inherited from light theme (#ffffff), suitable for dark theme's --color-accent-primary */
 }
 
+/* === BASE STYLES === */
 html {
-    font-size: 100%;
-    scroll-behavior: smooth;
-    -webkit-tap-highlight-color: transparent;
+    font-size: 100%; /* Base font size for rem units */
+    scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+    -webkit-tap-highlight-color: transparent; /* Removes tap highlight on touch devices */
 }
 
 body {
     font-family: var(--font-primary);
     font-weight: var(--font-weight-regular);
-    line-height: 1.7;
+    line-height: 1.7; /* Comfortable line spacing */
     background-color: var(--color-bg);
     color: var(--color-text-primary);
-    transition-property: background-color, color;
+    transition-property: background-color, color; /* Smooth theme transitions */
     transition-duration: var(--transition-duration-medium);
     transition-timing-function: var(--transition-timing-function);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased; /* Improves font rendering on WebKit */
+    -moz-osx-font-smoothing: grayscale;  /* Improves font rendering on Firefox */
+    overflow-x: hidden; /* Prevents horizontal scrolling */
 }
 
+/* Page Overlay for mobile navigation background dimming */
 .page-overlay {
     position: fixed;
-    inset: 0;
+    inset: 0; /* Covers the entire viewport */
     background-color: rgba(0, 0, 0, 0.5);
     opacity: 0;
     visibility: hidden;
@@ -120,18 +126,18 @@ body {
     transition: opacity var(--transition-duration-medium) var(--transition-timing-function),
                 visibility var(--transition-duration-medium) var(--transition-timing-function);
 }
-.page-overlay.active {
+.page-overlay.active { /* Shown when mobile menu is active */
     opacity: 1;
     visibility: visible;
 }
 [data-theme="dark"] .page-overlay {
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.7); /* Darker overlay for dark theme */
 }
 
 /* === UTILITY CLASSES === */
 .container {
-    width: 90%;
-    max-width: 1180px;
+    width: 90%; /* Responsive width */
+    max-width: 1180px; /* Max content width */
     margin-left: auto;
     margin-right: auto;
     padding-left: var(--space-md);
@@ -139,42 +145,51 @@ body {
 }
 
 .button {
-    display: inline-flex;
+    display: inline-flex; /* Allows icon and text alignment */
     align-items: center;
     justify-content: center;
-    gap: var(--space-sm);
-    padding: 0.8em 1.8em;
+    gap: var(--space-sm); /* Space between icon and text */
+    padding: 0.8em 1.8em; /* Generous padding */
     border-radius: var(--border-radius-pill);
     text-decoration: none;
     font-weight: var(--font-weight-semibold);
     border: var(--border-width-thick) solid transparent;
     cursor: pointer;
     font-size: 1rem;
-    white-space: nowrap;
+    white-space: nowrap; /* Prevents button text from wrapping */
     transition: all var(--transition-duration-fast) var(--transition-timing-function);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Subtle shadow */
 }
 .button-primary {
     background-color: var(--color-accent-primary);
-    color: #fff;
+    color: var(--color-button-text); /* Uses the defined button text color, default white */
     border-color: var(--color-accent-primary);
 }
 .button-primary:hover, .button-primary:focus-visible {
     background-color: var(--color-accent-primary-hover);
     border-color: var(--color-accent-primary-hover);
-    transform: translateY(-2px) scale(1.02);
+    transform: translateY(-2px) scale(1.02); /* Slight lift and scale effect */
     box-shadow: 0 4px 10px var(--color-shadow);
+    /* Text color is inherited, but we need a specific fix for dark mode hover */
 }
-.button .icon { font-size: 1.1em; }
+
+/* FIX: Ensure button text is readable on hover in dark mode */
+[data-theme="dark"] .button-primary:hover,
+[data-theme="dark"] .button-primary:focus-visible {
+    color: var(--color-bg); /* Change text to dark on lightened hover background */
+}
+
+
+.button .icon { font-size: 1.1em; } /* Slightly larger icon in buttons */
 
 /* === HEADER & NAVIGATION === */
 .site-header {
     background-color: var(--color-header-bg);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px); /* Frosted glass effect */
     -webkit-backdrop-filter: blur(10px);
     padding-top: var(--space-md);
     padding-bottom: var(--space-md);
-    position: sticky;
+    position: sticky; /* Keeps header at the top on scroll */
     top: 0;
     z-index: var(--z-sticky-header);
     border-bottom: var(--border-width) solid var(--color-border);
@@ -187,7 +202,7 @@ body {
     align-items: center;
 }
 .logo {
-    font-size: clamp(1.25rem, 3vw, 1.5rem);
+    font-size: clamp(1.25rem, 3vw, 1.5rem); /* Responsive font size */
     font-weight: var(--font-weight-bold);
     text-decoration: none;
     color: var(--color-text-primary);
@@ -198,7 +213,7 @@ body {
 }
 .logo:hover, .logo:focus-visible { opacity: 0.8; }
 .logo-icon {
-    font-size: 1.4em;
+    font-size: 1.4em; /* Larger logo icon */
     color: var(--color-accent-primary);
     filter: var(--icon-emoji-filter);
 }
@@ -206,7 +221,7 @@ body {
     list-style: none;
     display: flex;
     align-items: center;
-    gap: var(--space-xs);
+    gap: var(--space-xs); /* Small gap between nav items */
 }
 .main-nav ul li a {
     color: var(--color-text-secondary);
@@ -214,18 +229,18 @@ body {
     padding: var(--space-sm) var(--space-md);
     border-radius: var(--border-radius-md);
     font-weight: var(--font-weight-medium);
-    position: relative;
+    position: relative; /* For potential future pseudo-elements like underlines */
     transition: color var(--transition-duration-fast) var(--transition-timing-function),
                 background-color var(--transition-duration-fast) var(--transition-timing-function);
 }
 .main-nav ul li a:hover,
 .main-nav ul li a:focus-visible,
-.main-nav ul li a.active {
+.main-nav ul li a.active { /* Style for active navigation link */
     color: var(--color-accent-primary);
-    background-color: rgba(var(--color-accent-primary-rgb), 0.1);
+    background-color: rgba(var(--color-accent-primary-rgb), 0.1); /* Subtle background highlight */
 }
 
-.header-controls {
+.header-controls { /* Container for theme switcher and mobile nav toggle */
     display: flex;
     align-items: center;
     gap: var(--space-md);
@@ -234,7 +249,7 @@ body {
     background: transparent;
     border: none;
     color: var(--color-text-secondary);
-    font-size: 1.5rem;
+    font-size: 1.5rem; /* Size of sun/moon icons */
     cursor: pointer;
     padding: var(--space-xs);
     border-radius: var(--border-radius-md);
@@ -246,26 +261,27 @@ body {
 }
 .theme-switcher:hover, .theme-switcher:focus-visible {
     color: var(--color-accent-primary);
-    transform: rotate(15deg) scale(1.1);
+    transform: rotate(15deg) scale(1.1); /* Fun interaction */
 }
 .theme-switcher .icon {
     transition: opacity var(--transition-duration-medium) var(--transition-timing-function);
     filter: var(--icon-emoji-filter);
 }
-.theme-switcher .moon-icon { display: none; }
+.theme-switcher .moon-icon { display: none; } /* Moon hidden by default (light theme) */
+/* JS toggles display of sun/moon icons */
 
-.mobile-nav-toggle {
-    display: none;
+.mobile-nav-toggle { /* Hamburger icon for mobile */
+    display: none; /* Hidden on larger screens */
     background: transparent;
     border: none;
     cursor: pointer;
     padding: var(--space-sm);
-    z-index: var(--z-navigation) + 1;
-    position: relative;
-    width: 44px;
+    z-index: var(--z-navigation) + 1; /* Above mobile nav panel */
+    position: relative; /* For icon positioning */
+    width: 44px; /* Touch target size */
     height: 44px;
 }
-.mobile-nav-toggle-icon {
+.mobile-nav-toggle-icon { /* Middle bar of hamburger */
     display: block;
     width: 24px;
     height: var(--border-width-thick);
@@ -276,7 +292,7 @@ body {
                 background-color var(--transition-duration-medium) var(--transition-timing-function);
 }
 .mobile-nav-toggle-icon::before,
-.mobile-nav-toggle-icon::after {
+.mobile-nav-toggle-icon::after { /* Top and bottom bars */
     content: '';
     position: absolute;
     left: 0;
@@ -291,7 +307,8 @@ body {
 .mobile-nav-toggle-icon::before { top: -8px; }
 .mobile-nav-toggle-icon::after { bottom: -8px; }
 
-.mobile-nav-toggle.active .mobile-nav-toggle-icon { background-color: transparent; }
+/* Hamburger to X animation when active */
+.mobile-nav-toggle.active .mobile-nav-toggle-icon { background-color: transparent; } /* Middle bar disappears */
 .mobile-nav-toggle.active .mobile-nav-toggle-icon::before {
     top: 0;
     transform: rotate(45deg);
@@ -304,29 +321,29 @@ body {
 /* === HERO SECTION === */
 .hero-section {
     text-align: center;
-    padding: var(--space-xxxl) var(--space-md) var(--space-xxxl);
-    position: relative;
-    overflow: hidden;
-    background: var(--color-bg);
+    padding: var(--space-xxxl) var(--space-md) var(--space-xxxl); /* Generous vertical padding */
+    position: relative; /* For positioning background elements */
+    overflow: hidden; /* To contain blur circles */
+    background: var(--color-bg); /* Ensures it blends with body or stands out if different */
 }
-.hero-background-elements {
+.hero-background-elements { /* Container for decorative blur circles */
     position: absolute;
     inset: 0;
-    z-index: -1;
+    z-index: -1; /* Behind content */
     overflow: hidden;
 }
-.hero-blur-circle {
+.hero-blur-circle { /* Individual blur circle styling */
     position: absolute;
     border-radius: 50%;
-    filter: blur(100px);
-    opacity: 0.7;
-    animation: float 20s infinite ease-in-out alternate;
+    filter: blur(100px); /* Strong blur effect */
+    opacity: 0.7; /* Semi-transparent */
+    animation: float 20s infinite ease-in-out alternate; /* Floating animation */
 }
 .hero-blur-circle.circle-1 {
     width: 400px; height: 400px;
     background-color: var(--hero-blur-circle-1);
     top: -10%; left: -5%;
-    animation-duration: 22s;
+    animation-duration: 22s; /* Varied durations for natural feel */
 }
 .hero-blur-circle.circle-2 {
     width: 350px; height: 350px;
@@ -340,13 +357,14 @@ body {
     top: 20%; right: 30%; transform: translateX(50%);
     animation-duration: 25s; animation-delay: -10s;
 }
+/* Floating animation for blur circles */
 @keyframes float {
     0% { transform: translateY(0px) translateX(0px) scale(1); }
     50% { transform: translateY(-30px) translateX(20px) scale(1.1); }
     100% { transform: translateY(0px) translateX(0px) scale(1); }
 }
 
-.hero-content { position: relative; z-index: 1; }
+.hero-content { position: relative; z-index: 1; } /* Ensures content is above background elements */
 .version-badge {
     display: inline-block;
     background-color: rgba(var(--color-accent-primary-rgb), 0.1);
@@ -356,21 +374,21 @@ body {
     font-size: 0.9rem;
     font-weight: var(--font-weight-semibold);
     margin-bottom: var(--space-lg);
-    border: 1px solid rgba(var(--color-accent-primary-rgb), 0.3);
+    border: 1px solid rgba(var(--color-accent-primary-rgb), 0.3); /* Subtle border */
 }
-.hero-section h1 {
-    font-size: clamp(2.2rem, 6vw, 4rem);
+.hero-section h1 { /* Main heading */
+    font-size: clamp(2.2rem, 6vw, 4rem); /* Responsive font size */
     font-weight: var(--font-weight-extrabold);
     color: var(--color-text-primary);
     margin-bottom: var(--space-md);
-    line-height: 1.15;
-    letter-spacing: -0.02em;
+    line-height: 1.15; /* Tight line height for large headings */
+    letter-spacing: -0.02em; /* Slight negative letter spacing */
 }
-.hero-section .subtitle {
+.hero-section .subtitle { /* Subheading */
     font-size: clamp(1.1rem, 2.5vw, 1.35rem);
     color: var(--color-text-secondary);
-    max-width: 720px;
-    margin: 0 auto var(--space-xl) auto;
+    max-width: 720px; /* Constrains width for readability */
+    margin: 0 auto var(--space-xl) auto; /* Centered with bottom margin */
     line-height: 1.65;
     font-weight: var(--font-weight-light);
 }
@@ -379,15 +397,16 @@ body {
 
 /* === GENERAL SECTION & CONTENT STYLING === */
 .content-section {
-    padding: var(--space-xxxl) 0;
+    padding: var(--space-xxxl) 0; /* Vertical padding for sections */
 }
-.content-section.alt-bg {
+.content-section.alt-bg { /* For sections with an alternate background */
     background-color: var(--color-surface);
     border-top: var(--border-width) solid var(--color-border);
     border-bottom: var(--border-width) solid var(--color-border);
 }
+/* Specific dark theme styling for alternate background for subtle differentiation */
 [data-theme="dark"] .content-section.alt-bg {
-    background-color: rgba(var(--color-accent-primary-rgb), 0.03);
+    background-color: rgba(var(--color-accent-primary-rgb), 0.03); /* Very subtle tint */
 }
 
 .section-title {
@@ -396,10 +415,10 @@ body {
     font-weight: var(--font-weight-bold);
     margin-bottom: var(--space-xl);
     text-align: center;
-    position: relative;
+    position: relative; /* For the decorative underline */
     padding-bottom: var(--space-md);
 }
-.section-title::after {
+.section-title::after { /* Decorative underline for section titles */
     content: '';
     position: absolute;
     bottom: 0;
@@ -410,9 +429,9 @@ body {
     background-image: linear-gradient(to right, var(--color-accent-primary), var(--color-accent-secondary));
     border-radius: var(--border-radius-sm);
 }
-.section-title .icon, .subsection-title .icon {
+.section-title .icon, .subsection-title .icon { /* Icons in titles */
     margin-right: var(--space-sm);
-    font-size: 0.9em;
+    font-size: 0.9em; /* Slightly smaller than title text */
     color: var(--color-accent-primary);
     filter: var(--icon-emoji-filter);
 }
@@ -428,65 +447,69 @@ body {
 .card {
     background-color: var(--color-surface);
     border: var(--border-width) solid var(--color-border);
-    border-radius: var(--border-radius-lg);
+    border-radius: var(--border-radius-lg); /* Larger radius for cards */
     padding: var(--space-xl);
-    margin-bottom: var(--space-lg);
-    box-shadow: 0 4px 6px -1px var(--color-shadow), 0 2px 4px -1px rgba(0,0,0,0.03);
+    margin-bottom: var(--space-lg); /* Space below cards */
+    box-shadow: 0 4px 6px -1px var(--color-shadow), 0 2px 4px -1px rgba(0,0,0,0.03); /* Softer shadow */
     transition: transform var(--transition-duration-medium) var(--transition-timing-function),
                 box-shadow var(--transition-duration-medium) var(--transition-timing-function);
 }
-.card:hover {
-    transform: translateY(-var(--space-xs));
-    box-shadow: 0 10px 15px -3px var(--color-shadow), 0 4px 6px -2px rgba(0,0,0,0.04);
+.card:hover { /* Hover effect for cards */
+    transform: translateY(-var(--space-xs)); /* Slight lift */
+    box-shadow: 0 10px 15px -3px var(--color-shadow), 0 4px 6px -2px rgba(0,0,0,0.04); /* Enhanced shadow */
 }
 
 /* === TEXT ELEMENTS & LINKS === */
 p, li {
-    margin-bottom: var(--space-md);
+    margin-bottom: var(--space-md); /* Space below paragraphs and list items */
     color: var(--color-text-secondary);
-    font-size: 1.05rem;
-    line-height: 1.75;
+    font-size: 1.05rem; /* Slightly larger for readability */
+    line-height: 1.75; /* Generous line height */
 }
-section p strong, section li strong {
+section p strong, section li strong { /* Strong text within sections */
     color: var(--color-text-primary);
     font-weight: var(--font-weight-semibold);
 }
 
-ul.styled-list, ol.styled-list-ordered { /* Unified list styling */
-    list-style: none;
+/* Styling for unordered and ordered lists */
+ul.styled-list, ol.styled-list-ordered {
+    list-style: none; /* Remove default bullets/numbers */
     padding-left: 0;
 }
 ul.styled-list li, ol.styled-list-ordered li {
-    padding-left: var(--space-lg);
+    padding-left: var(--space-lg); /* Indentation for custom bullet/number */
     position: relative;
 }
+/* Custom bullet for unordered lists */
 ul.styled-list li::before {
-    content: '▹';
+    content: '▹'; /* Triangle bullet */
     position: absolute;
     left: var(--space-sm);
-    top: 0.15em;
+    top: 0.15em; /* Align with text */
     color: var(--color-accent-primary);
     font-weight: var(--font-weight-bold);
     font-size: 1.3em;
 }
+/* Custom numbering for ordered lists */
 ol.styled-list-ordered {
-    counter-reset: ordered-list-counter;
+    counter-reset: ordered-list-counter; /* Initialize counter */
 }
 ol.styled-list-ordered li {
-    counter-increment: ordered-list-counter;
+    counter-increment: ordered-list-counter; /* Increment for each item */
 }
 ol.styled-list-ordered li::before {
-    content: counter(ordered-list-counter) ".";
+    content: counter(ordered-list-counter) "."; /* Display counter value */
     position: absolute;
-    left: 0; /* Adjust if needed for alignment */
-    top: 0.05em; /* Align with text baseline */
+    left: 0;
+    top: 0.05em;
     color: var(--color-accent-primary);
     font-weight: var(--font-weight-semibold);
     font-size: 1.05rem; /* Match text size */
-    width: var(--space-lg); /* Ensure space for two digits */
+    width: var(--space-lg); /* Ensure space for number */
     text-align: left;
 }
 
+/* Specific style for check-mark lists */
 ul.styled-list.check-list li::before {
     content: '✔';
     color: var(--color-accent-secondary);
@@ -494,6 +517,7 @@ ul.styled-list.check-list li::before {
     font-size: 1.1em; left: var(--space-sm); top: 0.2em;
 }
 
+/* General link styling */
 a {
     color: var(--color-accent-primary);
     text-decoration: none;
@@ -501,52 +525,55 @@ a {
     transition: color var(--transition-duration-fast) var(--transition-timing-function),
                 text-decoration-color var(--transition-duration-fast) var(--transition-timing-function);
     text-decoration-line: underline;
-    text-decoration-color: transparent;
-    text-underline-offset: 3px;
+    text-decoration-color: transparent; /* Underline appears on hover */
+    text-underline-offset: 3px; /* Space between text and underline */
 }
 a:hover, a:focus-visible {
     color: var(--color-accent-primary-hover);
-    text-decoration-color: currentColor;
+    text-decoration-color: currentColor; /* Show underline */
 }
+/* External link icon styling */
 .external-link .external-link-icon {
     font-size: 0.8em;
     display: inline-block;
-    transform: translateY(-1px);
+    transform: translateY(-1px); /* Slight vertical adjustment */
     margin-left: var(--space-xs);
     color: var(--color-link-external-icon);
     transition: transform var(--transition-duration-fast) var(--transition-timing-function);
 }
 .external-link:hover .external-link-icon,
 .external-link:focus-visible .external-link-icon {
-    transform: translateY(-1px) scale(1.1) rotate(5deg);
+    transform: translateY(-1px) scale(1.1) rotate(5deg); /* Playful hover effect */
 }
 
 /* === CODE BLOCKS === */
-.code-block-wrapper {
+.code-block-wrapper { /* Wrapper for pre + copy button */
     position: relative;
     margin: var(--space-lg) 0;
 }
-pre {
+pre { /* Code block container */
     background-color: var(--color-code-bg);
     color: var(--color-code-text);
     padding: var(--space-lg);
     border-radius: var(--border-radius-md);
-    overflow-x: auto;
+    overflow-x: auto; /* Horizontal scroll for long lines */
     font-family: var(--font-code);
     font-size: 0.95em;
     line-height: 1.7;
     border: var(--border-width) solid var(--color-border);
-    -webkit-font-smoothing: auto;
+    -webkit-font-smoothing: auto; /* Revert to auto for monospace fonts */
     -moz-osx-font-smoothing: auto;
-    scrollbar-width: thin;
+    scrollbar-width: thin; /* Custom scrollbar style for Firefox */
     scrollbar-color: var(--color-accent-secondary) var(--color-code-bg);
 }
+/* Custom scrollbar style for WebKit browsers */
 pre::-webkit-scrollbar { height: 8px; }
 pre::-webkit-scrollbar-track { background: var(--color-code-bg); }
 pre::-webkit-scrollbar-thumb { background-color: var(--color-accent-secondary); border-radius: var(--border-radius-pill); }
 
-pre code { font-variant-ligatures: common-ligatures; }
+pre code { font-variant-ligatures: common-ligatures; } /* Enable font ligatures */
 
+/* Inline code styling */
 code:not(pre code) {
     font-family: var(--font-code);
     background-color: rgba(var(--color-accent-primary-rgb), 0.08);
@@ -556,9 +583,11 @@ code:not(pre code) {
     font-size: 0.9em;
     font-weight: var(--font-weight-medium);
 }
+/* Ensure inline code color has enough contrast in dark mode */
 [data-theme="dark"] code:not(pre code) {
     color: var(--color-accent-primary);
 }
+/* Copy button for code blocks (added by JS) */
 .copy-button {
     position: absolute;
     top: var(--space-md);
@@ -571,7 +600,7 @@ code:not(pre code) {
     cursor: pointer;
     font-size: 0.85em;
     font-weight: var(--font-weight-semibold);
-    opacity: 0.75;
+    opacity: 0.75; /* Slightly transparent until hovered */
     transition: all var(--transition-duration-fast) var(--transition-timing-function);
     display: inline-flex;
     align-items: center;
@@ -582,27 +611,27 @@ code:not(pre code) {
     background-color: rgba(var(--color-accent-primary-rgb), 0.25);
     transform: scale(1.03);
 }
-.copy-button.copied {
+.copy-button.copied { /* Style when text is copied */
     background-color: var(--color-accent-secondary);
     color: var(--color-surface);
     border-color: var(--color-accent-secondary);
     opacity: 1;
 }
-[data-theme="dark"] .copy-button.copied { color: var(--color-bg); }
+[data-theme="dark"] .copy-button.copied { color: var(--color-bg); } /* Ensure text contrast on "copied" state in dark mode */
 .copy-button .icon { filter: var(--icon-emoji-filter); font-size: 1.1em; }
 
 /* === TABLES === */
-.table-responsive {
+.table-responsive { /* Wrapper for horizontal scrolling of tables */
     overflow-x: auto;
     margin: var(--space-lg) 0;
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--border-radius-md);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.03); /* Subtle shadow */
 }
 table {
     width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
+    border-collapse: separate; /* Allows border-radius on table cells if needed */
+    border-spacing: 0; /* Remove space between cells */
     font-size: 0.95em;
 }
 table th, table td {
@@ -611,24 +640,23 @@ table th, table td {
     text-align: left;
     vertical-align: middle;
 }
-table th {
-    background-color: rgba(var(--color-accent-primary-rgb), 0.05);
+table th { /* Table header cells */
+    background-color: rgba(var(--color-accent-primary-rgb), 0.05); /* Light accent background */
     font-weight: var(--font-weight-semibold);
     color: var(--color-text-primary);
-    border-bottom-width: var(--border-width-thick);
+    border-bottom-width: var(--border-width-thick); /* Thicker bottom border */
     border-bottom-color: var(--color-accent-primary);
 }
-table tr:last-child td { border-bottom: none; }
+table tr:last-child td { border-bottom: none; } /* Remove border from last row */
 table td code { font-size: 0.9em; font-weight: var(--font-weight-medium); }
 
 /* === DISCLAIMER SECTION === */
-.disclaimer-box {
-    border-left: 4px solid var(--color-accent-secondary);
+.disclaimer-box { /* Specific styling for disclaimer card */
+    border-left: 4px solid var(--color-accent-secondary); /* Accent border on the left */
     padding-left: var(--space-xl);
-    background-color: var(--color-surface); /* Ensure card background for disclaimer too */
-    border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0; /* Match card radius */
+    background-color: var(--color-surface);
+    border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
 }
-/* Note: Other card styles like padding, margin, box-shadow will apply from .card class if disclaimer-box is also a card */
 .disclaimer-subtitle {
     color: var(--color-text-primary);
     font-weight: var(--font-weight-semibold);
@@ -650,14 +678,14 @@ table td code { font-size: 0.9em; font-weight: var(--font-weight-medium); }
 .site-footer p { margin-bottom: var(--space-sm); }
 .footer-link {
     font-weight: var(--font-weight-medium);
-    display: inline-flex;
+    display: inline-flex; /* For aligning icon with text */
     align-items: center;
     gap: var(--space-xs);
 }
-.github-icon {
+.github-icon { /* Styling for inline SVG GitHub icon */
     width: 1.1em;
     height: 1.1em;
-    fill: currentColor;
+    fill: currentColor; /* Inherits text color */
 }
 
 /* === SCROLL TO TOP BUTTON === */
@@ -666,107 +694,112 @@ table td code { font-size: 0.9em; font-weight: var(--font-weight-medium); }
     bottom: var(--space-lg);
     right: var(--space-lg);
     background-color: var(--color-accent-primary);
-    color: #fff;
+    color: #fff; /* White icon on accent background */
     border: none;
-    border-radius: 50%;
+    border-radius: 50%; /* Circular button */
     width: 52px;
     height: 52px;
-    font-size: 1.6rem;
+    font-size: 1.6rem; /* Arrow icon size */
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    box-shadow: 0 4px 12px var(--color-shadow);
-    opacity: 0;
+    box-shadow: 0 4px 12px var(--color-shadow); /* Prominent shadow */
+    opacity: 0; /* Hidden by default */
     visibility: hidden;
-    transform: translateY(20px) scale(0.9);
+    transform: translateY(20px) scale(0.9); /* Initial state for animation */
     transition: all var(--transition-duration-medium) var(--transition-timing-function);
-    z-index: var(--z-modal);
+    z-index: var(--z-modal); /* Above most content */
 }
-[data-theme="dark"] .scroll-to-top { color: var(--color-bg); }
-.scroll-to-top.visible {
+/* Ensure icon contrast in dark mode if button color changes drastically */
+[data-theme="dark"] .scroll-to-top { color: var(--color-bg); } /* Dark icon on light button if needed */
+.scroll-to-top.visible { /* Shown when scrolled down */
     opacity: 1;
     visibility: visible;
     transform: translateY(0) scale(1);
 }
 .scroll-to-top:hover, .scroll-to-top:focus-visible {
     background-color: var(--color-accent-primary-hover);
-    transform: scale(1.08) translateY(-2px);
+    transform: scale(1.08) translateY(-2px); /* Grow and lift on hover */
 }
 .scroll-to-top-icon { filter: var(--icon-emoji-filter); }
 
 /* === ANIMATE ON SCROLL === */
+/* Elements with this class fade/slide in when they enter viewport */
 .animate-on-scroll {
     opacity: 0;
-    transform: translateY(var(--space-lg));
+    transform: translateY(var(--space-lg)); /* Start slightly lower */
     transition-property: opacity, transform;
     transition-duration: var(--transition-duration-slow);
-    transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Easing with a slight overshoot */
 }
-.animate-on-scroll.is-visible {
+.animate-on-scroll.is-visible { /* State when element is in view */
     opacity: 1;
     transform: translateY(0);
 }
+/* Allows custom delay for animations via data-attribute in HTML */
 .animate-on-scroll[style*="--animation-delay"] {
     transition-delay: var(--animation-delay, 0s);
 }
 
 
-/* === RESPONSIVE DESIGN === */
-@media (max-width: 992px) {
-    .main-nav {
+/* === RESPONSIVE DESIGN (Media Queries) === */
+@media (max-width: 992px) { /* Tablet and smaller */
+    .main-nav { /* Mobile navigation panel */
         position: fixed;
-        inset: 0 0 0 auto;
-        transform: translateX(100%);
-        width: min(75vw, 320px);
+        inset: 0 0 0 auto; /* Top, bottom, right: 0, left: auto -> slides from right */
+        transform: translateX(100%); /* Initially off-screen */
+        width: min(75vw, 320px); /* Responsive width, max 320px */
         background-color: var(--color-surface);
-        box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+        box-shadow: -5px 0 20px rgba(0,0,0,0.1); /* Shadow on the left */
         display: flex;
         flex-direction: column;
-        padding: var(--space-xxxl) var(--space-lg) var(--space-lg);
+        padding: var(--space-xxxl) var(--space-lg) var(--space-lg); /* Padding inside nav */
         transition: transform var(--transition-duration-medium) var(--transition-timing-function);
         z-index: var(--z-navigation);
-        overflow-y: auto;
+        overflow-y: auto; /* Scroll if content exceeds height */
     }
-    .main-nav.active { transform: translateX(0); }
+    .main-nav.active { transform: translateX(0); } /* Slides in when active */
     .main-nav ul {
-        flex-direction: column;
-        align-items: flex-start;
+        flex-direction: column; /* Stack nav items vertically */
+        align-items: flex-start; /* Align items to the left */
         width: 100%;
         gap: var(--space-sm);
     }
-    .main-nav ul li { width: 100%; }
+    .main-nav ul li { width: 100%; } /* Full width list items */
     .main-nav ul li a {
-        display: block;
+        display: block; /* Make links take full width for easier tapping */
         padding: var(--space-md) var(--space-lg);
         font-size: 1.1rem;
         font-weight: var(--font-weight-medium);
-        color: var(--color-text-primary);
+        color: var(--color-text-primary); /* Use primary text color in mobile nav */
     }
     .main-nav ul li a:hover,
     .main-nav ul li a:focus-visible,
-    .main-nav ul li a.active {
+    .main-nav ul li a.active { /* Active/hover state for mobile nav links */
         color: var(--color-accent-primary);
         background-color: rgba(var(--color-accent-primary-rgb), 0.1);
     }
-    .mobile-nav-toggle { display: flex; align-items:center; justify-content:center; }
-    body.no-scroll { overflow: hidden; }
+    .mobile-nav-toggle { display: flex; align-items:center; justify-content:center; } /* Show hamburger icon */
+    body.no-scroll { overflow: hidden; } /* Prevent body scroll when mobile nav is open */
 }
 
-@media (max-width: 768px) {
+@media (max-width: 768px) { /* Smaller tablets and mobile landscape */
+    /* Adjust spacing for smaller screens */
     :root {
         --space-lg: 1.25rem;
         --space-xl: 1.75rem;
         --space-xxl: 2.5rem;
         --space-xxxl: 3.5rem;
     }
-    .logo-text { display: none; }
+    .logo-text { display: none; } /* Hide logo text, show only icon */
     .logo-icon { margin-right: 0; }
-    .hero-section h1 { font-size: clamp(2rem, 7vw, 3.2rem); }
-    .hero-section .subtitle { font-size: clamp(1rem, 3vw, 1.2rem); }
+    .hero-section h1 { font-size: clamp(2rem, 7vw, 3.2rem); } /* Smaller hero heading */
+    .hero-section .subtitle { font-size: clamp(1rem, 3vw, 1.2rem); } /* Smaller hero subtitle */
 }
 
-@media (max-width: 480px) {
+@media (max-width: 480px) { /* Mobile portrait */
+    /* Further reduce spacing for very small screens */
     :root {
         --space-md: 0.75rem;
         --space-lg: 1rem;
@@ -774,18 +807,24 @@ table td code { font-size: 0.9em; font-weight: var(--font-weight-medium); }
         --space-xxl: 2rem;
         --space-xxxl: 2.5rem;
     }
-    .button { padding: 0.7em 1.5em; font-size: 0.95rem; }
+    .button { padding: 0.7em 1.5em; font-size: 0.95rem; } /* Smaller buttons */
     .hero-button { font-size: 1rem; }
-    .scroll-to-top { width: 48px; height: 48px; font-size: 1.4rem; bottom: var(--space-md); right: var(--space-md); }
+    .scroll-to-top { /* Smaller scroll-to-top button */
+        width: 48px; height: 48px; font-size: 1.4rem;
+        bottom: var(--space-md); right: var(--space-md);
+    }
 }
 
 /* Accessibility: Consistent Focus visibility */
+/* Provides a clear visual indicator for keyboard navigation */
 :focus-visible {
     outline: var(--border-width-thick) solid var(--color-accent-secondary);
     outline-offset: 2px;
+    /* Fallback box-shadow for browsers that don't support outline-offset well or for more emphasis */
     box-shadow: 0 0 0 var(--border-width-thick) var(--color-surface), 0 0 0 calc(var(--border-width-thick) * 2) var(--color-accent-secondary);
-    border-radius: var(--border-radius-sm);
+    border-radius: var(--border-radius-sm); /* Rounded focus outline */
 }
+/* Remove default outline for elements that have custom focus styles or where it's visually disruptive */
 .theme-switcher:focus-visible,
 .mobile-nav-toggle:focus-visible,
 .scroll-to-top:focus-visible,
@@ -793,11 +832,12 @@ table td code { font-size: 0.9em; font-weight: var(--font-weight-medium); }
 .logo:focus-visible,
 .button:focus-visible,
 .main-nav ul li a:focus-visible {
-    outline: none;
-    box-shadow: none;
+    outline: none; /* Custom focus is handled by their :hover styles or specific :focus-visible */
+    box-shadow: none; /* Remove the global focus shadow if they have their own */
 }
+/* Specific focus for pre elements (code blocks) as they can be focused for scrolling */
 pre:focus-visible {
     outline: var(--border-width-thick) solid var(--color-accent-secondary);
-    outline-offset: 1px;
-    box-shadow: none;
+    outline-offset: 1px; /* Slightly closer offset for pre */
+    box-shadow: none; /* No complex shadow needed here */
 }
