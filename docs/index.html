@@ -17,7 +17,7 @@
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="css/style.css">
 </head>
-<!-- data-theme attribute managed by JavaScript -->
+<!-- data-theme attribute managed by JavaScript to toggle light/dark modes -->
 <body>
 
     <!-- Page Overlay for Mobile Menu background dimming -->
@@ -42,11 +42,11 @@
             </nav>
             <div class="header-controls">
                 <button class="theme-switcher" id="themeSwitcher" type="button" aria-label="Toggle color theme" aria-live="polite" title="Toggle color theme">
-                    <span class="icon sun-icon" aria-hidden="true">☀️</span>
-                    <span class="icon moon-icon" aria-hidden="true">🌙</span>
+                    <span class="icon sun-icon" aria-hidden="true">☀️</span> <!-- Shows in light mode -->
+                    <span class="icon moon-icon" aria-hidden="true">🌙</span> <!-- Shows in dark mode -->
                 </button>
                 <button class="mobile-nav-toggle" id="mobileNavToggle" type="button" aria-label="Toggle mobile navigation" aria-expanded="false" aria-controls="mainNav">
-                    <span class="mobile-nav-toggle-icon" aria-hidden="true"></span>
+                    <span class="mobile-nav-toggle-icon" aria-hidden="true"></span> <!-- Hamburger icon bars -->
                 </button>
             </div>
         </div>
@@ -56,6 +56,7 @@
         <!-- Hero Section -->
         <section class="hero-section" id="home" aria-labelledby="hero-heading">
             <div class="hero-background-elements" aria-hidden="true">
+                <!-- Decorative blurred circles for background effect -->
                 <div class="hero-blur-circle circle-1"></div>
                 <div class="hero-blur-circle circle-2"></div>
                 <div class="hero-blur-circle circle-3"></div>
@@ -117,6 +118,7 @@
                     <p>For normal users, you can run this command:</p>
                     <div class="code-block-wrapper">
                         <pre tabindex="0"><code class="language-bash">sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main/OpenSUSE_Installation.sh)"</code></pre>
+                        <!-- Copy button will be added by JavaScript -->
                     </div>
                     <p>This will bring up a CLI menu-based installer to let you know what to install. For more options, please see the <a href="#arguments">Arguments section</a>.</p>
                 </div>
