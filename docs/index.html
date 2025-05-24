@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="A set of scripts to help configure OpenSUSE Tumbleweed: repositories, codecs, packages, and system tweaks. Version 2.1.1 and beyond.">
-    <title>OpenSUSE Tumbleweed Setup Scripts | Effortless Configuration</title>
+    <meta name="description" content="A set of scripts to help configure OpenSUSE Tumbleweed: repositories, codecs, packages, and system tweaks. Now with an openSUSE-inspired theme!">
+    <title>OpenSUSE Tumbleweed Setup Scripts | openSUSE Themed UI</title>
 
     <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚙️</text></svg>">
 
-    <!-- Google Fonts: Inter for text, Fira Code for code (with ligatures) -->
+    <!-- Google Fonts: Inter for text, Fira Code for code -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
@@ -17,13 +17,13 @@
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="css/style.css">
 </head>
-<!-- data-theme attribute managed by JavaScript to toggle light/dark modes -->
+<!-- data-theme attribute is managed by JavaScript to toggle light/dark modes -->
 <body>
 
-    <!-- Page Overlay for Mobile Menu background dimming -->
+    <!-- Page Overlay: Dims the background when mobile menu is active -->
     <div class="page-overlay" id="pageOverlay" aria-hidden="true"></div>
 
-    <!-- Site Header -->
+    <!-- Site Header: Contains logo, navigation, and theme/mobile toggles -->
     <header class="site-header" id="siteHeader">
         <div class="container header-container">
             <a href="#home" class="logo" aria-label="OpenSUSE Setup Scripts Homepage">
@@ -32,18 +32,18 @@
             </a>
             <nav class="main-nav" id="mainNav" aria-label="Main site navigation">
                 <ul>
-                    <li><a href="#about">About</a></li> <!-- Corresponds to README intro -->
-                    <li><a href="#important-info">Important Info</a></li> <!-- Corresponds to "IMPORTANT" section -->
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#important-info">Important Info</a></li>
                     <li><a href="#quick-run">Quick Run</a></li>
                     <li><a href="#arguments">Arguments</a></li>
-                    <li><a href="#more-info">More Info</a></li> <!-- Corresponds to "I Need More Information!" -->
+                    <li><a href="#more-info">More Info</a></li>
                     <li><a href="#disclaimer">Disclaimer</a></li>
                 </ul>
             </nav>
             <div class="header-controls">
                 <button class="theme-switcher" id="themeSwitcher" type="button" aria-label="Toggle color theme" aria-live="polite" title="Toggle color theme">
-                    <span class="icon sun-icon" aria-hidden="true">☀️</span> <!-- Shows in light mode -->
-                    <span class="icon moon-icon" aria-hidden="true">🌙</span> <!-- Shows in dark mode -->
+                    <span class="icon sun-icon" aria-hidden="true">☀️</span> <!-- Visible in light mode -->
+                    <span class="icon moon-icon" aria-hidden="true">🌙</span> <!-- Visible in dark mode -->
                 </button>
                 <button class="mobile-nav-toggle" id="mobileNavToggle" type="button" aria-label="Toggle mobile navigation" aria-expanded="false" aria-controls="mainNav">
                     <span class="mobile-nav-toggle-icon" aria-hidden="true"></span> <!-- Hamburger icon bars -->
@@ -53,16 +53,15 @@
     </header>
 
     <main id="mainContent">
-        <!-- Hero Section -->
+        <!-- Hero Section: The main welcome area -->
         <section class="hero-section" id="home" aria-labelledby="hero-heading">
             <div class="hero-background-elements" aria-hidden="true">
-                <!-- Decorative blurred circles for background effect -->
                 <div class="hero-blur-circle circle-1"></div>
                 <div class="hero-blur-circle circle-2"></div>
                 <div class="hero-blur-circle circle-3"></div>
             </div>
             <div class="container hero-content">
-                <span class="version-badge animate-on-scroll" data-animation-delay="0.3s">Now with improved code in version 2.1.1 and beyond!</span>
+                <span class="version-badge animate-on-scroll" data-animation-delay="0.3s">Now with an openSUSE Theme!</span>
                 <h1 id="hero-heading" class="animate-on-scroll" data-animation-delay="0s">OpenSUSE Tumbleweed Setup Scripts</h1>
                 <p class="subtitle animate-on-scroll" data-animation-delay="0.1s">Your go-to scripts for setting up OpenSUSE Tumbleweed. Configure repositories, codecs, packages, and system settings for daily use, fast and easy.</p>
                 <a href="#quick-run" class="button button-primary hero-button animate-on-scroll" data-animation-delay="0.2s">
@@ -71,7 +70,7 @@
             </div>
         </section>
 
-        <!-- About Section (Corresponds to README intro) -->
+        <!-- About Section -->
         <section id="about" class="content-section" aria-labelledby="about-heading">
             <div class="container">
                 <h2 id="about-heading" class="section-title animate-on-scroll"><span class="icon" aria-hidden="true">ℹ️</span>What's This About?</h2>
@@ -83,7 +82,7 @@
             </div>
         </section>
 
-        <!-- IMPORTANT Section (Corresponds to README "IMPORTANT") -->
+        <!-- IMPORTANT Section -->
         <section id="important-info" class="content-section alt-bg" aria-labelledby="important-heading">
             <div class="container">
                 <h2 id="important-heading" class="section-title animate-on-scroll"><span class="icon" aria-hidden="true">📌</span>Important Info & Forks</h2>
@@ -118,7 +117,7 @@
                     <p>For normal users, you can run this command:</p>
                     <div class="code-block-wrapper">
                         <pre tabindex="0"><code class="language-bash">sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main/OpenSUSE_Installation.sh)"</code></pre>
-                        <!-- Copy button will be added by JavaScript -->
+                        {/* Copy button will be dynamically added by JavaScript */}
                     </div>
                     <p>This will bring up a CLI menu-based installer to let you know what to install. For more options, please see the <a href="#arguments">Arguments section</a>.</p>
                 </div>
@@ -173,22 +172,25 @@
                     <p>To use the arguments, use this syntax:</p>
                     <div class="code-block-wrapper">
                         <pre tabindex="0"><code class="language-bash">Type1=Option1,Option2,Option3... Type2=Option1,Option2,Option3...</code></pre>
+                        {/* Copy button will be dynamically added by JavaScript */}
                     </div>
                     <p><strong>Example:</strong></p>
                     <div class="code-block-wrapper">
                         <pre tabindex="0"><code class="language-bash">Browser=Brave Codecs=opi Fix=SDDMNumLock,ICMProfiles</code></pre>
+                        {/* Copy button will be dynamically added by JavaScript */}
                     </div>
 
                     <h3 class="subsection-title">Running Individual Scripts</h3>
                     <p>You can run individual scripts by using the following command (just replace <code><SCRIPT_NAME></code> with a valid script file name):</p>
                     <div class="code-block-wrapper">
                         <pre tabindex="0"><code class="language-bash">bash -c "$(curl -fsSL https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main/<SCRIPT_NAME>.sh)"</code></pre>
+                        {/* Copy button will be dynamically added by JavaScript */}
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- More Information Section (Corresponds to README "I Need More Information!") -->
+        <!-- More Information Section -->
         <section id="more-info" class="content-section" aria-labelledby="moreinfo-heading">
             <div class="container">
                 <h2 id="moreinfo-heading" class="section-title animate-on-scroll"><span class="icon" aria-hidden="true">📚</span>Need More Information?</h2>
@@ -228,7 +230,7 @@
     <!-- Site Footer -->
     <footer class="site-footer">
         <div class="container">
-            <p>© <span id="currentYear"></span> DAK404 & Contributors. All Rights Reserved.</p>
+            <p>© <span id="currentYear">2024</span> DAK404 & Contributors. All Rights Reserved.</p>
             <p class="social-links">
                 Find this project on
                 <a href="https://github.com/DAK404/OpenSUSE-Setup-Scripts" target="_blank" rel="noopener noreferrer" title="View Project on GitHub" class="footer-link">
