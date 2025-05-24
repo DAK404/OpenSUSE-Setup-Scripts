@@ -1,0 +1,749 @@
+/* style.css - The heart of our website's look and feel! */
+
+/* A little reset for everyone, making sure we start from a consistent baseline. */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* This makes sizing elements so much easier! */
+}
+
+/* === CSS CUSTOM PROPERTIES (THEMES & LAYOUT) === */
+/* Think of these as our central control panel for colors, spacing, fonts, etc. */
+:root {
+    /* Typography: Let's keep our fonts consistent. */
+    --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-code: 'Fira Code', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace; /* For that slick code look. */
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --font-weight-extrabold: 800;
+
+    /* Spacing Scale: Our ruler for consistent margins, paddings, and gaps. */
+    --space-xs: 0.25rem;  /*  4px */
+    --space-sm: 0.5rem;   /*  8px */
+    --space-md: 1rem;     /* 16px - Our trusty default. */
+    --space-lg: 1.5rem;   /* 24px */
+    --space-xl: 2rem;     /* 32px */
+    --space-xxl: 3rem;    /* 48px */
+    --space-xxxl: 4.5rem; /* For those big, airy sections. */
+
+    /* Borders & Radii: Defining the shapes and edges. */
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;  /* A nice, soft curve for most things. */
+    --border-radius-lg: 12px; /* For larger elements like cards. */
+    --border-radius-pill: 50px; /* Perfect for those roundy buttons. */
+    --border-width: 1px;
+    --border-width-thick: 2px;
+
+    /* Transitions: For smooth and delightful animations. */
+    --transition-duration-fast: 0.15s;
+    --transition-duration-medium: 0.3s; /* Good for most hover effects. */
+    --transition-duration-slow: 0.5s;
+    --transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); /* A standard, smooth ease. */
+    --transition-timing-function-overshoot: cubic-bezier(0.175, 0.885, 0.32, 1.275); /* A bit more playful! */
+
+    /* Z-Indexes: Managing the stacking order of elements. Higher numbers are on top. */
+    --z-overlay: 10;        /* For things like the mobile nav background dim. */
+    --z-modal: 20;          /* Pop-ups, if we ever add them. */
+    --z-navigation: 30;     /* Mobile nav panel needs to be above the overlay. */
+    --z-sticky-header: 40;  /* Our header should always stay on top. */
+
+    /* --- Light Theme (openSUSE Inspired) --- */
+    /* The default look, aiming for openSUSE's clean and green vibe. */
+    --opensuse-green: #20672c; /* A core openSUSE green - good for text on light bg */
+    --opensuse-green-light: #73ba25; /* A brighter openSUSE green, often used for highlights */
+    --opensuse-gray-dark: #222222; /* openSUSE dark gray for text */
+    --opensuse-gray-medium: #555555; /* openSUSE medium gray */
+    --opensuse-gray-light: #eeeeee; /* openSUSE light gray for backgrounds/borders */
+    --opensuse-gray-bg: #f7f7f7; /* A common light background gray */
+
+    --color-bg: var(--opensuse-gray-bg);
+    --color-text-primary: var(--opensuse-gray-dark);
+    --color-text-secondary: var(--opensuse-gray-medium);
+    --color-accent-primary: var(--opensuse-green); /* Our main green! */
+    --color-accent-primary-hover: #1a5223;     /* A slightly darker shade for hover. */
+    --color-accent-primary-rgb: 32, 103, 44;   /* RGB for when we need transparency. */
+    --color-accent-secondary: #5a83b6;         /* A complementary accessible blue (inspired by some openSUSE toolings) */
+    --color-accent-secondary-hover: #486a94;
+    --color-accent-secondary-rgb: 90, 131, 182;
+    --color-surface: #ffffff;                       /* Cards and modals get a clean white. */
+    --color-border: var(--opensuse-gray-light);
+    --color-code-bg: #f0f0f0;                       /* Light gray for code blocks. */
+    --color-code-text: #333333;                     /* Darker text for code. */
+    --color-shadow: rgba(0, 0, 0, 0.07);            /* A soft, subtle shadow. */
+    --color-header-bg: rgba(247, 247, 247, 0.85);   /* Header matches light bg, with blur. */
+    --color-link-external-icon: var(--color-accent-primary);
+    --icon-emoji-filter: none;                      /* Emojis look fine as is in light mode. */
+    --hero-blur-circle-1: rgba(var(--color-accent-primary-rgb), 0.2);
+    --hero-blur-circle-2: rgba(var(--color-accent-secondary-rgb), 0.15);
+    --hero-blur-circle-3: rgba(var(--color-accent-primary-rgb), 0.12);
+    --color-button-text: #ffffff;                   /* White text on green buttons. */
+    --color-focus-ring: var(--opensuse-green-light); /* A brighter green for focus, good visibility. */
+    --color-table-row-stripe: rgba(var(--color-accent-primary-rgb), 0.03); /* Very faint green stripe. */
+}
+
+[data-theme="dark"] {
+    /* --- Dark Theme (openSUSE Inspired) --- */
+    /* Bringing the green goodness to the dark side. */
+    --opensuse-green-dark-theme: #86dc3d; /* A brighter, more vivid green for dark backgrounds. */
+    --opensuse-dark-bg: #2d2d2d;          /* A common dark gray for openSUSE dark themes. */
+    --opensuse-dark-surface: #3c3c3c;     /* Slightly lighter for cards. */
+    --opensuse-dark-border: #505050;
+    --opensuse-dark-text-primary: #e0e0e0;
+    --opensuse-dark-text-secondary: #b0b0b0;
+
+    --color-bg: var(--opensuse-dark-bg);
+    --color-text-primary: var(--opensuse-dark-text-primary);
+    --color-text-secondary: var(--opensuse-dark-text-secondary);
+    --color-accent-primary: var(--opensuse-green-dark-theme);
+    --color-accent-primary-hover: #73ba25;        /* Slightly less bright for hover. */
+    --color-accent-primary-rgb: 134, 220, 61;
+    --color-accent-secondary: #6fa0d8;            /* A lighter, brighter blue for dark mode. */
+    --color-accent-secondary-hover: #5a83b6;
+    --color-accent-secondary-rgb: 111, 160, 216;
+    --color-surface: var(--opensuse-dark-surface);
+    --color-border: var(--opensuse-dark-border);
+    --color-code-bg: #252525;                     /* Even darker for code blocks to stand out. */
+    --color-code-text: #c0c0c0;
+    --color-shadow: rgba(0, 0, 0, 0.2);
+    --color-header-bg: rgba(45, 45, 45, 0.85);    /* Header matches dark bg, with blur. */
+    --color-link-external-icon: var(--color-accent-primary);
+    --icon-emoji-filter: brightness(0.9) contrast(1.1); /* Adjust emojis slightly. */
+    --hero-blur-circle-1: rgba(var(--color-accent-primary-rgb), 0.2);
+    --hero-blur-circle-2: rgba(var(--color-accent-secondary-rgb), 0.15);
+    --hero-blur-circle-3: rgba(var(--color-accent-primary-rgb), 0.12);
+    --color-button-text: #111111;                 /* Dark text on the bright green button. */
+    --color-focus-ring: var(--color-accent-primary); /* The bright green is already good for focus. */
+    --color-table-row-stripe: rgba(var(--color-accent-primary-rgb), 0.05);
+}
+
+/* === BASE STYLES === */
+/* Setting up the foundational styles for our page. */
+html {
+    font-size: 100%; /* Usually 16px, our 'rem' unit anchor. */
+    scroll-behavior: smooth; /* Nice and smooth when clicking #links. */
+    -webkit-tap-highlight-color: transparent; /* No ugly tap highlights on mobile. */
+}
+
+body {
+    font-family: var(--font-primary);
+    font-weight: var(--font-weight-regular);
+    line-height: 1.75; /* A bit more breathing room between lines. */
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
+    transition-property: background-color, color; /* Smoothly transition theme changes. */
+    transition-duration: var(--transition-duration-medium);
+    transition-timing-function: var(--transition-timing-function);
+    -webkit-font-smoothing: antialiased; /* Sharper text on Mac/iOS. */
+    -moz-osx-font-smoothing: grayscale;  /* Sharper text on Firefox. */
+    overflow-x: hidden; /* No pesky horizontal scrollbars. */
+}
+
+/* The overlay that dims the page when the mobile nav is open. */
+.page-overlay {
+    position: fixed; inset: 0; /* Cover the whole screen. */
+    background-color: rgba(30, 30, 30, 0.5); /* A neutral dark overlay. */
+    opacity: 0; visibility: hidden; /* Hidden by default. */
+    z-index: var(--z-overlay);
+    transition: opacity var(--transition-duration-medium) var(--transition-timing-function),
+                visibility var(--transition-duration-medium) var(--transition-timing-function);
+}
+.page-overlay.active { opacity: 1; visibility: visible; } /* JS makes it visible. */
+[data-theme="dark"] .page-overlay { background-color: rgba(0, 0, 0, 0.65); } /* A bit darker on dark theme. */
+
+/* === UTILITY CLASSES === */
+/* Our main content wrapper, keeping things centered and tidy. */
+.container {
+    width: 90%;
+    max-width: 1200px; /* A comfortable maximum width. */
+    margin-left: auto; margin-right: auto; /* The classic centering trick. */
+    padding-left: var(--space-lg);
+    padding-right: var(--space-lg);
+}
+
+/* === BUTTONS === */
+/* Styling our clickable friends. */
+.button {
+    display: inline-flex; align-items: center; justify-content: center; /* For icon + text alignment. */
+    gap: var(--space-sm);
+    padding: 0.85em 2em;
+    border-radius: var(--border-radius-pill); /* Nice and round. */
+    text-decoration: none;
+    font-weight: var(--font-weight-semibold);
+    border: var(--border-width-thick) solid transparent; /* Border color comes from specific button type. */
+    cursor: pointer;
+    font-size: 1rem;
+    white-space: nowrap; /* Keep text on one line. */
+    transition: all var(--transition-duration-fast) var(--transition-timing-function);
+    box-shadow: 0 1px 3px 0 var(--color-shadow), 0 1px 2px -1px var(--color-shadow); /* Subtle depth. */
+}
+.button-primary { /* Our main call-to-action button. */
+    background-color: var(--color-accent-primary); /* The openSUSE green! */
+    color: var(--color-button-text); /* Text color needs to contrast well. */
+    border-color: var(--color-accent-primary);
+}
+
+/* MODIFIED RULE - START */
+.button-primary:hover,
+.button-primary:focus-visible,
+.button-primary:active { /* Added :active */
+    background-color: var(--color-accent-primary-hover);
+    border-color: var(--color-accent-primary-hover);
+    color: var(--color-button-text); /* Added explicit color to ensure visibility */
+    transform: translateY(-2px) scale(1.03); /* A little lift and grow. */
+    box-shadow: 0 4px 10px 0 var(--color-shadow), 0 2px 4px -2px var(--color-shadow); /* More shadow on hover. */
+}
+/* MODIFIED RULE - END */
+
+/* Note: Text color on hover for dark theme is handled by the --color-button-text variable being set to dark. */
+.button .icon { font-size: 1.1em; }
+
+/* === HEADER & NAVIGATION === */
+/* The trusty header that sticks around. */
+.site-header {
+    background-color: var(--color-header-bg);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); /* That cool frosted glass effect. */
+    padding-top: var(--space-md); padding-bottom: var(--space-md);
+    position: sticky; top: 0; /* This is what makes it stick! */
+    z-index: var(--z-sticky-header);
+    border-bottom: var(--border-width) solid var(--color-border);
+    transition: background-color var(--transition-duration-medium) var(--transition-timing-function),
+                border-color var(--transition-duration-medium) var(--transition-timing-function),
+                box-shadow var(--transition-duration-medium) var(--transition-timing-function);
+}
+/* A subtle shadow appears when the user scrolls, giving a sense of elevation. */
+.site-header.scrolled {
+    box-shadow: 0 2px 8px -1px rgba(30, 30, 30, 0.08);
+}
+[data-theme="dark"] .site-header.scrolled {
+    box-shadow: 0 2px 8px -1px rgba(0, 0, 0, 0.2);
+}
+
+.header-container { display: flex; justify-content: space-between; align-items: center; }
+.logo {
+    font-size: clamp(1.3rem, 3vw, 1.6rem);
+    font-weight: var(--font-weight-bold);
+    text-decoration: none; color: var(--color-text-primary);
+    display: flex; align-items: center; gap: var(--space-sm);
+    transition: opacity var(--transition-duration-fast) var(--transition-timing-function);
+}
+.logo:hover, .logo:focus-visible { opacity: 0.75; } /* Slight fade on hover. */
+.logo-icon {
+    font-size: 1.5em;
+    color: var(--color-accent-primary); /* Logo icon gets the primary green. */
+    filter: var(--icon-emoji-filter);
+}
+
+/* Desktop navigation. */
+.main-nav ul { list-style: none; display: flex; align-items: center; gap: var(--space-sm); }
+.main-nav ul li a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--border-radius-md);
+    font-weight: var(--font-weight-medium);
+    position: relative; /* For potential future fanciness. */
+    transition: color var(--transition-duration-fast) var(--transition-timing-function),
+                background-color var(--transition-duration-fast) var(--transition-timing-function);
+}
+.main-nav ul li a:hover,
+.main-nav ul li a:focus-visible,
+.main-nav ul li a.active { /* Highlight the active/hovered link. */
+    color: var(--color-accent-primary); /* Text turns green. */
+    background-color: rgba(var(--color-accent-primary-rgb), 0.08); /* Very subtle green background. */
+}
+
+/* Theme switcher and mobile nav toggle buttons. */
+.header-controls { display: flex; align-items: center; gap: var(--space-md); }
+.theme-switcher {
+    background: transparent; border: none;
+    color: var(--color-text-secondary);
+    font-size: 1.6rem; cursor: pointer; padding: var(--space-xs);
+    border-radius: var(--border-radius-md);
+    display: flex; align-items: center; justify-content: center;
+    transition: color var(--transition-duration-fast) var(--transition-timing-function),
+                transform var(--transition-duration-fast) var(--transition-timing-function-overshoot);
+}
+.theme-switcher:hover, .theme-switcher:focus-visible {
+    color: var(--color-accent-primary); /* Icon turns green on hover. */
+    transform: rotate(20deg) scale(1.15); /* A little spin and grow! */
+}
+.theme-switcher .icon { transition: opacity var(--transition-duration-medium) var(--transition-timing-function); filter: var(--icon-emoji-filter); }
+.theme-switcher .moon-icon { display: none; } /* JS handles showing the right icon. */
+
+/* The hamburger menu toggle for mobile. */
+.mobile-nav-toggle {
+    display: none; /* Hidden on desktop. */
+    background: transparent; border: none; cursor: pointer;
+    padding: var(--space-sm); z-index: calc(var(--z-navigation) + 1); /* Above the nav panel. */
+    position: relative; width: 44px; height: 44px; /* Good tap target size. */
+}
+.mobile-nav-toggle-icon { /* The three little bars. */
+    display: block; width: 26px; height: 3px;
+    background-color: var(--color-text-primary);
+    border-radius: var(--border-radius-sm); position: relative;
+    transition: transform var(--transition-duration-medium) var(--transition-timing-function),
+                background-color var(--transition-duration-medium) var(--transition-timing-function);
+}
+.mobile-nav-toggle-icon::before,
+.mobile-nav-toggle-icon::after { /* Top and bottom bars. */
+    content: ''; position: absolute; left: 0;
+    width: 100%; height: 3px;
+    background-color: var(--color-text-primary);
+    border-radius: var(--border-radius-sm);
+    transition: transform var(--transition-duration-medium) var(--transition-timing-function),
+                top var(--transition-duration-medium) var(--transition-timing-function),
+                bottom var(--transition-duration-medium) var(--transition-timing-function);
+}
+.mobile-nav-toggle-icon::before { top: -9px; }
+.mobile-nav-toggle-icon::after { bottom: -9px; }
+
+/* Animate the hamburger to an "X" when active. */
+.mobile-nav-toggle.active .mobile-nav-toggle-icon { background-color: transparent; } /* Middle bar vanishes. */
+.mobile-nav-toggle.active .mobile-nav-toggle-icon::before { top: 0; transform: rotate(45deg); }
+.mobile-nav-toggle.active .mobile-nav-toggle-icon::after { bottom: 0; transform: rotate(-45deg); }
+
+/* === HERO SECTION === */
+/* The big, bold welcome area at the top. */
+.hero-section {
+    text-align: center;
+    padding: var(--space-xxxl) var(--space-md) var(--space-xxxl);
+    position: relative; overflow: hidden; /* Keep those blur circles contained! */
+    background: var(--color-bg);
+}
+/* Decorative blurry circles for a bit of flair. */
+.hero-background-elements { position: absolute; inset: 0; z-index: -1; overflow: hidden; }
+.hero-blur-circle {
+    position: absolute; border-radius: 50%;
+    filter: blur(120px); opacity: 0.18; /* More subtle opacity for green circles */
+    animation: float 25s infinite ease-in-out alternate;
+}
+.hero-blur-circle.circle-1 { /* Main green accent */
+    width: clamp(300px, 50vw, 550px); height: clamp(300px, 50vw, 550px);
+    background-color: var(--color-accent-primary); /* Uses the current theme's primary green */
+    top: -15%; left: -10%; animation-duration: 28s; opacity: 0.15;
+}
+.hero-blur-circle.circle-2 { /* Secondary accent color */
+    width: clamp(250px, 40vw, 500px); height: clamp(250px, 40vw, 500px);
+    background-color: var(--color-accent-secondary);
+    bottom: -20%; right: -15%; animation-duration: 22s; animation-delay: -7s; opacity: 0.12;
+}
+.hero-blur-circle.circle-3 { /* Another touch of primary green */
+    width: clamp(200px, 35vw, 450px); height: clamp(200px, 35vw, 450px);
+    background-color: var(--color-accent-primary);
+    top: 15%; right: 25%; transform: translateX(50%);
+    animation-duration: 30s; animation-delay: -12s; opacity: 0.1;
+}
+/* The gentle floating animation for the blur circles. */
+@keyframes float {
+    0% { transform: translateY(0px) translateX(0px) scale(1); }
+    50% { transform: translateY(-35px) translateX(25px) scale(1.12); }
+    100% { transform: translateY(5px) translateX(-5px) scale(0.98); }
+}
+
+.hero-content { position: relative; z-index: 1; } /* Content stays on top. */
+.version-badge { /* That little badge announcing updates. */
+    display: inline-block;
+    background-color: rgba(var(--color-accent-primary-rgb), 0.1);
+    color: var(--color-accent-primary);
+    padding: var(--space-sm) var(--space-lg);
+    border-radius: var(--border-radius-pill);
+    font-size: 0.95rem; font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--space-lg);
+    border: 1px solid rgba(var(--color-accent-primary-rgb), 0.2);
+}
+.hero-section h1 { /* The main headline. */
+    font-size: clamp(2.5rem, 7vw, 4.5rem);
+    font-weight: var(--font-weight-extrabold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-md);
+    line-height: 1.1; letter-spacing: -0.025em; /* Tight and impactful. */
+}
+.hero-section .subtitle { /* The supporting text. */
+    font-size: clamp(1.15rem, 3vw, 1.45rem);
+    color: var(--color-text-secondary);
+    max-width: 780px;
+    margin: 0 auto var(--space-xl) auto; /* Centered and spaced. */
+    line-height: 1.7; font-weight: var(--font-weight-light);
+}
+.hero-button .icon { filter: var(--icon-emoji-filter); }
+
+
+/* === GENERAL SECTION & CONTENT STYLING === */
+/* How our main content sections look. */
+.content-section { padding: var(--space-xxxl) 0; }
+.content-section.alt-bg { /* For sections that need a different background. */
+    background-color: var(--color-surface); /* Usually white or very light gray. */
+    border-top: var(--border-width) solid var(--color-border);
+    border-bottom: var(--border-width) solid var(--color-border);
+}
+[data-theme="dark"] .content-section.alt-bg {
+    background-color: var(--opensuse-dark-surface); /* Uses the specific dark surface color. */
+    border-color: var(--opensuse-dark-border);
+}
+
+/* Titles for each section. */
+.section-title {
+    font-size: clamp(2rem, 5.5vw, 3rem);
+    color: var(--color-text-primary);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--space-xl); text-align: center;
+    position: relative; padding-bottom: var(--space-md);
+}
+.section-title::after { /* The decorative underline. */
+    content: ''; position: absolute;
+    bottom: 0; left: 50%; transform: translateX(-50%); /* Centered. */
+    width: 90px; height: 4px;
+    background-image: linear-gradient(to right, var(--color-accent-primary), var(--color-accent-secondary)); /* A nice gradient. */
+    border-radius: var(--border-radius-sm);
+}
+.section-title .icon, .subsection-title .icon { /* Icons within titles. */
+    margin-right: var(--space-sm); font-size: 0.9em;
+    color: var(--color-accent-primary); /* Green icon! */
+    filter: var(--icon-emoji-filter);
+}
+.subsection-title { /* For smaller headings within sections. */
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    color: var(--color-text-primary);
+    font-weight: var(--font-weight-semibold);
+    margin-top: var(--space-xl); margin-bottom: var(--space-lg);
+}
+
+/* === CARDS === */
+/* Our content containers, made to look neat. */
+.card {
+    background-color: var(--color-surface);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius-lg); /* A pleasant curve. */
+    padding: var(--space-xl);
+    margin-bottom: var(--space-lg);
+    box-shadow: 0 3px 5px -1px var(--color-shadow), 0 2px 3px -2px var(--color-shadow); /* Slightly refined shadow. */
+    transition: transform var(--transition-duration-medium) var(--transition-timing-function-overshoot),
+                box-shadow var(--transition-duration-medium) var(--transition-timing-function);
+}
+.card:hover { /* A little interaction on hover. */
+    transform: translateY(-var(--space-sm)) scale(1.005); /* Subtle lift and grow. */
+    box-shadow: 0 8px 12px -3px var(--color-shadow), 0 3px 5px -3px var(--color-shadow); /* More pronounced shadow. */
+}
+
+/* === TEXT ELEMENTS & LINKS === */
+/* Basic styling for our text. */
+p, li {
+    margin-bottom: var(--space-md);
+    color: var(--color-text-secondary);
+    font-size: 1.05rem; line-height: 1.8; /* Good readability. */
+}
+section p strong, section li strong { /* Making bold text stand out. */
+    color: var(--color-text-primary);
+    font-weight: var(--font-weight-semibold);
+}
+
+/* Custom-styled lists. */
+ul.styled-list, ol.styled-list-ordered { list-style: none; padding-left: 0; }
+ul.styled-list li, ol.styled-list-ordered li {
+    padding-left: calc(var(--space-lg) + var(--space-xs));
+    position: relative;
+}
+ul.styled-list li::before { /* Custom bullet for unordered lists. */
+    content: '▹'; position: absolute;
+    left: var(--space-sm); top: 0.1em;
+    color: var(--color-accent-primary); /* Green bullet. */
+    font-weight: var(--font-weight-bold); font-size: 1.4em;
+}
+ol.styled-list-ordered { counter-reset: ordered-list-counter; } /* Setting up CSS counters. */
+ol.styled-list-ordered li { counter-increment: ordered-list-counter; } /* Each item bumps the counter. */
+ol.styled-list-ordered li::before { /* Custom numbers for ordered lists. */
+    content: counter(ordered-list-counter) ".";
+    position: absolute; left: 0; top: 0.08em;
+    color: var(--color-accent-primary); /* Green numbers. */
+    font-weight: var(--font-weight-semibold); font-size: 1.05rem;
+    width: calc(var(--space-lg) + var(--space-xs)); text-align: left;
+}
+
+/* Styling our links. */
+a {
+    color: var(--color-accent-primary); /* Green links! */
+    text-decoration: none;
+    font-weight: var(--font-weight-medium);
+    transition: color var(--transition-duration-fast) var(--transition-timing-function),
+                text-decoration-color var(--transition-duration-fast) var(--transition-timing-function),
+                opacity var(--transition-duration-fast) var(--transition-timing-function);
+    text-decoration-line: underline;
+    text-decoration-color: rgba(var(--color-accent-primary-rgb), 0.4); /* Underline is a bit faded by default. */
+    text-underline-offset: 4px; /* Gives the underline some space. */
+}
+a:hover, a:focus-visible {
+    color: var(--color-accent-primary-hover); /* Darker green on hover. */
+    text-decoration-color: currentColor; /* Underline becomes solid. */
+    opacity: 0.85; /* Slight fade for a softer hover. */
+}
+/* The little arrow for external links. */
+.external-link .external-link-icon {
+    font-size: 0.8em; display: inline-block;
+    transform: translateY(-1px); margin-left: var(--space-xs);
+    color: var(--color-link-external-icon);
+    transition: transform var(--transition-duration-fast) var(--transition-timing-function-overshoot);
+}
+.external-link:hover .external-link-icon,
+.external-link:focus-visible .external-link-icon {
+    transform: translateY(-2px) scale(1.15) rotate(7deg); /* A playful bounce. */
+}
+
+/* === CODE BLOCKS === */
+/* Making our code snippets look sharp. */
+.code-block-wrapper { position: relative; margin: var(--space-lg) 0; }
+pre { /* The container for the code itself. */
+    background-color: var(--color-code-bg); color: var(--color-code-text);
+    padding: var(--space-lg); border-radius: var(--border-radius-md);
+    overflow-x: auto; /* Scroll for long lines. */
+    font-family: var(--font-code); /* Monospace, of course. */
+    font-size: 0.95em; line-height: 1.75;
+    border: var(--border-width) solid var(--color-border);
+    -webkit-font-smoothing: auto; -moz-osx-font-smoothing: auto; /* Better rendering for mono fonts. */
+    scrollbar-width: thin; /* Slimmer scrollbars in Firefox. */
+    scrollbar-color: var(--color-accent-primary) var(--color-code-bg); /* Green scrollbar thumb! */
+}
+pre::-webkit-scrollbar { height: 10px; width: 10px; } /* For Chrome/Safari. */
+pre::-webkit-scrollbar-track { background: var(--color-code-bg); border-radius: var(--border-radius-md); }
+pre::-webkit-scrollbar-thumb { background-color: var(--color-accent-primary); border-radius: var(--border-radius-pill); }
+pre code { font-variant-ligatures: common-ligatures; } /* Enable ligatures if your font has them (Fira Code does!). */
+
+/* Inline code, like `this`. */
+code:not(pre code) {
+    font-family: var(--font-code);
+    background-color: rgba(var(--color-accent-primary-rgb), 0.08);
+    color: var(--color-accent-primary); /* Green inline code. */
+    padding: 0.25em 0.6em;
+    border-radius: var(--border-radius-sm);
+    font-size: 0.9em; font-weight: var(--font-weight-medium);
+}
+[data-theme="dark"] code:not(pre code) {
+    background-color: rgba(var(--color-accent-primary-rgb), 0.15); /* A bit more pop on dark theme. */
+}
+
+/* The "Copy" button for code blocks. */
+.copy-button {
+    position: absolute; top: var(--space-md); right: var(--space-md);
+    background-color: rgba(var(--color-text-primary), 0.05);
+    color: var(--color-text-secondary);
+    border: var(--border-width) solid var(--color-border);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--border-radius-md); cursor: pointer;
+    font-size: 0.85em; font-weight: var(--font-weight-semibold);
+    opacity: 0.6; /* Faded out until you hover the code block. */
+    transition: all var(--transition-duration-fast) var(--transition-timing-function);
+    display: inline-flex; align-items: center; gap: var(--space-xs);
+}
+.code-block-wrapper:hover .copy-button { opacity: 1; } /* Button appears on hover. */
+.copy-button:hover, .copy-button:focus-visible {
+    opacity: 1;
+    background-color: rgba(var(--color-accent-primary-rgb), 0.1);
+    color: var(--color-accent-primary); /* Green on hover. */
+    transform: scale(1.05);
+}
+.copy-button.copied { /* When code is successfully copied. */
+    background-color: var(--color-accent-secondary); /* Uses the secondary accent. */
+    color: var(--color-surface); /* Text should be light on this secondary accent. */
+    border-color: var(--color-accent-secondary); opacity: 1;
+}
+/* Ensuring contrast for "Copied!" text based on theme's secondary accent */
+[data-theme="light"] .copy-button.copied { color: #ffffff; /* White text on the light theme's blueish secondary */ }
+[data-theme="dark"] .copy-button.copied { color: #ffffff; /* White text on dark theme's lighter blue secondary */ }
+.copy-button .icon { filter: var(--icon-emoji-filter); font-size: 1.1em; }
+
+/* === TABLES === */
+/* Making our tables look presentable. */
+.table-responsive { /* Allows tables to scroll horizontally on small screens. */
+    overflow-x: auto; margin: var(--space-lg) 0;
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04); /* A very subtle shadow. */
+}
+table {
+    width: 100%; border-collapse: separate; border-spacing: 0;
+    font-size: 0.95em;
+}
+table th, table td {
+    border-bottom: var(--border-width) solid var(--color-border);
+    padding: var(--space-md) var(--space-lg);
+    text-align: left; vertical-align: middle;
+}
+table th { /* Table headers. */
+    background-color: rgba(var(--color-text-primary), 0.02); /* Very neutral header. */
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    border-bottom-width: var(--border-width-thick);
+    border-bottom-color: var(--color-border);
+}
+table tbody tr:nth-child(even) td { /* Zebra striping for readability. */
+    background-color: var(--color-table-row-stripe);
+}
+table tr:last-child td { border-bottom: none; } /* No bottom border on the last row. */
+table td code { font-size: 0.9em; font-weight: var(--font-weight-medium); }
+
+/* === DISCLAIMER SECTION === */
+/* Special styling for the important disclaimer. */
+.disclaimer-box {
+    border-left: 5px solid var(--color-accent-secondary); /* A prominent accent line. */
+    padding: var(--space-xl) calc(var(--space-xl) + var(--space-sm));
+    background-color: var(--color-surface);
+    border-radius: 0 var(--border-radius-lg) var(--border-radius-lg) 0;
+}
+.disclaimer-subtitle {
+    color: var(--color-text-primary); font-weight: var(--font-weight-semibold);
+    margin-top: var(--space-lg); margin-bottom: var(--space-sm);
+    font-size: 1.3rem;
+}
+.disclaimer-box .disclaimer-subtitle:first-of-type { margin-top: 0; }
+
+/* === FOOTER === */
+/* The bottom of our page. */
+.site-footer {
+    text-align: center;
+    padding: var(--space-xl) 0 var(--space-lg);
+    margin-top: var(--space-xxxl);
+    border-top: var(--border-width) solid var(--color-border);
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+}
+.site-footer p { margin-bottom: var(--space-sm); line-height: 1.6; }
+.footer-link {
+    font-weight: var(--font-weight-medium);
+    display: inline-flex; align-items: center; gap: var(--space-xs);
+}
+.github-icon { width: 1.1em; height: 1.1em; fill: currentColor; }
+
+/* === SCROLL TO TOP BUTTON === */
+/* That handy button to zip back to the top. */
+.scroll-to-top {
+    position: fixed; bottom: var(--space-lg); right: var(--space-lg);
+    background-color: var(--color-accent-primary); /* Green button! */
+    color: var(--color-button-text); /* Contrasting text. */
+    border: none; border-radius: 50%; /* Perfectly round. */
+    width: 56px; height: 56px;
+    font-size: 1.8rem;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 6px 12px var(--color-shadow); /* A noticeable shadow. */
+    opacity: 0; visibility: hidden; /* Hidden until user scrolls. */
+    transform: translateY(25px) scale(0.85); /* Starts off-screen and small. */
+    transition: all var(--transition-duration-medium) var(--transition-timing-function-overshoot);
+    z-index: var(--z-modal); /* Should be above most things. */
+}
+/* Dark theme button text needs to be dark to contrast with bright green. */
+[data-theme="dark"] .scroll-to-top { color: var(--opensuse-gray-dark); }
+.scroll-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0) scale(1); } /* Animates in. */
+.scroll-to-top:hover, .scroll-to-top:focus-visible {
+    background-color: var(--color-accent-primary-hover);
+    transform: scale(1.1) translateY(-3px); /* Grows and lifts on hover. */
+}
+.scroll-to-top-icon {
+    filter: var(--icon-emoji-filter);
+    transition: transform 0.2s ease-in-out;
+}
+.scroll-to-top:hover .scroll-to-top-icon {
+    transform: translateY(-2px); /* Icon moves up a bit too. */
+}
+
+
+/* === ANIMATE ON SCROLL === */
+/* For elements that gracefully appear as you scroll. */
+.animate-on-scroll {
+    opacity: 0; /* Start invisible. */
+    transform: translateY(var(--space-xl)); /* Start a bit lower. */
+    transition-property: opacity, transform;
+    transition-duration: var(--transition-duration-slow);
+    transition-timing-function: var(--transition-timing-function-overshoot); /* A nice bouncy ease. */
+}
+.animate-on-scroll.is-visible { opacity: 1; transform: translateY(0); } /* Animate into place. */
+.animate-on-scroll[style*="--animation-delay"] { /* If JS sets a delay, we use it. */
+    transition-delay: var(--animation-delay, 0s);
+}
+
+
+/* === RESPONSIVE DESIGN (Media Queries) === */
+/* Making sure it looks good on all screen sizes! */
+
+@media (max-width: 992px) { /* Tablets and smaller. */
+    /* Mobile navigation panel slides in from the right. */
+    .main-nav {
+        position: fixed; inset: 0 0 0 auto; /* Top, bottom, right: 0; left: auto. */
+        transform: translateX(100%); /* Starts off-screen. */
+        width: min(80vw, 350px); /* Responsive width, max 350px. */
+        background-color: var(--color-surface);
+        box-shadow: -5px 0 25px rgba(30, 30, 30, 0.1);
+        display: flex; flex-direction: column; /* Stack links vertically. */
+        padding: var(--space-xxxl) var(--space-lg) var(--space-lg);
+        transition: transform var(--transition-duration-medium) var(--transition-timing-function);
+        z-index: var(--z-navigation); overflow-y: auto; /* Scroll if too many links. */
+    }
+    [data-theme="dark"] .main-nav { box-shadow: -5px 0 25px rgba(0,0,0,0.2); }
+    .main-nav.active { transform: translateX(0); } /* Slides in. */
+    .main-nav ul { flex-direction: column; align-items: flex-start; width: 100%; gap: var(--space-md); }
+    .main-nav ul li { width: 100%; } /* Links take full width. */
+    .main-nav ul li a {
+        display: block; padding: var(--space-md) var(--space-lg);
+        font-size: 1.15rem; font-weight: var(--font-weight-medium);
+        color: var(--color-text-primary);
+    }
+    .main-nav ul li a:hover,
+    .main-nav ul li a:focus-visible,
+    .main-nav ul li a.active { /* Highlight in mobile nav. */
+        color: var(--color-accent-primary);
+        background-color: rgba(var(--color-accent-primary-rgb), 0.08);
+    }
+    .mobile-nav-toggle { display: flex; align-items:center; justify-content:center; } /* Show hamburger. */
+    body.no-scroll { overflow: hidden; } /* Stop body scroll when nav is open. */
+}
+
+@media (max-width: 768px) { /* Smaller tablets and mobile landscape. */
+    /* Adjusting spacing for smaller screens. */
+    :root {
+        --space-lg: 1.2rem; --space-xl: 1.6rem; --space-xxl: 2.2rem; --space-xxxl: 3rem;
+    }
+    .container { padding-left: var(--space-md); padding-right: var(--space-md); }
+    .logo-text { display: none; } /* Hide logo text, just show icon. */
+    .logo-icon { margin-right: 0; }
+    .hero-section h1 { font-size: clamp(2.2rem, 8vw, 3.5rem); }
+    .hero-section .subtitle { font-size: clamp(1.05rem, 3.5vw, 1.3rem); }
+}
+
+@media (max-width: 480px) { /* Mobile portrait. */
+    /* Even tighter spacing for small phones. */
+    :root {
+        --space-md: 0.8rem; --space-lg: 1rem; --space-xl: 1.4rem; --space-xxl: 1.8rem; --space-xxxl: 2.2rem;
+    }
+    .button { padding: 0.75em 1.6em; font-size: 0.9rem; }
+    .hero-button { font-size: 0.95rem; }
+    .scroll-to-top { width: 50px; height: 50px; font-size: 1.5rem; bottom: var(--space-md); right: var(--space-md); }
+    .section-title { font-size: clamp(1.8rem, 6vw, 2.5rem); }
+    .subsection-title { font-size: clamp(1.2rem, 4.5vw, 1.7rem); }
+}
+
+/* === ACCESSIBILITY: FOCUS VISIBILITY === */
+/* Making sure keyboard users know where they are! */
+:focus-visible { /* Our global focus style. */
+    outline: var(--border-width-thick) solid var(--color-focus-ring); /* A clear, contrasting ring. */
+    outline-offset: 3px; /* A little space from the element. */
+    box-shadow: 0 0 0 var(--border-width-thick) var(--color-surface), 0 0 0 calc(var(--border-width-thick) * 2 + 1px) var(--color-focus-ring); /* Fallback/enhancement. */
+    border-radius: var(--border-radius-sm); /* Rounded to match our style. */
+}
+/* Elements that have their own distinct hover/focus styles don't need the global one. */
+.theme-switcher:focus-visible,
+.mobile-nav-toggle:focus-visible,
+.scroll-to-top:focus-visible,
+.copy-button:focus-visible,
+.logo:focus-visible,
+.button:focus-visible,
+.main-nav ul li a:focus-visible {
+    outline: none; box-shadow: none;
+}
+pre:focus-visible { /* Code blocks get a simpler outline. */
+    outline: var(--border-width-thick) solid var(--color-focus-ring);
+    outline-offset: 2px;
+    box-shadow: none;
+}
