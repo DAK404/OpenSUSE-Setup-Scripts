@@ -2,14 +2,16 @@
 
 A big thank you to:
 
-+ [wz790](https://github.com/wz790)
-    * Helped implement the logic for installing JetBrains toolbox.
-    * Made an awesome website for this project!
-+ [n-shamsi](https://github.com/n-shamsi)
-    * Made an alternative repo for Leap users with Nvidia Installation.
-+ [PercyPanleo](https://github.com/PercyPanleo)
-    * Modified the Gigabyte Sleep Fix script for GPP8 for a few Gigabyte motherboards
++ [wz790](https://github.com/wz790)  
+  • Helped implement the logic for installing JetBrains Toolbox.  
+  • Created an awesome website for this project!
+
++ [n-shamsi](https://github.com/n-shamsi)  
+  • Developed an alternative repo for Leap users with Nvidia installation support.
+
++ [PercyPanleo](https://github.com/PercyPanleo)  
+  • Modified the Gigabyte Sleep Fix script (GPP8) to support certain Gigabyte motherboards.
 
 ---
 
-## **A big thank you to all who have taken the time out to check, give feedback and use the scripts!**
+## 🙏 **Thanks to everyone who has taken the time to check out, use, and provide feedback on these scripts!**

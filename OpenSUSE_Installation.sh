@@ -139,22 +139,23 @@ display_menu()
     echo "13. Tweak Firewall Rules for mDNS"
     echo "14. Install and Configure openRGB"
     echo "15. Install Monthly Automatic System Updates"
-    echo "16. Install zsh and Oh-My-Zsh!"
+    echo "16. Install Tasks"
+    echo "17. Install zsh and Oh-My-Zsh!"
     echo
     echo "---- PACKAGE INSTALLATION ----"
     echo
-    echo "17. Gaming Packages"
-    echo "18. Git and GitHub Desktop"
-    echo "19. Essential System Utilities"
-    echo "20. Visual Studio Code"
-    echo "21. JetBrains Toolbox"
-    echo "22. Warp Terminal (warp.dev)"
+    echo "18. Gaming Packages"
+    echo "19. Git and GitHub Desktop"
+    echo "20. Essential System Utilities"
+    echo "21. Visual Studio Code"
+    echo "22. JetBrains Toolbox"
+    echo "23. Warp Terminal (warp.dev)"
     echo
     echo "------- PERSONALIZATION ------"
     echo
-    echo "23. Install Global Theme (Plasma and GTK)"
-    echo "24. Install Posy's Cursors"
-    echo "25. Install Breeze Transparent Plasma Style"
+    echo "24. Install Global Theme (Plasma and GTK)"
+    echo "25. Install Posy's Cursors"
+    echo "26. Install Breeze Transparent Plasma Style"
     echo
     echo "------------------------------"
     echo
@@ -222,34 +223,37 @@ handle_input() {
         15)
             sw_install_tweaks 'SysAutoUpdate'
             ;;
-        16)
-            sw_install_tweaks 'zsh'
+        16) 
+            sw_install_tweaks 'Tasks'
             ;;
         17)
-            sw_install_packages 'Gaming'
+            sw_install_tweaks 'zsh'
             ;;
         18)
-            sw_install_packages 'GitHubDesktop'
+            sw_install_packages 'Gaming'
             ;;
         19)
-            sw_install_packages 'SysUtilities'
+            sw_install_packages 'GitHubDesktop'
             ;;
         20)
-            sw_install_packages 'VSCode'
+            sw_install_packages 'SysUtilities'
             ;;
         21)
-            sw_install_packages 'JetBrainsToolbox'
+            sw_install_packages 'VSCode'
             ;;
         22)
-            sw_install_packages 'WarpTerminal'
+            sw_install_packages 'JetBrainsToolbox'
             ;;
         23)
-            sw_install_personalization 'GlobalTheme'
+            sw_install_packages 'WarpTerminal'
             ;;
         24)
-            sw_install_personalization 'PosysCursors'
+            sw_install_personalization 'GlobalTheme'
             ;;
         25)
+            sw_install_personalization 'PosysCursors'
+            ;;
+        26)
             sw_install_personalization 'BreezeTransparent'
             ;;
         ?)
