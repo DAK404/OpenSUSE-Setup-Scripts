@@ -16,9 +16,9 @@ fi
 #
 ##########################################
 
-SCRIPT_VERSION="2.1.0"
+SCRIPT_VERSION="2.1.1"
 INTERNET_CONNECTION=false
-SCRIPT_PATH="."
+SCRIPT_PATH="https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main"
 
 BROWSER_TYPE="NONE"
 CODECS_TYPE="NONE"
@@ -262,7 +262,7 @@ handle_input() {
 }
 
 # Check internet connection
-#check_internet_connection
+check_internet_connection
 
 if [ $# -eq 0 ]; then
     # Main loop
