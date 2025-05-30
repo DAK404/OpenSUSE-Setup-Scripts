@@ -18,7 +18,7 @@ fi
 
 SCRIPT_VERSION="2.1.0"
 INTERNET_CONNECTION=false
-SCRIPT_PATH="https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main"
+SCRIPT_PATH="."
 
 BROWSER_TYPE="NONE"
 CODECS_TYPE="NONE"
@@ -139,23 +139,22 @@ display_menu()
     echo "13. Tweak Firewall Rules for mDNS"
     echo "14. Install and Configure openRGB"
     echo "15. Install Monthly Automatic System Updates"
-    echo "16. Install Tasks"
-    echo "17. Install zsh and Oh-My-Zsh!"
+    echo "16. Install zsh and Oh-My-Zsh!"
     echo
     echo "---- PACKAGE INSTALLATION ----"
     echo
-    echo "18. Gaming Packages"
-    echo "19. Git and GitHub Desktop"
-    echo "20. Essential System Utilities"
-    echo "21. Visual Studio Code"
-    echo "22. JetBrains Toolbox"
-    echo "23. Warp Terminal (warp.dev)"
+    echo "17. Gaming Packages"
+    echo "18. Git and GitHub Desktop"
+    echo "19. Essential System Utilities"
+    echo "20. Visual Studio Code"
+    echo "21. JetBrains Toolbox"
+    echo "22. Warp Terminal (warp.dev)"
     echo
     echo "------- PERSONALIZATION ------"
     echo
-    echo "24. Install Global Theme (Plasma and GTK)"
-    echo "25. Install Posy's Cursors"
-    echo "26. Install Breeze Transparent Plasma Style"
+    echo "23. Install Global Theme (Plasma and GTK)"
+    echo "24. Install Posy's Cursors"
+    echo "25. Install Breeze Transparent Plasma Style"
     echo
     echo "------------------------------"
     echo
@@ -223,37 +222,34 @@ handle_input() {
         15)
             sw_install_tweaks 'SysAutoUpdate'
             ;;
-        16) 
-            sw_install_tweaks 'Tasks'
-            ;;
-        17)
+        16)
             sw_install_tweaks 'zsh'
             ;;
-        18)
+        17)
             sw_install_packages 'Gaming'
             ;;
-        19)
+        18)
             sw_install_packages 'GitHubDesktop'
             ;;
-        20)
+        19)
             sw_install_packages 'SysUtilities'
             ;;
-        21)
+        20)
             sw_install_packages 'VSCode'
             ;;
-        22)
+        21)
             sw_install_packages 'JetBrainsToolbox'
             ;;
-        23)
+        22)
             sw_install_packages 'WarpTerminal'
             ;;
-        24)
+        23)
             sw_install_personalization 'GlobalTheme'
             ;;
-        25)
+        24)
             sw_install_personalization 'PosysCursors'
             ;;
-        26)
+        25)
             sw_install_personalization 'BreezeTransparent'
             ;;
         ?)
@@ -266,13 +262,13 @@ handle_input() {
 }
 
 # Check internet connection
-check_internet_connection
+#check_internet_connection
 
 if [ $# -eq 0 ]; then
     # Main loop
     while true; do
         display_menu
-        read -p "Enter your choice (1-23): " choice
+        read -p "Enter your choice (1-25): " choice
         handle_input $choice
         read -p "Press Enter to continue..."
     done

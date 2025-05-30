@@ -35,7 +35,7 @@ This is the changelog since version 2.0.0. Each section contains divisions for e
 + Added zsh installation and customization script
 + Made adjustments to guided installer to fit new items
 + Added `CREDITS.MD` file
-+ Added a Task tweak, for login and logout tasks
++ Added a Task script, for login, logout and other tasks
 
 ### Modifications
 
