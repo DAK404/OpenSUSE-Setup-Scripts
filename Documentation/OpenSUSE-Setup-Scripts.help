@@ -215,7 +215,14 @@ to write code with IntelliSense autocomplete features. It is used mainly by deve
 
 ---------------------------------------------------------------
 
-2D.5. Warp Terminal (warp.dev)
+2D.5. JetBrains Toolbox
+
+This script will download and install JetBrains Toolbox on the system. JetBrains Toolbox App lets you install JetBrains IDEs 
+like Rider.
+
+---------------------------------------------------------------
+
+2D.6. Warp Terminal (warp.dev)
 
 Warp Terminal is an application that is AI powered terminal. It is intuitive and can execute workflows easily.
 

@@ -1,6 +1,6 @@
 # OpenSUSE Tumbleweed Setup Scripts
 
-**Now with improved code in version 2.1.0 and beyond!**
+**Now with improved code in version 2.1.1 and beyond!**
 
 This is a set of scripts that can help in configuring and setting up repositories, codecs, packages and configure applications or systems for daily use.
 
@@ -20,12 +20,16 @@ Please note that the `Testing` branch is always ahead of the `main` branch. Ther
 
 ## IMPORTANT
 
-I would like to highlight 2 of the forks that is significant.
+The website is made by [wz790](https://github.com/wz790)!
+
+I would like to highlight 2 significant forks.
 
 1. N Shamsi's Fork: [https://github.com/n-shamsi/OpenSUSE-Setup-Scripts](https://github.com/n-shamsi/OpenSUSE-Setup-Scripts) - This is a modified version of the scripts for OpenSUSE Leap versions.
 2. Percy Panelo's Fork: [https://github.com/PercyPanleo/OpenSUSE-Setup-Scripts](https://github.com/PercyPanleo/OpenSUSE-Setup-Scripts) - This contains an alternative fix for Gigabyte sleep issues. If the version provided does not work as expected, please use Percy Panelo's version.
 
 A big thank you to you both for contributing to this project!
+
+Please see the [CREDITS](CREDITS.MD) file to check-out all the contributors to the project!
 
 ## Quick Run
 
@@ -60,10 +64,12 @@ The `OpenSUSE-Installation.sh` script may require a few arguments as per your us
 | Tweak           | mDNSFirewallRules         | Adds mDNS to public and external zones in the firewall     |
 | Tweak           | OpenRGB                   | Installs and sets up openRGB                               |
 | Tweak           | SysAutoUpdate             | Adds service to update system on 1st day of every month    |
+| Tweak           | zsh                       | Installs zsh and Oh-My-Zsh packages                        |
 | Pkg             | Gaming                    | Installs Gaming components to the system                   |
 | Pkg             | GitHubDesktop             | Installs GitHub Desktop and Git                            |
 | Pkg             | SysUtilities              | Installs Essential System Utilities                        |
 | Pkg             | VSCode                    | Installs Visual Studio Code                                |
+| Pkg             | JetBrains Toolbox         | Installs JetBrains Toolbox                                 |
 | Pkg             | WarpTerminal              | Installs Warp Terminal (warp.dev)                          |
 | Personalization | BreezeTransparent         | Installs Breeze Transparent Plasma Style                   |
 | Personalization | GlobalTheme               | Installs Colloid KDE Plasma, GTK and Icon themes           |

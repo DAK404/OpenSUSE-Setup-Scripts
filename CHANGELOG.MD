@@ -5,23 +5,42 @@ This is the changelog since version 2.0.0. Each section contains divisions for e
 # Table of Contents
 - [Changelog](#changelog)
 - [Table of Contents](#table-of-contents)
-  - [2.1.0](#210)
+  - [2.1.1](#211)
     - [Additions](#additions)
     - [Modifications](#modifications)
-    - [Deletions](#deletions)
-  - [2.0.2](#202)
+  - [2.1.0](#210)
     - [Additions](#additions-1)
     - [Modifications](#modifications-1)
-    - [Deletions](#deletions-1)
-  - [2.0.1](#201)
+    - [Deletions](#deletions)
+  - [2.0.2](#202)
     - [Additions](#additions-2)
     - [Modifications](#modifications-2)
-  - [2.0.0](#200)
+    - [Deletions](#deletions-1)
+  - [2.0.1](#201)
     - [Additions](#additions-3)
     - [Modifications](#modifications-3)
+  - [2.0.0](#200)
+    - [Additions](#additions-4)
+    - [Modifications](#modifications-4)
     - [Deletions](#deletions-2)
 
 ---
+
+## 2.1.1
+
+### Additions
+
++ Added JetBrains Toolbox installation Script. Thanks, [wz790](https://github.com/wz790)!
++ Added an awesome website. Thanks, [wz790](https://github.com/wz790)!
++ Added zsh installation and customization script
++ Made adjustments to guided installer to fit new items
++ Added `CREDITS.MD` file
++ Added a Task script, for login, logout and other tasks
+
+### Modifications
+
+* Updated the documentation
+* Updated Missings Fonts with to include `symbols-only-nerd-fonts` package
 
 ## 2.1.0
 
