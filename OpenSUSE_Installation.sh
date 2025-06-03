@@ -16,7 +16,7 @@ fi
 #
 ##########################################
 
-SCRIPT_VERSION="2.1.1"
+SCRIPT_VERSION="2.1.2"
 INTERNET_CONNECTION=false
 SCRIPT_PATH="https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main"
 
@@ -51,13 +51,29 @@ scriptlet_runner()
     local scriptlet_name="$1"
     local scriptlet_path="$SCRIPT_PATH/Scriptlets/$scriptlet_name.sh"
 
-    if [ ! -f "$scriptlet_path" ]; then
-        echo "[ ERROR ] Scriptlet $scriptlet_name not found at $scriptlet_path!"
-        return 1
+    echo "[ INFO ] Running scriptlet: $scriptlet_name"
+
+    if [ "$INTERNET_CONNECTION" = true ]; then
+        echo "[ INFO ] Fetching from remote: $scriptlet_path"
+        if curl -fsSL "$scriptlet_path" | bash; then
+            echo "[ SUCCESS ] Remote scriptlet executed successfully."
+            return 0
+        else
+            echo "[ WARNING ] Failed to fetch/execute remote script. Trying local fallback..."
+        fi
     fi
 
-    sudo bash "$scriptlet_path"
+    # Fallback: try to run from local path
+    local fallback_path="./Scriptlets/$scriptlet_name.sh"
+    if [ -f "$fallback_path" ]; then
+        echo "[ INFO ] Running local scriptlet: $fallback_path"
+        bash "$fallback_path"
+    else
+        echo "[ ERROR ] Scriptlet not found locally at $fallback_path"
+        return 1
+    fi
 }
+
 
 # Function to install browser packages
 sw_install_browers()

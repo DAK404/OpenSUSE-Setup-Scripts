@@ -5,26 +5,35 @@ This is the changelog since version 2.0.0. Each section contains divisions for e
 # Table of Contents
 - [Changelog](#changelog)
 - [Table of Contents](#table-of-contents)
+  - [2.1.2](#212)
+    - [Modifications](#modifications)
   - [2.1.1](#211)
     - [Additions](#additions)
-    - [Modifications](#modifications)
+    - [Modifications](#modifications-1)
   - [2.1.0](#210)
     - [Additions](#additions-1)
-    - [Modifications](#modifications-1)
+    - [Modifications](#modifications-2)
     - [Deletions](#deletions)
   - [2.0.2](#202)
     - [Additions](#additions-2)
-    - [Modifications](#modifications-2)
+    - [Modifications](#modifications-3)
     - [Deletions](#deletions-1)
   - [2.0.1](#201)
     - [Additions](#additions-3)
-    - [Modifications](#modifications-3)
+    - [Modifications](#modifications-4)
   - [2.0.0](#200)
     - [Additions](#additions-4)
-    - [Modifications](#modifications-4)
+    - [Modifications](#modifications-5)
     - [Deletions](#deletions-2)
 
 ---
+
+## 2.1.2
+
+### Modifications
+
++ Fix the script installation function when using online mode
++ Add a fallback to check if the script (if unreachable) can be executed locally 
 
 ## 2.1.1
 
