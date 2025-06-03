@@ -16,7 +16,7 @@ fi
 #
 ##########################################
 
-SCRIPT_VERSION="2.1.1"
+SCRIPT_VERSION="2.1.2"
 INTERNET_CONNECTION=false
 SCRIPT_PATH="https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main"
 
