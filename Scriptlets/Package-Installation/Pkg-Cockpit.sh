@@ -12,7 +12,7 @@
 ############################################################
 
 # Install Cockpit and Myrlyn packages
-zypper in cockpit myrlyn
+zypper in patterns-cockpit myrlyn
 
 # Enable cockpit
 systemctl enable --now cockpit.socket
@@ -21,4 +21,4 @@ systemctl enable --now cockpit.socket
 sudo firewall-cmd --permanent --zone=public --add-service=cockpit
 sudo firewall-cmd --reload
 
-echo "Now, go to https://localhost:9090 to access Cockpit"
+echo "Now, go to https://localhost:9090 to access Cockpit."
