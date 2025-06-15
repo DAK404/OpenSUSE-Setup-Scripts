@@ -1,6 +1,6 @@
 # OpenSUSE Tumbleweed Setup Scripts
 
-**Now with improved code in version 2.1.1 and beyond!**
+**Now with improved code in version 2.1.0 and beyond!**
 
 This is a set of scripts that can help in configuring and setting up repositories, codecs, packages and configure applications or systems for daily use.
 
@@ -65,6 +65,7 @@ The `OpenSUSE-Installation.sh` script may require a few arguments as per your us
 | Tweak           | OpenRGB                   | Installs and sets up openRGB                               |
 | Tweak           | SysAutoUpdate             | Adds service to update system on 1st day of every month    |
 | Tweak           | zsh                       | Installs zsh and Oh-My-Zsh packages                        |
+| Pkg             | Cockpit                   | Installs Cockpit and Myrlyn packages                       |
 | Pkg             | Gaming                    | Installs Gaming components to the system                   |
 | Pkg             | GitHubDesktop             | Installs GitHub Desktop and Git                            |
 | Pkg             | SysUtilities              | Installs Essential System Utilities                        |
