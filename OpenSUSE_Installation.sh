@@ -172,6 +172,7 @@ display_menu()
     echo "24. Install Global Theme (Plasma and GTK)"
     echo "25. Install Posy's Cursors"
     echo "26. Install Breeze Transparent Plasma Style"
+    echo "27. Install KDE Plasma Shader Wallpaper (Live Wallpaper)"
     echo
     echo "------------------------------"
     echo
@@ -272,6 +273,9 @@ handle_input() {
         26)
             sw_install_personalization 'BreezeTransparent'
             ;;
+        27)
+            sw_install_personalization 'ShaderWallpaper'
+            ;;
         ?)
             script_helpfile
             ;;
@@ -288,7 +292,7 @@ if [ $# -eq 0 ]; then
     # Main loop
     while true; do
         display_menu
-        read -p "Enter your choice (1-26): " choice
+        read -p "Enter your choice (1-27): " choice
         handle_input $choice
         read -p "Press Enter to continue..."
     done
