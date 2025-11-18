@@ -42,6 +42,7 @@ This is the changelog since version 2.0.0. Each section contains divisions for e
 ### Modifications
 
 * Modified Personalization scriptlets to use git clone rather than using curl or wget
+* Added -y flag to the Cockpit installation script
 * Changed Global Theme to MacTahoe by vinceliuice (Thanks!)
 
 ## 2.1.3
