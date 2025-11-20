@@ -17,10 +17,10 @@ Description=Workaround for Gigabyte BIOS sleep/wakeup bug
 
 [Service]
 Type=oneshot
-ExecStart = /bin/sh -c 'if grep 'GPP0' /proc/acpi/wakeup | grep -q 'enabled'; then echo 'GPP0' > /proc/acpi/wakeup; fi'
+ExecStart=/bin/sh -c 'if grep 'GPP0' /proc/acpi/wakeup | grep -q 'enabled'; then echo 'GPP0' > /proc/acpi/wakeup; fi'
 
 [Install]
-WantedBy = multi-user.target
+WantedBy=multi-user.target
 EOL
 
 systemctl daemon-reload && systemctl enable biosWakeupWorkaround.service
