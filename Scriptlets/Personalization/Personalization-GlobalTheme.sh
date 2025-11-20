@@ -22,62 +22,65 @@ zypper in -y kvantum-manager gtk2-engine-murrine sassc
 # ---------------------------------------------------------- #
 
 # Print information message
-echo "[ INFORMATION ] Installing: KDE & Kvantum Theme"
+echo "[ INFORMATION ] Installing: MacTahoe KDE & Kvantum Theme"
 
-# Download the Colloid Theme (Thanks Vinceliuice!)
-curl -LJO https://github.com/vinceliuice/Colloid-kde/archive/refs/heads/main.zip
+# Download the MacTahoe KDE Theme using git clone (Thanks Vinceliuice!) See notes
+git clone https://github.com/vinceliuice/MacTahoe-kde.git
 
-# Unzip the downloaded file
-unzip ./Colloid-kde-main.zip
-
-# Install the KDE and Kvantum theme for ALL users (remove if you want to install to current user only)
-sh ./Colloid-kde-main/install.sh
+# Install the theme system-wide using the provided installer
+bash ./MacTahoe-kde/install.sh
 
 # Delete the extracted directory to save space
-rm -rf ./Colloid-kde-main
+rm -rf ./MacTahoe-kde
 
 # ---------------------------------------------------------- #
 
 # Print information message
-echo "[ INFORMATION ] Installing: Colloid GTK Theme"
+echo "[ INFORMATION ] Installing: MacTahoe GTK Theme"
 
-# Download the Colloid Theme (Thanks Vinceliuice!)
-curl -LJO https://github.com/vinceliuice/Colloid-gtk-theme/archive/refs/heads/main.zip
+# Download the MacTahoe GTK Theme using git clone (Thanks Vinceliuice!) See notes
+git clone https://github.com/vinceliuice/MacTahoe-gtk-theme.git
 
-# Unzip the downloaded file
-unzip ./Colloid-gtk-theme-main.zip
-
-# Install the GTK theme
-sh ./Colloid-gtk-theme-main/install.sh
+# Install the theme using the provided installer
+bash ./MacTahoe-gtk-theme/install.sh
 
 # Delete the extracted directory to save space
-rm -rf ./Colloid-gtk-theme-main
+rm -rf ./MacTahoe-gtk-theme
 
 # ---------------------------------------------------------- #
 
 # Print information message
-echo "[ INFORMATION ] Installing: Colloid Icon Theme"
+echo "[ INFORMATION ] Installing: MacTahoe Icon Theme"
 
-# Download the Colloid Icon Theme (Thanks Vinceliuice!)
-curl -LJO https://github.com/vinceliuice/Colloid-icon-theme/archive/refs/heads/main.zip
+# Download the MacTahoe KDE Theme using git clone (Thanks Vinceliuice!) See notes
+git clone https://github.com/vinceliuice/MacTahoe-icon-theme.git
 
-# Unzip the downloaded file
-unzip ./Colloid-icon-theme-main.zip
-
-# Install the icon theme
-sh ./Colloid-icon-theme-main/install.sh
+# Install the theme using the provided installer
+bash ./MacTahoe-icon-theme/install.sh
 
 # Delete the extracted directory to save space
-rm -rf ./Colloid-icon-theme-main
-
-# ---------------------------------------------------------- #
-
-# Print information message
-echo "[ INFORMATION ] Cleaning Up ZIP Files"
-
-# Remove all zip files in the directory to clean up
-rm -rf ./*.zip
+rm -rf ./MacTahoe-icon-theme
 
 # ---------------------------------------------------------- #
 
 echo "[ INFORMATION ] Global Theme Installed"
+
+##############################################################
+# NOTES
+#
+# TL;DR: DO NOT USE CURL OR WGET TO DOWNLOAD THE REPO AND TO
+# INSTALL THE THEMES. THAT PROCESS DOES NOT WORK RELIABLY!
+#
+# Please see the below discussion for the same:
+# https://github.com/vinceliuice/MacTahoe-icon-theme/issues/14
+#
+# ------------------------------------------------------------
+#
+# Switched from curl to git clone because a few themes do not
+# work well when downloading it as a zip file. These issues
+# are not found when the repo is cloned then installed. This
+# switch in logic also helps in reducing the overall file 
+# sizes and avoids downloading a zip file, installing the 
+# theme and then removing it.
+#
+##############################################################

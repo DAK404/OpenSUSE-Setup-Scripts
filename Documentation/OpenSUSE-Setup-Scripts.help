@@ -237,7 +237,7 @@ skip installing these should they have their own personalization preferences.
 
 2E.1. Global Theme (KDE and GTK)
 
-This script shall download and install the Colloid Plasma Theme, Colloid GTK theme and Colloid Icon packs (Thanks, Vinceliuice!)
+This script shall download and install the MacTahoe Plasma, GTK theme and Icon packs (Thanks, Vinceliuice!)
 The themes give a uniform look to the system, giving it a clean look across components of the OS.
 
 ---------------------------------------------------------------
@@ -253,6 +253,13 @@ gives a clean set of cursors to use.
 
 This makes the panels and the menu elements transparent for the default Breeze theme (Thanks Gumbachi!)
 The user may want this should they wish to have an "Aero" style of blurring effects.
+
+---------------------------------------------------------------
+
+2E.4. Shader Wallpaper
+
+This installs the KDE Plasma's "Live" wallpaper as seen on Android devices (Thanks y4my4my4m!)
+Please check out the repository for the specifics of the wallpaper.
 
 -------------------------------------------------------------------------------------------------------------------------------
 

@@ -12,7 +12,7 @@
 ############################################################
 
 # Install Cockpit and Myrlyn packages
-zypper in patterns-cockpit myrlyn
+zypper in -y patterns-cockpit myrlyn
 
 # Enable cockpit
 systemctl enable --now cockpit.socket

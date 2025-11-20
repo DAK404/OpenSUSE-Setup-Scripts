@@ -15,18 +15,12 @@
 echo "[ INFORMATION ] Installing: Breeze Transparent Plasma Style"
 
 # Download the Breeze Transparent Plasma Style (Thanks Gumbachi!)
-curl -LJO https://github.com/Gumbachi/Breeze-Transparent/archive/refs/heads/main.zip
-
-# Unzip the downloaded file
-unzip ./Breeze-Transparent-main.zip
+git clone https://github.com/Gumbachi/Breeze-Transparent.git
 
 # Install the Plasma Style by copying it to the appropriate directory
-cp -r ./Breeze-Transparent-main /usr/share/plasma/desktoptheme/
+cp -r ./Breeze-Transparent /usr/share/plasma/desktoptheme/
 
 # Delete the extracted directory to save space
-rm -rf ./Breeze-Transparent-main
-
-# Delete the downloaded zip file to clean up
-rm -rf ./Breeze-Transparent-main.zip
+rm -rf ./Breeze-Transparent
 
 echo "[ INFORMATION ] Breeze Transparent Plasma Style Installed"

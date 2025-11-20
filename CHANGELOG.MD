@@ -5,30 +5,45 @@ This is the changelog since version 2.0.0. Each section contains divisions for e
 # Table of Contents
 - [Changelog](#changelog)
 - [Table of Contents](#table-of-contents)
-  - [2.1.3](#213)
+  - [2.1.4](#214)
     - [Additions](#additions)
-  - [2.1.2](#212)
     - [Modifications](#modifications)
-  - [2.1.1](#211)
+  - [2.1.3](#213)
     - [Additions](#additions-1)
+  - [2.1.2](#212)
     - [Modifications](#modifications-1)
-  - [2.1.0](#210)
+  - [2.1.1](#211)
     - [Additions](#additions-2)
     - [Modifications](#modifications-2)
-    - [Deletions](#deletions)
-  - [2.0.2](#202)
+  - [2.1.0](#210)
     - [Additions](#additions-3)
     - [Modifications](#modifications-3)
-    - [Deletions](#deletions-1)
-  - [2.0.1](#201)
+    - [Deletions](#deletions)
+  - [2.0.2](#202)
     - [Additions](#additions-4)
     - [Modifications](#modifications-4)
-  - [2.0.0](#200)
+    - [Deletions](#deletions-1)
+  - [2.0.1](#201)
     - [Additions](#additions-5)
     - [Modifications](#modifications-5)
+  - [2.0.0](#200)
+    - [Additions](#additions-6)
+    - [Modifications](#modifications-6)
     - [Deletions](#deletions-2)
 
 ---
+
+## 2.1.4
+
+### Additions
+
++ Added KDE Plasma Shader Wallpaper download and install scriptlet
+
+### Modifications
+
+* Modified Personalization scriptlets to use git clone rather than using curl or wget
+* Added -y flag to the Cockpit installation script
+* Changed Global Theme to MacTahoe by vinceliuice (Thanks!)
 
 ## 2.1.3
 
@@ -40,8 +55,8 @@ This is the changelog since version 2.0.0. Each section contains divisions for e
 
 ### Modifications
 
-+ Fix the script installation function when using online mode
-+ Add a fallback to check if the script (if unreachable) can be executed locally 
+* Fix the script installation function when using online mode
+* Add a fallback to check if the script (if unreachable) can be executed locally 
 
 ## 2.1.1
 
@@ -63,9 +78,9 @@ This is the changelog since version 2.0.0. Each section contains divisions for e
 
 ### Additions
 
-* Added a Guided Installation option
-* Added Tweak to configure firewall rules for mDNS
-* Added a help file to help users understand the script features
++ Added a Guided Installation option
++ Added Tweak to configure firewall rules for mDNS
++ Added a help file to help users understand the script features
 + Added Google Chrome, Brave, MS Edge and Zen Browser installation scripts
 + Added option to install codecs from Packman Essentials
 + Added a fix to turn on NumLock in SDDM

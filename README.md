@@ -73,8 +73,9 @@ The `OpenSUSE-Installation.sh` script may require a few arguments as per your us
 | Pkg             | JetBrains Toolbox         | Installs JetBrains Toolbox                                 |
 | Pkg             | WarpTerminal              | Installs Warp Terminal (warp.dev)                          |
 | Personalization | BreezeTransparent         | Installs Breeze Transparent Plasma Style                   |
-| Personalization | GlobalTheme               | Installs Colloid KDE Plasma, GTK and Icon themes           |
+| Personalization | GlobalTheme               | Installs MacTahoe KDE Plasma, GTK and Icon themes          |
 | Personalization | PosysCursors              | Installs Posy's Cursors                                    |
+| Personalization | ShaderWallpaper           | Installs Shader (Live) Wallpapers in KDE Plasma            |
 
 
 For using the arguments, use the following syntax:
