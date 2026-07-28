@@ -151,29 +151,28 @@ display_menu()
     echo "9. Install ICM Profiles"
     echo "10. Install Missing Fonts"
     echo "11. SDDM Number Lock Fix"
-    echo "12. Tweak Aliases"
-    echo "13. Tweak Firewall Rules for mDNS"
-    echo "14. Fix Startup Sound (Enable Pipewire User Service)"
-    echo "15. Install and Configure openRGB"
-    echo "16. Install Monthly Automatic System Updates"
-    echo "17. Install zsh and Oh-My-Zsh!"
+    echo "12. Tweak Firewall Rules for mDNS"
+    echo "13. Fix Startup Sound (Enable Pipewire User Service)"
+    echo "14. Install and Configure openRGB"
+    echo "15. Install Monthly Automatic System Updates"
+    echo "16. Install zsh and Oh-My-Zsh!"
     echo
     echo "---- PACKAGE INSTALLATION ----"
     echo
-    echo "18. Cockpit and Myrlyn"
-    echo "19. Gaming Packages"
-    echo "20. Git and GitHub Desktop Plus"
-    echo "21. Essential System Utilities"
-    echo "22. Visual Studio Code"
-    echo "23. JetBrains Toolbox"
-    echo "24. Warp Terminal (warp.dev)"
+    echo "17. Cockpit and Myrlyn"
+    echo "18. Gaming Packages"
+    echo "19. Git and GitHub Desktop Plus"
+    echo "20. Essential System Utilities"
+    echo "21. Visual Studio Code"
+    echo "22. JetBrains Toolbox"
+    echo "23. Warp Terminal (warp.dev)"
     echo
     echo "------- PERSONALIZATION ------"
     echo
-    echo "25. Install Global Theme (Plasma and GTK)"
-    echo "26. Install Posy's Cursors"
-    echo "27. Install Breeze Transparent Plasma Style"
-    echo "28. Install KDE Plasma Shader Wallpaper (Live Wallpaper)"
+    echo "24. Install Global Theme (Plasma and GTK)"
+    echo "25. Install Posy's Cursors"
+    echo "26. Install Breeze Transparent Plasma Style"
+    echo "27. Install KDE Plasma Shader Wallpaper (Live Wallpaper)"
     echo
     echo "------------------------------"
     echo
@@ -230,54 +229,51 @@ handle_input() {
             sw_install_fixes 'SDDMNumLock'
             ;;
         12)
-            sw_install_tweaks 'Aliases'
-            ;;
-        13)
             sw_install_tweaks 'mDNSFirewallRules'
             ;;
-        14)
+        13)
             sw_install_tweaks 'StartupSound'
             ;;
-        15)
+        14)
             sw_install_tweaks 'OpenRGB'
             ;;
-        16)
+        15)
             sw_install_tweaks 'SysAutoUpdate'
             ;;
-        17)
+        16)
             sw_install_tweaks 'zsh'
             ;;
-        18)
+        17)
             sw_install_packages 'Cockpit'
             ;;
-        19)
+        18)
             sw_install_packages 'Gaming'
             ;;
-        20)
+        19)
             sw_install_packages 'GitHubDesktopPlus'
             ;;
-        21)
+        20)
             sw_install_packages 'SysUtilities'
             ;;
-        22)
+        21)
             sw_install_packages 'VSCode'
             ;;
-        23)
+        22)
             sw_install_packages 'JetBrainsToolbox'
             ;;
-        24)
+        23)
             sw_install_packages 'WarpTerminal'
             ;;
-        25)
+        24)
             sw_install_personalization 'GlobalTheme'
             ;;
-        26)
+        25)
             sw_install_personalization 'PosysCursors'
             ;;
-        27)
+        26)
             sw_install_personalization 'BreezeTransparent'
             ;;
-        28)
+        27)
             sw_install_personalization 'ShaderWallpaper'
             ;;
         ?)
