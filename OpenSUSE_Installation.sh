@@ -161,7 +161,7 @@ display_menu()
     echo
     echo "17. Cockpit and Myrlyn"
     echo "18. Gaming Packages"
-    echo "19. Git and GitHub Desktop"
+    echo "19. Git and GitHub Desktop Plus"
     echo "20. Essential System Utilities"
     echo "21. Visual Studio Code"
     echo "22. JetBrains Toolbox"
@@ -250,7 +250,7 @@ handle_input() {
             sw_install_packages 'Gaming'
             ;;
         19)
-            sw_install_packages 'GitHubDesktop'
+            sw_install_packages 'GitHubDesktopPlus'
             ;;
         20)
             sw_install_packages 'SysUtilities'
