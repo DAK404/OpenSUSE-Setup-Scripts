@@ -3,38 +3,32 @@
 This is the changelog since version 2.0.0. Each section contains divisions for each addition, modification and deletion. Please go through the commits to find specific versions of the script.
 
 # Table of Contents
-- [Changelog](#changelog)
-- [Table of Contents](#table-of-contents)
-  - [2.1.5](#215)
-    - [Additions](#additions)
-    - [Modifications](#modifications)
-  - [2.1.4](#214)
-    - [Additions](#additions)
-    - [Modifications](#modifications)
-  - [2.1.3](#213)
-    - [Additions](#additions-1)
-  - [2.1.2](#212)
-    - [Modifications](#modifications-1)
-  - [2.1.1](#211)
-    - [Additions](#additions-2)
-    - [Modifications](#modifications-2)
-  - [2.1.0](#210)
-    - [Additions](#additions-3)
-    - [Modifications](#modifications-3)
-    - [Deletions](#deletions)
-  - [2.0.2](#202)
-    - [Additions](#additions-4)
-    - [Modifications](#modifications-4)
-    - [Deletions](#deletions-1)
-  - [2.0.1](#201)
-    - [Additions](#additions-5)
-    - [Modifications](#modifications-5)
-  - [2.0.0](#200)
-    - [Additions](#additions-6)
-    - [Modifications](#modifications-6)
-    - [Deletions](#deletions-2)
+
+- [2.1.6](#216)
+- [2.1.5](#215)
+- [2.1.4](#214)
+- [2.1.3](#213)
+- [2.1.2](#212)
+- [2.1.1](#211)
+- [2.1.0](#210)
+- [2.0.2](#202)
+- [2.0.1](#201)
+- [2.0.0](#200)
 
 ---
+
+## 2.1.6
+
+### Modifications
+
+- Shorten the index in Changelog to just the release versions
+- Activated Startup Sound fix
+- Updated help documentation
+- Cleaned up entries
+
+### Deletions
+
+- Removed `Alias` scriptlet
 
 ## 2.1.5
 
