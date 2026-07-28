@@ -5,6 +5,9 @@ This is the changelog since version 2.0.0. Each section contains divisions for e
 # Table of Contents
 - [Changelog](#changelog)
 - [Table of Contents](#table-of-contents)
+  - [2.1.5](#215)
+    - [Additions](#additions)
+    - [Modifications](#modifications)
   - [2.1.4](#214)
     - [Additions](#additions)
     - [Modifications](#modifications)
@@ -32,6 +35,18 @@ This is the changelog since version 2.0.0. Each section contains divisions for e
     - [Deletions](#deletions-2)
 
 ---
+
+## 2.1.5
+
+### Additions
+
++ Add `fetchmsttfonts` to font fix scriptlet
++ Add Startup sound fix by enabling Pipewire user services
+
+### Modifications
+
+* Replace Discord with Vencord
+* Rename and replace GitHub Desktop with GitHub Desktop Plus
 
 ## 2.1.4
 

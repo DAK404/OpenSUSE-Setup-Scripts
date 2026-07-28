@@ -11,6 +11,6 @@
 #
 ############################################################
 
-zypper in -y symbols-only-nerd-fonts google-noto-*
+zypper in -y symbols-only-nerd-fonts google-noto-* fetchmsttfonts
 
 echo "[ INFORMATION ] Missing Fonts Installed"

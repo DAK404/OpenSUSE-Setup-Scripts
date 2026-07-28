@@ -67,7 +67,7 @@ The `OpenSUSE-Installation.sh` script may require a few arguments as per your us
 | Tweak           | zsh                       | Installs zsh and Oh-My-Zsh packages                        |
 | Pkg             | Cockpit                   | Installs Cockpit and Myrlyn packages                       |
 | Pkg             | Gaming                    | Installs Gaming components to the system                   |
-| Pkg             | GitHubDesktop             | Installs GitHub Desktop and Git                            |
+| Pkg             | GitHubDesktopPlus         | Installs GitHub Desktop Plus and Git                       |
 | Pkg             | SysUtilities              | Installs Essential System Utilities                        |
 | Pkg             | VSCode                    | Installs Visual Studio Code                                |
 | Pkg             | JetBrains Toolbox         | Installs JetBrains Toolbox                                 |
