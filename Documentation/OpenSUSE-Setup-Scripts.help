@@ -146,10 +146,13 @@ time the system boots.
 
 ---------------------------------------------------------------
 
-2C.5. Tweak Aliases
+2C.5. Fix Startup Sound (Enable Pipewire User Service)
 
-Certain aliases can be installed to the system to help in administrating the system. This script shall install the aliases to 
-the `/etc/bash.bashrc.local` file
+In OpenSUSE Tumbleweed, the Pipewire user service is not enabled, which causes the startup sound to not play. This script will
+enable the Pipewire service to allow the startup sound to play correctly.
+
+(PS. You may want to take a look at my PS5 Sound Theme for KDE Plasma 6
+Link: https://github.com/DAK404/PS5-Plasma-Soundtheme)
 
 ---------------------------------------------------------------
 
