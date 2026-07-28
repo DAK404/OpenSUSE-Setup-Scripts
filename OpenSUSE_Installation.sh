@@ -16,7 +16,7 @@ fi
 #
 ##########################################
 
-SCRIPT_VERSION="2.1.5"
+SCRIPT_VERSION="2.1.6"
 INTERNET_CONNECTION=false
 SCRIPT_PATH="https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main"
 
@@ -153,26 +153,27 @@ display_menu()
     echo "11. SDDM Number Lock Fix"
     echo "12. Tweak Aliases"
     echo "13. Tweak Firewall Rules for mDNS"
-    echo "14. Install and Configure openRGB"
-    echo "15. Install Monthly Automatic System Updates"
-    echo "16. Install zsh and Oh-My-Zsh!"
+    echo "14. Fix Startup Sound (Enable Pipewire User Service)"
+    echo "15. Install and Configure openRGB"
+    echo "16. Install Monthly Automatic System Updates"
+    echo "17. Install zsh and Oh-My-Zsh!"
     echo
     echo "---- PACKAGE INSTALLATION ----"
     echo
-    echo "17. Cockpit and Myrlyn"
-    echo "18. Gaming Packages"
-    echo "19. Git and GitHub Desktop Plus"
-    echo "20. Essential System Utilities"
-    echo "21. Visual Studio Code"
-    echo "22. JetBrains Toolbox"
-    echo "23. Warp Terminal (warp.dev)"
+    echo "18. Cockpit and Myrlyn"
+    echo "19. Gaming Packages"
+    echo "20. Git and GitHub Desktop Plus"
+    echo "21. Essential System Utilities"
+    echo "22. Visual Studio Code"
+    echo "23. JetBrains Toolbox"
+    echo "24. Warp Terminal (warp.dev)"
     echo
     echo "------- PERSONALIZATION ------"
     echo
-    echo "24. Install Global Theme (Plasma and GTK)"
-    echo "25. Install Posy's Cursors"
-    echo "26. Install Breeze Transparent Plasma Style"
-    echo "27. Install KDE Plasma Shader Wallpaper (Live Wallpaper)"
+    echo "25. Install Global Theme (Plasma and GTK)"
+    echo "26. Install Posy's Cursors"
+    echo "27. Install Breeze Transparent Plasma Style"
+    echo "28. Install KDE Plasma Shader Wallpaper (Live Wallpaper)"
     echo
     echo "------------------------------"
     echo
@@ -235,45 +236,48 @@ handle_input() {
             sw_install_tweaks 'mDNSFirewallRules'
             ;;
         14)
-            sw_install_tweaks 'OpenRGB'
+            sw_install_tweaks 'StartupSound'
             ;;
         15)
-            sw_install_tweaks 'SysAutoUpdate'
+            sw_install_tweaks 'OpenRGB'
             ;;
         16)
-            sw_install_tweaks 'zsh'
+            sw_install_tweaks 'SysAutoUpdate'
             ;;
         17)
-            sw_install_packages 'Cockpit'
+            sw_install_tweaks 'zsh'
             ;;
         18)
-            sw_install_packages 'Gaming'
+            sw_install_packages 'Cockpit'
             ;;
         19)
-            sw_install_packages 'GitHubDesktopPlus'
+            sw_install_packages 'Gaming'
             ;;
         20)
-            sw_install_packages 'SysUtilities'
+            sw_install_packages 'GitHubDesktopPlus'
             ;;
         21)
-            sw_install_packages 'VSCode'
+            sw_install_packages 'SysUtilities'
             ;;
         22)
-            sw_install_packages 'JetBrainsToolbox'
+            sw_install_packages 'VSCode'
             ;;
         23)
-            sw_install_packages 'WarpTerminal'
+            sw_install_packages 'JetBrainsToolbox'
             ;;
         24)
-            sw_install_personalization 'GlobalTheme'
+            sw_install_packages 'WarpTerminal'
             ;;
         25)
-            sw_install_personalization 'PosysCursors'
+            sw_install_personalization 'GlobalTheme'
             ;;
         26)
-            sw_install_personalization 'BreezeTransparent'
+            sw_install_personalization 'PosysCursors'
             ;;
         27)
+            sw_install_personalization 'BreezeTransparent'
+            ;;
+        28)
             sw_install_personalization 'ShaderWallpaper'
             ;;
         ?)
