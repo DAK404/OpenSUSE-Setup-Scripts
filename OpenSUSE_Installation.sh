@@ -16,7 +16,7 @@ fi
 #
 ##########################################
 
-SCRIPT_VERSION="2.1.5"
+SCRIPT_VERSION="2.1.6"
 INTERNET_CONNECTION=false
 SCRIPT_PATH="https://raw.githubusercontent.com/DAK404/OpenSUSE-Setup-Scripts/main"
 
@@ -151,8 +151,8 @@ display_menu()
     echo "9. Install ICM Profiles"
     echo "10. Install Missing Fonts"
     echo "11. SDDM Number Lock Fix"
-    echo "12. Tweak Aliases"
-    echo "13. Tweak Firewall Rules for mDNS"
+    echo "12. Tweak Firewall Rules for mDNS"
+    echo "13. Fix Startup Sound (Enable Pipewire User Service)"
     echo "14. Install and Configure openRGB"
     echo "15. Install Monthly Automatic System Updates"
     echo "16. Install zsh and Oh-My-Zsh!"
@@ -229,10 +229,10 @@ handle_input() {
             sw_install_fixes 'SDDMNumLock'
             ;;
         12)
-            sw_install_tweaks 'Aliases'
+            sw_install_tweaks 'mDNSFirewallRules'
             ;;
         13)
-            sw_install_tweaks 'mDNSFirewallRules'
+            sw_install_tweaks 'StartupSound'
             ;;
         14)
             sw_install_tweaks 'OpenRGB'

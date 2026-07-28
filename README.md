@@ -60,7 +60,6 @@ The `OpenSUSE-Installation.sh` script may require a few arguments as per your us
 | Fix             | ICMProfiles               | Installs ICM profiles                                      |
 | Fix             | MissingFonts              | Installs Missing Fonts (Google Noto fonts pack)            |
 | Fix             | SDDMNumLock               | Enables NumLock on boot to SDDM                            |
-| Tweak           | Aliases                   | Installs useful aliases to the system                      |
 | Tweak           | mDNSFirewallRules         | Adds mDNS to public and external zones in the firewall     |
 | Tweak           | OpenRGB                   | Installs and sets up openRGB                               |
 | Tweak           | SysAutoUpdate             | Adds service to update system on 1st day of every month    |
