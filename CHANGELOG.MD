@@ -4,7 +4,7 @@ This is the changelog since version 2.0.0. Each section contains divisions for e
 
 # Table of Contents
 
-- [2.1.7])#217)
+- [2.1.7](#217)
 - [2.1.6](#216)
 - [2.1.5](#215)
 - [2.1.4](#214)
