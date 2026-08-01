@@ -34,11 +34,6 @@ SERVICE_DESCRIPTION="OpenSUSE Tumbleweed Distribution Update"
 SCRIPT_CONTENT='#!/bin/bash
 set -euo pipefail
 
-if ! systemctl is-active --quiet graphical.target; then
-    echo "Graphical target not active. Skipping update."
-    exit 0
-fi
-
 echo "[$(date)] Starting monthly update..."
 
 zypper refresh
