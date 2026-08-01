@@ -4,6 +4,7 @@ This is the changelog since version 2.0.0. Each section contains divisions for e
 
 # Table of Contents
 
+- [2.1.7])#217)
 - [2.1.6](#216)
 - [2.1.5](#215)
 - [2.1.4](#214)
@@ -17,14 +18,21 @@ This is the changelog since version 2.0.0. Each section contains divisions for e
 
 ---
 
+## 2.1.7
+
+### Modifications
+
+* Refactored and fixed `Tweak-SysAutoUpdate.sh`
+* Changed the bullet styling in `CHANGELOG.MD` file. Bullet characters are now consistent
+
 ## 2.1.6
 
 ### Modifications
 
-- Shorten the index in Changelog to just the release versions
-- Activated Startup Sound fix
-- Updated help documentation
-- Cleaned up entries
+* Shorten the index in Changelog to just the release versions
+* Activated Startup Sound fix
+* Updated help documentation
+* Cleaned up entries
 
 ### Deletions
 
